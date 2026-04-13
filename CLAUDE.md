@@ -518,3 +518,21 @@ Le site est un **one-page** avec navigation par ancres. Sections :
 - [PageSpeed Insights](https://pagespeed.web.dev/) — Test Core Web Vitals
 - [W3C Validator](https://validator.w3.org/) — Validation HTML
 - [WAVE](https://wave.webaim.org/) — Test accessibilité
+
+---
+
+## Deploy Configuration (configured by /setup-deploy)
+
+- **Platform:** Netlify
+- **Production URL:** https://grand-elf-480fdd.netlify.app
+- **GitHub repo:** https://github.com/johnwhop200/tms-website
+- **Deploy workflow:** Automatic on push to main
+- **Deploy status command:** `netlify status --site 57ed5850-1f53-4a2d-87af-9bec67c511b6`
+- **Publish directory:** `site/`
+- **Build command:** *(none — static site)*
+- **Health check:** GET https://grand-elf-480fdd.netlify.app
+
+### Deploy hooks
+- **Pre-deploy:** `git push origin main`
+- **Deploy trigger:** Automatic on GitHub push to main
+- **Post-deploy check:** Health check URL responds with 200 OK
