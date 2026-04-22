@@ -248,14 +248,11 @@
 
     item.addEventListener('click', function (e) {
       if (item.classList.contains('gallery-item--before-after')) {
-        var beforeDiv = item.querySelector('.gallery-item__before');
-        var afterDiv = item.querySelector('.gallery-item__after');
-        var clickedImg;
-        if (afterDiv && afterDiv.contains(e.target)) {
-          clickedImg = afterDiv.querySelector('img');
-        } else {
-          clickedImg = beforeDiv ? beforeDiv.querySelector('img') : item.querySelector('img');
-        }
+        var rect = item.getBoundingClientRect();
+        var isRightHalf = e.clientX > rect.left + rect.width / 2;
+        var beforeImg = item.querySelector('.gallery-item__before img');
+        var afterImg = item.querySelector('.gallery-item__after img');
+        var clickedImg = isRightHalf ? (afterImg || beforeImg) : (beforeImg || item.querySelector('img'));
         item.setAttribute('data-lightbox-src', clickedImg.src);
         item.setAttribute('data-lightbox-alt', clickedImg.alt);
       } else {
