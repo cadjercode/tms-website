@@ -1150,9 +1150,111 @@ strong {
   color: #fff;
 }
 
-.temoignages__grid {
-  display: grid;
+/* Carousel */
+.carousel {
+  position: relative;
+}
+
+.carousel__viewport {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.carousel__viewport:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.carousel__track {
+  display: flex;
   gap: var(--space-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.carousel__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.carousel__arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.carousel__arrow:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+.carousel__arrow:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.carousel__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.carousel__arrow:disabled:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.carousel__dots {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.carousel__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.25);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), width var(--transition-fast);
+}
+
+.carousel__dot:hover {
+  background: rgba(255,255,255,0.5);
+}
+
+.carousel__dot:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.carousel__dot--active {
+  background: var(--color-primary);
+  width: 28px;
+  border-radius: 999px;
 }
 
 .testimonial-card {
@@ -1161,6 +1263,9 @@ strong {
   padding: var(--space-xl);
   border: 1px solid rgba(255,255,255,0.08);
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .testimonial-card__quote {
@@ -1532,8 +1637,8 @@ strong {
     grid-template-columns: 1fr 1fr;
   }
 
-  .temoignages__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .carousel__slide {
+    flex-basis: calc((100% - var(--space-lg)) / 2);
   }
 
   .contact__grid {
@@ -1621,8 +1726,8 @@ strong {
     text-align: center;
   }
 
-  .temoignages__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .carousel__slide {
+    flex-basis: calc((100% - 2 * var(--space-lg)) / 3);
   }
 
   .footer__grid {
