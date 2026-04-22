@@ -219,9 +219,15 @@
   function updateLightbox() {
     var item = visibleItems[currentIndex];
     if (!item) return;
-    var img = item.querySelector('img');
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
+    var src = item.getAttribute('data-lightbox-src');
+    if (src) {
+      lightboxImg.src = src;
+      lightboxImg.alt = item.getAttribute('data-lightbox-alt') || '';
+    } else {
+      var img = item.querySelector('img');
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+    }
     lightboxCaption.textContent = item.getAttribute('data-caption') || '';
   }
 
@@ -240,7 +246,21 @@
     item.setAttribute('role', 'button');
     item.setAttribute('aria-label', item.getAttribute('data-caption') || 'Voir la photo');
 
-    item.addEventListener('click', function () {
+    item.addEventListener('click', function (e) {
+      if (item.classList.contains('gallery-item--before-after')) {
+        var beforeDiv = item.querySelector('.gallery-item__before');
+        var afterDiv = item.querySelector('.gallery-item__after');
+        var clickedImg;
+        if (afterDiv && afterDiv.contains(e.target)) {
+          clickedImg = afterDiv.querySelector('img');
+        } else {
+          clickedImg = beforeDiv ? beforeDiv.querySelector('img') : item.querySelector('img');
+        }
+        item.setAttribute('data-lightbox-src', clickedImg.src);
+        item.setAttribute('data-lightbox-alt', clickedImg.alt);
+      } else {
+        item.removeAttribute('data-lightbox-src');
+      }
       var vis = getVisibleItems();
       var idx = vis.indexOf(item);
       openLightbox(idx);
@@ -249,6 +269,7 @@
     item.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        item.removeAttribute('data-lightbox-src');
         var vis = getVisibleItems();
         var idx = vis.indexOf(item);
         openLightbox(idx);
