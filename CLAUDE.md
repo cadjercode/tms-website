@@ -18,9 +18,9 @@ Tu maîtrises également le **SEO technique et local** au niveau professionnel, 
 **Adresse :** Lieu-dit Bellevue, 81290 Labruguière
 **Zone d'intervention :** Tarn (Labruguière, Castres, Mazamet, Albi) et région Occitanie
 **Domaine :** tms81.fr
-**Téléphone :** 05 63 88 45 12
-**Mobile / WhatsApp :** +33 6 31 74 23 13
-**Email pro (façade site) :** contact@tms-oc.fr
+**Téléphone (unique) :** 06 31 74 23 13 (mobile / WhatsApp)
+~~**Fixe :** 05 63 88 45 12~~ — supprimé à la demande du client (2026-05-08)
+**Email public (site + annuaires) :** tms81290@gmail.com
 **Email perso (réception formulaires) :** vincentpro81110@gmail.com
 **Hébergement :** Hostinger Business Web Hosting (payé jusqu'au 16 nov. 2027)
 **Site existant :** Sauvegarde du site Hostinger actuel dans `assets/site-hostinger/`
@@ -202,7 +202,7 @@ Le NAP doit être **strictement identique** partout :
 ```
 EURL T.M.S - Terrassement Multi-Service
 [Adresse complète], 81290 Labruguière
-05 63 88 45 12
+06 31 74 23 13
 ```
 - Présent dans le footer de chaque page
 - Présent dans le schema.org
@@ -229,7 +229,7 @@ EURL T.M.S - Terrassement Multi-Service
   "alternateName": "TMS",
   "url": "https://tms81.fr",
   "telephone": "+33563884512",
-  "email": "contact@tms-oc.fr",
+  "email": "tms81290@gmail.com",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "[Adresse]",
@@ -524,13 +524,11 @@ Le site est un **one-page** avec navigation par ancres. Sections :
 ## Deploy Configuration (configured by /setup-deploy)
 
 - **Platform:** Netlify
-- **Production URL:** https://grand-elf-480fdd.netlify.app
-- **GitHub repo:** https://github.com/johnwhop200/tms-website
+- **Netlify team:** https://app.netlify.com/teams/cadjercode/projects
+- **GitHub repo:** https://github.com/cadjercode/tms-website
 - **Deploy workflow:** Automatic on push to main
-- **Deploy status command:** `netlify status --site 57ed5850-1f53-4a2d-87af-9bec67c511b6`
 - **Publish directory:** `site/`
 - **Build command:** *(none — static site)*
-- **Health check:** GET https://grand-elf-480fdd.netlify.app
 
 ### Deploy hooks
 - **Pre-deploy:** `git push origin main`

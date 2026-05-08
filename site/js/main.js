@@ -434,7 +434,7 @@
 
     // Marqueurs
     var hq = L.marker([43.5336, 2.2639], { icon: orangeIcon }).addTo(map);
-    hq.bindPopup('<span class="zone-popup-title">TMS — Siège</span><br>Lieu-dit Bellevue<br>81290 Labruguière<br><span class="zone-popup-dist">05 63 88 45 12</span>');
+    hq.bindPopup('<span class="zone-popup-title">TMS — Siège</span><br>Lieu-dit Bellevue<br>81290 Labruguière<br><span class="zone-popup-dist">06 31 74 23 13</span>');
 
     var cities = [
       { name: 'Castres', lat: 43.6045, lng: 2.2390, dist: '~10 min' },
