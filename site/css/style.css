@@ -1615,24 +1615,30 @@ strong {
 /* ============================================
    16. SCROLL REVEAL
    ============================================ */
-.reveal {
+.reveal,
+.reveal-left {
+  opacity: 1;
+  transform: none;
+}
+
+.js-ready .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.reveal.visible {
+.js-ready .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal-left {
+.js-ready .reveal-left {
   opacity: 0;
   transform: translateX(-30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.reveal-left.visible {
+.js-ready .reveal-left.visible {
   opacity: 1;
   transform: translateX(0);
 }

@@ -6,6 +6,8 @@
 (function () {
   'use strict';
 
+  document.documentElement.classList.add('js-ready');
+
   // ============================================
   // 1. MOBILE NAV TOGGLE
   // ============================================
