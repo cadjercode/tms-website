@@ -1818,6 +1818,10 @@ strong {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .gallery-item--before-after {
+    grid-column: span 2;
+  }
+
   .carousel__slide {
     flex-basis: calc((100% - 2 * var(--space-lg)) / 3);
   }
@@ -1844,6 +1848,10 @@ strong {
 
   .realisations__grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .gallery-item--before-after {
+    grid-column: span 2;
   }
 }
 
