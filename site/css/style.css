@@ -188,12 +188,12 @@ strong {
 }
 
 .section {
-  padding: var(--space-3xl) 0;
+  padding: var(--space-2xl) 0;
 }
 
 .section__header {
   text-align: center;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-lg);
 }
 
 .section__header h2 {
@@ -320,6 +320,32 @@ strong {
   border-radius: var(--radius-md);
   object-fit: cover;
   flex-shrink: 0;
+}
+
+.nav__brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.nav__brand strong {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.nav__brand-sub {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.header--scrolled .nav__brand {
+  color: var(--color-text);
 }
 
 .footer__logo-img {
@@ -1808,7 +1834,7 @@ strong {
   }
 
   .section {
-    padding: var(--space-3xl) 0;
+    padding: var(--space-2xl) 0;
   }
 
   .services__grid {
