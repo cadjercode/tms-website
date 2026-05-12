@@ -778,8 +778,8 @@ strong {
 
 .realisations__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: var(--space-md);
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
 }
 
 .gallery-item {
@@ -841,8 +841,8 @@ strong {
 
 /* Avant / Après */
 .gallery-item--before-after {
-  aspect-ratio: auto;
-  grid-column: span 2;
+  aspect-ratio: 16/9;
+  grid-column: 1 / -1;
 }
 
 .gallery-item__before-after {
@@ -1679,11 +1679,12 @@ strong {
   }
 
   .realisations__grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
   }
 
   .gallery-item--before-after {
-    grid-column: span 1;
+    grid-column: 1 / -1;
   }
 
   .materiel__grid {
@@ -1785,6 +1786,10 @@ strong {
 
   .figure-card__label {
     text-align: center;
+  }
+
+  .realisations__grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .carousel__slide {
