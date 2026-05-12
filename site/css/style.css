@@ -628,7 +628,13 @@ strong {
 
 .apropos__grid {
   display: grid;
-  gap: var(--space-2xl);
+  gap: var(--space-lg);
+}
+
+.apropos__text {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .apropos__text h2 {
@@ -642,8 +648,10 @@ strong {
 
 .apropos__figures {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-sm);
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .figure-card {
@@ -677,6 +685,7 @@ strong {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);
+  justify-content: center;
 }
 
 .certif-badge {
@@ -1692,12 +1701,8 @@ strong {
     justify-content: center;
   }
 
-  .apropos__grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .apropos__certifs {
-    grid-column: 1 / -1;
+    justify-content: center;
   }
 
   .services__grid {
