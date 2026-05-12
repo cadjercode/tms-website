@@ -348,6 +348,14 @@ strong {
   color: var(--color-text);
 }
 
+.footer .nav__brand {
+  color: #fff;
+}
+
+.footer .nav__brand-sub {
+  color: rgba(255,255,255,0.6);
+}
+
 .footer__logo-img {
   width: 40px;
   height: 40px;
@@ -876,8 +884,7 @@ strong {
 
 /* Avant / Après */
 .gallery-item--before-after {
-  aspect-ratio: 16/9;
-  grid-column: 1 / -1;
+  aspect-ratio: 4/3;
 }
 
 .gallery-item__before-after {
@@ -1537,8 +1544,8 @@ strong {
 
 .footer__grid {
   display: grid;
-  gap: var(--space-xl);
-  margin-bottom: var(--space-2xl);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .footer__brand p {
@@ -1556,9 +1563,9 @@ strong {
 .footer__nav a {
   font-size: 0.9rem;
   display: inline-block;
-  padding: 0.5rem 0;
-  min-height: 48px;
-  line-height: 2;
+  padding: 0.25rem 0;
+  min-height: 44px;
+  line-height: 1.6;
   transition: color var(--transition-fast);
 }
 
@@ -1714,9 +1721,6 @@ strong {
     gap: var(--space-md);
   }
 
-  .gallery-item--before-after {
-    grid-column: 1 / -1;
-  }
 
   .materiel__grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1823,10 +1827,6 @@ strong {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .gallery-item--before-after {
-    grid-column: span 2;
-  }
-
   .carousel__slide {
     flex-basis: calc((100% - 2 * var(--space-lg)) / 3);
   }
@@ -1855,9 +1855,6 @@ strong {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .gallery-item--before-after {
-    grid-column: span 2;
-  }
 }
 
 /* Reduced motion */
