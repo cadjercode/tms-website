@@ -271,10 +271,12 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); }
 /* ===== À PROPOS (identique) ===== */
 .apropos { background: var(--color-bg-alt); }
 .apropos__grid { display: grid; gap: 2rem; }
+.apropos__text { text-align: center; max-width: 700px; margin: 0 auto; }
 .apropos__text h2 { margin-bottom: 1rem; }
 .apropos__text p { color: var(--color-text-light); font-size: 1.05rem; margin-bottom: 1rem; }
 .apropos__text p:last-child { margin-bottom: 0; }
-.apropos__figures { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.apropos__figures { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 400px; margin: 0 auto; }
+.apropos__certifs { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
 .figure-card {
   text-align: center;
   padding: 1.5rem;
@@ -408,12 +410,6 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); }
   .services__list { gap: 1.25rem; }
 }
 
-@media (min-width: 768px) {
-  .apropos__grid {
-    grid-template-columns: 1.2fr 0.8fr;
-  }
-  .apropos__certifs { grid-column: 1 / -1; }
-}
 
 /* ===== RÉALISATIONS — UPGRADE: grille masonry ===== */
 .realisations { background: var(--color-bg-alt); }
