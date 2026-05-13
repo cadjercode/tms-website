@@ -664,29 +664,25 @@ strong {
 
 .figure-card {
   text-align: center;
-  padding: var(--space-md) var(--space-lg);
+  padding: 1.5rem;
   background: var(--color-bg);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
 }
 
 .figure-card__number {
   display: block;
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--color-primary);
   line-height: 1;
-  white-space: nowrap;
 }
 
 .figure-card__label {
   font-size: 0.85rem;
   color: var(--color-text-light);
-  text-align: left;
+  margin-top: 0.25rem;
 }
 
 .apropos__certifs {
@@ -1805,22 +1801,16 @@ strong {
   }
 
   .apropos__figures {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
   }
 
   .figure-card {
-    flex-direction: column;
-    text-align: center;
     padding: var(--space-lg);
   }
 
   .figure-card__number {
     font-size: 3rem;
-  }
-
-  .figure-card__label {
-    text-align: center;
   }
 
   .realisations__grid {
