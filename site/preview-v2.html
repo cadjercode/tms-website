@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMS — Preview Modernisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== MÊMES TOKENS QUE TON SITE ===== */
+:root {
+  --color-primary: #2D7D46;
+  --color-primary-dark: #1B5E30;
+  --color-primary-light: #ECFDF5;
+  --color-secondary: #1B2A3D;
+  --color-secondary-light: #2C3E50;
+  --color-accent: #E8A838;
+  --color-text: #1A1A2E;
+  --color-text-light: #5A6270;
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F7F5F2;
+  --color-bg-dark: #0F1923;
+  --color-success: #27A960;
+  --color-whatsapp: #25D366;
+  --color-border: #E2DDD7;
+  --color-error: #DC3545;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  --container-max: 1200px;
+  --header-h: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); }
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem; }
+.section { padding: 5rem 0; }
+.section__header { text-align: center; margin-bottom: 3rem; }
+.section__subtitle { color: var(--color-text-light); font-size: 1.05rem; max-width: 600px; margin: 0.5rem auto 0; }
+
+/* ===== PREVIEW BANNER ===== */
+.preview-banner {
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+.preview-banner span { opacity: 0.7; }
+
+/* ===== HEADER (identique) ===== */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.nav__logo-img { width: 50px; height: 50px; border-radius: var(--radius-md); object-fit: cover; }
+.nav__links { display: flex; gap: 2rem; }
+.nav__link {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  padding: 0.75rem 0.5rem;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 2px;
+  background: var(--color-primary);
+  transition: all var(--transition-base);
+  transform: translateX(-50%);
+}
+.nav__link:hover::after { width: 60%; }
+.nav__link:hover { color: var(--color-primary); }
+.nav__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  min-height: 48px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background var(--transition-fast);
+}
+.nav__cta:hover { background: var(--color-primary-dark); }
+.nav__cta svg { width: 18px; height: 18px; }
+
+/* ===== HERO (upgrade: gradient plus subtil, parallax-ready) ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+}
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 55% 24%;
+}
+/* UPGRADE: gradient plus subtil, moins de bleu, plus naturel */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(15,25,35,0.88) 0%,
+    rgba(15,25,35,0.55) 55%,
+    rgba(15,25,35,0.25) 100%
+  );
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
+  padding: calc(var(--header-h) + 4rem) 2rem 4rem;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+.hero h1 {
+  color: #fff;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.hero__subtitle {
+  color: rgba(255,255,255,0.9);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+.hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+.btn--primary { background: var(--color-primary); color: #fff; }
+.btn--primary:hover { background: var(--color-primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn--outline { border: 2px solid #fff; color: #fff; background: transparent; }
+.btn--outline:hover { background: rgba(255,255,255,0.15); }
+.btn svg { width: 18px; height: 18px; }
+
+/* Hero bottom bar — artisan + certifs */
+.hero__bottom-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero__stat { text-align: center; }
+.hero__stat-flag {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1;
+  letter-spacing: -0.15em;
+  margin-bottom: 2px;
+}
+.hero__stat-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.hero__stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.25);
+}
+.hero__certifs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.hero__certif-badge {
+  padding: 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  backdrop-filter: blur(5px);
+}
+.hero__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: rgba(255,255,255,0.5);
+  animation: heroScrollBounce 2s ease infinite;
+}
+@keyframes heroScrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ===== À PROPOS (identique) ===== */
+.apropos { background: var(--color-bg-alt); }
+.apropos__grid { display: grid; gap: 2rem; }
+.apropos__text h2 { margin-bottom: 1rem; }
+.apropos__text p { color: var(--color-text-light); font-size: 1.05rem; margin-bottom: 1rem; }
+.apropos__text p:last-child { margin-bottom: 0; }
+.apropos__figures { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.figure-card {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.figure-card__number {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+.figure-card__label { font-size: 0.85rem; color: var(--color-text-light); margin-top: 0.25rem; }
+.certif-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg);
+  border: 2px solid var(--color-success);
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-success);
+}
+.certif-badge svg { width: 20px; height: 20px; flex-shrink: 0; }
+.apropos__certifs { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* ===== SERVICES — UPGRADE: compact horizontal alterné ===== */
+.services__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.service-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+/* Mobile: photo visible mais pas démesurée */
+.service-card__image {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.service-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+.service-card:hover .service-card__image img {
+  transform: scale(1.05);
+}
+.service-card__content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.service-card__content h3 {
+  color: var(--color-secondary);
+  margin-bottom: 0.35rem;
+  font-size: 1.1rem;
+}
+.service-card__content p {
+  color: var(--color-text-light);
+  font-size: 0.88rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.55;
+}
+.service-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 0;
+  min-height: 44px;
+  transition: gap var(--transition-fast);
+}
+.service-card:hover .service-card__link { gap: 0.5rem; }
+.service-card__number {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--color-primary);
+  opacity: 0.08;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+/* Tablet: grille 2 colonnes */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .services__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* Desktop: horizontal alterné, photos bien visibles */
+@media (min-width: 1024px) {
+  .service-card {
+    grid-template-columns: 1fr 1fr;
+  }
+  .service-card:nth-child(even) .service-card__image {
+    order: 2;
+  }
+  .service-card:nth-child(even) .service-card__content {
+    order: 1;
+  }
+  .service-card__image {
+    aspect-ratio: auto;
+    min-height: 220px;
+    max-height: 260px;
+  }
+  .service-card__content {
+    padding: 1.75rem 2rem;
+  }
+  .services__list { gap: 1.25rem; }
+}
+
+@media (min-width: 768px) {
+  .apropos__grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+  .apropos__certifs { grid-column: 1 / -1; }
+}
+
+/* ===== RÉALISATIONS — UPGRADE: grille masonry ===== */
+.realisations { background: var(--color-bg-alt); }
+.realisations__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  border: 2px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+.filter-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.filter-btn.active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+
+/* UPGRADE: grille masonry avec CSS grid + row spans */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 140px;
+  gap: 0.75rem;
+}
+.gallery-item {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  grid-row: span 1;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+.gallery-item:hover img { transform: scale(1.06); }
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+.gallery-item:hover::after { opacity: 1; }
+.gallery-item__caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1rem;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all var(--transition-base);
+}
+.gallery-item:hover .gallery-item__caption { opacity: 1; transform: translateY(0); }
+/* Featured: occupe 2 rangées = plus grand */
+.gallery-item--featured {
+  grid-row: span 2;
+}
+/* Standard: 1 rangée */
+.gallery-item--standard {
+  grid-row: span 1;
+}
+
+/* AVANT/APRÈS: occupe 2 colonnes, layout côte à côte */
+.gallery-item--before-after {
+  grid-column: span 2;
+  grid-row: span 2;
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.gallery-item--before-after .ba-side {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.gallery-item--before-after .ba-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+.gallery-item--before-after:hover .ba-side img {
+  transform: scale(1.04);
+}
+.gallery-item--before-after .ba-label {
+  position: absolute;
+  top: 0.6rem;
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+  color: #fff;
+}
+.ba-side--avant .ba-label {
+  left: 0.6rem;
+  background: rgba(220,53,69,0.85);
+}
+.ba-side--apres .ba-label {
+  right: 0.6rem;
+  background: rgba(39,169,96,0.85);
+}
+.gallery-item--before-after .ba-divider {
+  width: 3px;
+  background: #fff;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.gallery-item--before-after .ba-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 160px;
+    gap: 1rem;
+  }
+}
+@media (min-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 150px;
+  }
+}
+
+/* UPGRADE: galerie pliable — aperçu + expand */
+.gallery-expandable {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease;
+  overflow: hidden;
+}
+.gallery-expandable > .gallery-grid {
+  min-height: 0;
+  overflow: hidden;
+}
+.gallery-expandable.is-open {
+  grid-template-rows: 1fr;
+}
+.gallery-expandable.is-open > .gallery-grid {
+  margin-top: 0.75rem;
+}
+.gallery-toggle-btn {
+  gap: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+}
+.gallery-toggle-btn__icon {
+  transition: transform var(--transition-base);
+}
+.gallery-toggle-btn[aria-expanded="true"] .gallery-toggle-btn__icon {
+  transform: rotate(180deg);
+}
+.gallery-toggle-btn[aria-expanded="true"] .gallery-toggle-btn__text::after {
+  content: '';
+}
+
+/* ===== FAQ — UPGRADE: accordéons plus élégants ===== */
+.faq__list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.faq__item {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.faq__item[open] {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+.faq__question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  list-style: none;
+  gap: 1rem;
+  transition: background var(--transition-base);
+}
+.faq__question::-webkit-details-marker { display: none; }
+/* UPGRADE: chevron animé au lieu du + */
+.faq__question::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+.faq__item[open] .faq__question::after {
+  transform: rotate(-135deg);
+}
+.faq__question:hover { background: var(--color-primary-light); }
+.faq__answer {
+  padding: 0 1.5rem 1.25rem;
+  color: var(--color-text-light);
+  line-height: 1.7;
+  animation: faqSlideDown 0.3s ease;
+}
+@keyframes faqSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.faq__answer a { color: var(--color-primary); font-weight: 600; }
+
+/* ===== CONTACT — UPGRADE: inputs plus raffinés ===== */
+.contact__grid { display: grid; gap: 3rem; }
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.35rem;
+  color: var(--color-text);
+}
+/* UPGRADE: bordure plus fine, transition douce, fond blanc pur */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fff;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #aaa;
+}
+.form-group textarea { resize: vertical; min-height: 120px; }
+/* UPGRADE: bouton submit plus affirmé */
+.btn--submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+.btn--submit:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(45,125,70,0.3);
+}
+
+.contact__info { display: flex; flex-direction: column; gap: 2rem; }
+.contact__nap h3 { margin-bottom: 1rem; color: var(--color-secondary); }
+.contact__nap address { font-style: normal; line-height: 1.8; }
+.contact__nap a { color: var(--color-primary); font-weight: 600; }
+.contact__hours h3 { margin-bottom: 0.5rem; }
+
+@media (min-width: 768px) {
+  .contact__grid { grid-template-columns: 1.2fr 0.8fr; }
+}
+
+/* ===== FOOTER (identique) ===== */
+.footer {
+  background: var(--color-secondary);
+  color: rgba(255,255,255,0.8);
+  padding: 3rem 0 1.5rem;
+}
+.footer h4 { color: #fff; font-size: 1rem; margin-bottom: 1rem; }
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+.footer__brand p { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem; }
+.footer__nav ul { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer__nav a { font-size: 0.9rem; transition: color var(--transition-fast); }
+.footer__nav a:hover { color: var(--color-primary); }
+.footer__contact address { font-style: normal; font-size: 0.9rem; line-height: 1.8; }
+.footer__contact a:hover { color: var(--color-primary); }
+.footer__legal p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+.footer__bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+}
+@media (max-width: 768px) {
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; gap: 0.5rem; }
+  .nav__links { display: none; }
+}
+
+/* ===== SCROLL REVEAL GSAP-ready ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* UPGRADE: stagger delay sur les éléments de grille */
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- PREVIEW BANNER -->
+<div class="preview-banner">
+  PREVIEW MODERNISATION — Mêmes couleurs, mêmes typos, composants upgradés
+  <span> | Services horizontaux • Galerie masonry • FAQ animée • Formulaire raffiné</span>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <nav class="nav">
+    <a href="#accueil">
+      <img src="https://tms81.fr/images/tms-logo.jpg" alt="TMS" class="nav__logo-img" width="50" height="50">
+    </a>
+    <ul class="nav__links">
+      <li><a href="#services" class="nav__link">Services</a></li>
+      <li><a href="#realisations" class="nav__link">Réalisations</a></li>
+      <li><a href="#faq" class="nav__link">FAQ</a></li>
+      <li><a href="#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="tel:+33631742313" class="nav__cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.14.94.37 1.87.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.94.33 1.87.56 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      06 31 74 23 13
+    </a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="hero__bg">
+    <img src="https://tms81.fr/images/hero-chantier-pelle.jpg"
+         alt="Chantier de terrassement avec pelle Doosan — TMS Terrassement Labruguière" width="1920" height="1440">
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <h1>On transforme votre terrain.</h1>
+    <p class="hero__subtitle">Terrassement, VRD, aménagement extérieur, défrichement — votre spécialiste travaux publics à Labruguière, dans le Tarn.</p>
+    <div class="hero__ctas">
+      <a href="#contact" class="btn btn--primary">Obtenir un devis gratuit</a>
+      <a href="tel:+33631742313" class="btn btn--outline">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.14.94.37 1.87.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.94.33 1.87.56 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        06 31 74 23 13
+      </a>
+    </div>
+    <div class="hero__bottom-bar">
+      <div class="hero__stat hero__stat--artisan">
+        <span class="hero__stat-flag" aria-hidden="true"><span style="color:#002395;">&#9646;</span><span style="color:#fff;">&#9646;</span><span style="color:#ED2939;">&#9646;</span></span>
+        <span class="hero__stat-label">Artisan français</span>
+      </div>
+      <div class="hero__stat-divider" aria-hidden="true"></div>
+      <div class="hero__certifs">
+        <span class="hero__certif-badge">Garantie décennale</span>
+        <span class="hero__certif-badge">RC Pro</span>
+      </div>
+    </div>
+    <a href="#apropos" class="hero__scroll" aria-label="Découvrir la suite">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section class="apropos section">
+  <div class="container">
+    <div class="apropos__grid">
+      <div class="apropos__text reveal">
+        <h2>Votre spécialiste terrassement dans le Tarn</h2>
+        <p>Spécialisé en <strong>terrassement dans le Tarn</strong>, Vincent Padilla a créé <strong>TMS (Terrassement Multi-Service)</strong> à Labruguière. Son entreprise s'est bâtie sur sa meilleure publicité : la satisfaction et les recommandations de ses clients à Castres, Mazamet, Albi et dans toute l'Occitanie.</p>
+        <p>Particuliers, professionnels, collectivités ou agriculteurs — TMS intervient sur tous types de chantiers de <strong>travaux publics</strong> avec un parc matériel adapté et un savoir-faire reconnu.</p>
+      </div>
+      <div class="apropos__figures reveal">
+        <div class="figure-card">
+          <span class="figure-card__number">50+</span>
+          <span class="figure-card__label">Chantiers réalisés</span>
+        </div>
+        <div class="figure-card">
+          <span class="figure-card__number">24h</span>
+          <span class="figure-card__label">réponse devis</span>
+        </div>
+      </div>
+      <div class="apropos__certifs reveal">
+        <div class="certif-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Garantie décennale
+        </div>
+        <div class="certif-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          RC Professionnelle
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — UPGRADE: LAYOUT HORIZONTAL ALTERNÉ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section__header reveal">
+      <h2>Nos services</h2>
+      <p class="section__subtitle">Terrassement, VRD, aménagement — TMS répond à tous vos besoins dans le Tarn et en Occitanie</p>
+    </div>
+    <div class="services__list">
+
+      <article class="service-card reveal">
+        <div class="service-card__image">
+          <img src="https://tms81.fr/images/lotissement-nivele.webp" alt="Terrain nivelé après travaux de terrassement" width="600" height="400" loading="lazy">
+        </div>
+        <div class="service-card__content">
+          <div class="service-card__number">01</div>
+          <h3>Terrassement résidentiel et agricole</h3>
+          <p>Terrassement de terrain à Labruguière, Castres et dans tout le Tarn. Décapage, nivellement, remblaiement sur tous types de sols, même les terrains difficiles et pentus. Un travail précis adapté à votre projet.</p>
+          <a href="#contact" class="service-card__link">Demander un devis →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-card__image">
+          <img src="https://tms81.fr/images/voie-acces-parking.jpg" alt="Voie d'accès créée par TMS" width="600" height="400" loading="lazy">
+        </div>
+        <div class="service-card__content">
+          <div class="service-card__number">02</div>
+          <h3>Voies d'accès et parking</h3>
+          <p>Création de chemins d'accès, parkings et pistes forestières dans le Tarn et en montagne. Intervention en terrain pentu et boisé pour ouvrir, élargir et entretenir vos voies d'accès.</p>
+          <a href="#contact" class="service-card__link">Demander un devis →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-card__image">
+          <img src="https://tms81.fr/images/terrassement-piscine.webp" alt="Terrassement piscine" width="600" height="400" loading="lazy">
+        </div>
+        <div class="service-card__content">
+          <div class="service-card__number">03</div>
+          <h3>Piscines et aménagement extérieur</h3>
+          <p>Terrassement de piscine et aménagement extérieur : bassins, clôtures, mise en forme de terrain. Transformez votre jardin à Castres, Labruguière ou Mazamet avec un projet sur mesure.</p>
+          <a href="#contact" class="service-card__link">Demander un devis →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-card__image">
+          <img src="https://tms81.fr/images/travaux-forestiers.jpg" alt="Travaux forestiers avec pelle Doosan" width="600" height="400" loading="lazy">
+        </div>
+        <div class="service-card__content">
+          <div class="service-card__number">04</div>
+          <h3>Travaux forestiers et défrichement</h3>
+          <p>Défrichement de terrain dans le Tarn pour préparer vos projets de construction, d'aménagement ou d'exploitation agricole. Nettoyage complet de parcelles, même en terrain boisé.</p>
+          <a href="#contact" class="service-card__link">Demander un devis →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-card__image">
+          <img src="https://tms81.fr/images/fosse-septique.webp" alt="Installation fosse septique" width="600" height="400" loading="lazy">
+        </div>
+        <div class="service-card__content">
+          <div class="service-card__number">05</div>
+          <h3>VRD et assainissement</h3>
+          <p>Travaux de VRD à Castres, Labruguière et dans les environs : pose de fosses septiques, canalisations, raccordements aux réseaux. Assainissement conforme aux normes en vigueur.</p>
+          <a href="#contact" class="service-card__link">Demander un devis →</a>
+        </div>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-card__image">
+          <img src="https://tms81.fr/images/vrd-viabilisation.jpg" alt="VRD et viabilisation" width="600" height="400" loading="lazy">
+        </div>
+        <div class="service-card__content">
+          <div class="service-card__number">06</div>
+          <h3>Viabilisation de terrain</h3>
+          <p>Viabilisation de terrain à bâtir dans le Tarn : terrassement, raccordement aux réseaux, création d'accès. Votre terrain prêt à construire, clé en main.</p>
+          <a href="#contact" class="service-card__link">Demander un devis →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- RÉALISATIONS — UPGRADE: MASONRY -->
+<section class="realisations section" id="realisations">
+  <div class="container">
+    <div class="section__header reveal">
+      <h2>Nos réalisations</h2>
+      <p class="section__subtitle">Découvrez nos chantiers réalisés dans le Tarn et en Occitanie</p>
+    </div>
+    <div class="realisations__filters reveal">
+      <button class="filter-btn active">Tous</button>
+      <button class="filter-btn">Terrassement</button>
+      <button class="filter-btn">Pistes &amp; Voies</button>
+      <button class="filter-btn">Aménagement</button>
+      <button class="filter-btn">VRD</button>
+      <button class="filter-btn">Avant / Après</button>
+    </div>
+    <!-- APERÇU : 4 premières photos toujours visibles -->
+    <div class="gallery-grid gallery-grid--preview">
+      <div class="gallery-item gallery-item--standard reveal">
+        <img src="https://tms81.fr/images/lotissement-nivele.webp" alt="Terrassement lotissement" loading="lazy">
+        <span class="gallery-item__caption">Terrassement lotissement</span>
+      </div>
+      <div class="gallery-item gallery-item--standard reveal reveal-delay-1">
+        <img src="https://tms81.fr/images/doosan-foret-tuyau.webp" alt="Travaux forestiers" loading="lazy">
+        <span class="gallery-item__caption">Travaux forestiers</span>
+      </div>
+      <div class="gallery-item gallery-item--standard reveal reveal-delay-2">
+        <img src="https://tms81.fr/images/voie-acces-gravier.webp" alt="Voie d'accès gravier" loading="lazy">
+        <span class="gallery-item__caption">Voie d'accès gravier</span>
+      </div>
+      <div class="gallery-item gallery-item--standard reveal reveal-delay-3">
+        <img src="https://tms81.fr/images/drone-minipelle-camion.webp" alt="Vue drone chantier" loading="lazy">
+        <span class="gallery-item__caption">Vue drone chantier</span>
+      </div>
+    </div>
+
+    <!-- RESTE : masqué par défaut, révélé au clic -->
+    <div class="gallery-expandable" id="galleryExpandable">
+      <div class="gallery-grid">
+        <!-- 5-8 -->
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/terrassement-piscine.webp" alt="Terrassement piscine" loading="lazy">
+          <span class="gallery-item__caption">Terrassement piscine</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/fosse-septique.webp" alt="Assainissement" loading="lazy">
+          <span class="gallery-item__caption">Assainissement</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/demolition-interieure.webp" alt="Démolition intérieure" loading="lazy">
+          <span class="gallery-item__caption">Démolition intérieure</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/defrichement-terrain.webp" alt="Défrichement" loading="lazy">
+          <span class="gallery-item__caption">Défrichement</span>
+        </div>
+        <!-- 9-12 -->
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/pelle-case-agricole.webp" alt="Chantier agricole" loading="lazy">
+          <span class="gallery-item__caption">Chantier agricole</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/pompe-beton-fondations.webp" alt="Fondations" loading="lazy">
+          <span class="gallery-item__caption">Fondations</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/terrain-viabilise.webp" alt="Viabilisation" loading="lazy">
+          <span class="gallery-item__caption">Viabilisation</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/voie-gravier.webp" alt="Voie gravillonnée finie" loading="lazy">
+          <span class="gallery-item__caption">Voie gravillonnée finie</span>
+        </div>
+        <!-- 13-16 -->
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/doosan-piste-forestiere.webp" alt="Doosan piste forestière" loading="lazy">
+          <span class="gallery-item__caption">Doosan piste forestière</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/allee-parc-chemin.webp" alt="Allée de parc aménagée" loading="lazy">
+          <span class="gallery-item__caption">Allée de parc aménagée</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/terrassement-hangar.webp" alt="Terrassement intérieur hangar" loading="lazy">
+          <span class="gallery-item__caption">Terrassement intérieur hangar</span>
+        </div>
+        <div class="gallery-item gallery-item--standard">
+          <img src="https://tms81.fr/images/camion-pelle-remorque.webp" alt="Transport engins" loading="lazy">
+          <span class="gallery-item__caption">Transport engins</span>
+        </div>
+        <!-- 17-18. FEATURED -->
+        <div class="gallery-item gallery-item--featured">
+          <img src="https://tms81.fr/images/amenagement-piscine-chantier.webp" alt="Terrassement piscine avec 2 engins" loading="lazy">
+          <span class="gallery-item__caption">Terrassement piscine (2 engins)</span>
+        </div>
+        <div class="gallery-item gallery-item--featured">
+          <img src="https://tms81.fr/images/terrain-nivele-piscine.webp" alt="Terrain nivelé piscine" loading="lazy">
+          <span class="gallery-item__caption">Terrain nivelé piscine</span>
+        </div>
+        <!-- 19. AVANT/APRÈS -->
+        <div class="gallery-item gallery-item--before-after">
+          <div class="ba-side ba-side--avant">
+            <span class="ba-label">Avant</span>
+            <img src="https://tms81.fr/images/avant-apres-1-avant.jpg" alt="Terrain avant travaux" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+          <div class="ba-side ba-side--apres">
+            <span class="ba-label">Après</span>
+            <img src="https://tms81.fr/images/avant-apres-1-apres.jpg" alt="Terrain nivelé et aménagé" loading="lazy">
+          </div>
+          <span class="ba-caption">Terrain nivelé et aménagé</span>
+        </div>
+        <!-- 20. AVANT/APRÈS -->
+        <div class="gallery-item gallery-item--before-after">
+          <div class="ba-side ba-side--avant">
+            <span class="ba-label">Avant</span>
+            <img src="https://tms81.fr/images/avant-apres-2-avant.jpg" alt="Cour avant travaux" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+          <div class="ba-side ba-side--apres">
+            <span class="ba-label">Après</span>
+            <img src="https://tms81.fr/images/avant-apres-2-apres.jpg" alt="Cour résiduelle transformée" loading="lazy">
+          </div>
+          <span class="ba-caption">Cour résiduelle transformée</span>
+        </div>
+        <!-- 21. AVANT/APRÈS -->
+        <div class="gallery-item gallery-item--before-after">
+          <div class="ba-side ba-side--avant">
+            <span class="ba-label">Avant</span>
+            <img src="https://tms81.fr/images/avant-apres-3-avant.jpg" alt="Jardin avant travaux" loading="lazy">
+          </div>
+          <div class="ba-divider"></div>
+          <div class="ba-side ba-side--apres">
+            <span class="ba-label">Après</span>
+            <img src="https://tms81.fr/images/avant-apres-3-apres.jpg" alt="Jardin résidentiel nivelé" loading="lazy">
+          </div>
+          <span class="ba-caption">Jardin résidentiel nivelé</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton toggle -->
+    <div class="gallery-toggle-wrap" style="text-align:center; margin-top:1.5rem;">
+      <button class="btn btn--primary gallery-toggle-btn" id="galleryToggleBtn" aria-expanded="false" aria-controls="galleryExpandable">
+        <span class="gallery-toggle-btn__text">Voir toutes nos réalisations</span>
+        <svg class="gallery-toggle-btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ — UPGRADE: chevron animé + slide -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section__header reveal">
+      <h2>Questions fréquentes</h2>
+      <p class="section__subtitle">Tout ce que vous voulez savoir sur nos prestations de terrassement dans le Tarn</p>
+    </div>
+    <div class="faq__list">
+      <details class="faq__item reveal">
+        <summary class="faq__question">Quelles zones d'intervention couvre TMS ?</summary>
+        <div class="faq__answer">
+          <p>TMS intervient principalement dans le <strong>Tarn (81)</strong> : Labruguière, Castres, Mazamet, Albi, Revel, Saint-Amans-Soult et toute la région Occitanie. Pour les projets importants, nous pouvons nous déplacer au-delà du département.</p>
+        </div>
+      </details>
+      <details class="faq__item reveal reveal-delay-1">
+        <summary class="faq__question">Proposez-vous des devis gratuits ?</summary>
+        <div class="faq__answer">
+          <p>Oui, tous nos devis sont <strong>gratuits et sans engagement</strong>. Nous nous déplaçons sur votre terrain pour évaluer précisément votre projet. Contactez-nous au <a href="tel:+33631742313">06 31 74 23 13</a>.</p>
+        </div>
+      </details>
+      <details class="faq__item reveal reveal-delay-2">
+        <summary class="faq__question">TMS est-elle une entreprise garantie et assurée ?</summary>
+        <div class="faq__answer">
+          <p>Oui. TMS dispose d'une <strong>garantie décennale</strong> et d'une <strong>responsabilité civile professionnelle</strong>. Ces assurances couvrent tous nos chantiers.</p>
+        </div>
+      </details>
+      <details class="faq__item reveal reveal-delay-3">
+        <summary class="faq__question">Intervenez-vous sur les terrains difficiles d'accès ?</summary>
+        <div class="faq__answer">
+          <p>C'est l'une de nos spécialités. Nous intervenons sur <strong>tous types de terrains</strong> : zones forestières, terrains en pente, zones agricoles isolées, chantiers avec accès étroit.</p>
+        </div>
+      </details>
+      <details class="faq__item reveal reveal-delay-4">
+        <summary class="faq__question">Quels types de travaux réalisez-vous ?</summary>
+        <div class="faq__answer">
+          <p>TMS propose : <strong>création de voies d'accès et pistes forestières</strong>, aménagement extérieur, <strong>démolition intérieure</strong>, VRD et assainissement, drainage, et viabilisation de terrain.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT — UPGRADE: formulaire raffiné -->
+<section class="section" id="contact" style="background: var(--color-bg-alt);">
+  <div class="container">
+    <div class="section__header reveal">
+      <h2>Contactez-nous</h2>
+      <p class="section__subtitle">Demandez votre devis gratuit — réponse sous 24h</p>
+    </div>
+    <div class="contact__grid">
+      <div class="reveal">
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="nom">Nom complet *</label>
+            <input type="text" id="nom" name="nom" placeholder="Votre nom et prénom">
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="votre@email.fr">
+          </div>
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78">
+          </div>
+          <div class="form-group">
+            <label for="service">Service souhaité</label>
+            <select id="service" name="service">
+              <option value="">-- Choisir un service --</option>
+              <option value="terrassement">Terrassement</option>
+              <option value="voies">Voies d'accès / Pistes forestières</option>
+              <option value="piscine">Piscines &amp; Aménagement</option>
+              <option value="vrd">VRD / Assainissement</option>
+              <option value="demolition">Démolition</option>
+              <option value="viabilisation">Viabilisation</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Décrivez votre projet *</label>
+            <textarea id="message" name="message" placeholder="Type de travaux, surface estimée, délai souhaité..."></textarea>
+          </div>
+          <button type="button" class="btn--submit">Envoyer ma demande de devis</button>
+        </form>
+      </div>
+      <div class="contact__info reveal reveal-delay-1">
+        <div class="contact__nap">
+          <h3>EURL T.M.S</h3>
+          <address>
+            <p>Lieu-dit Bellevue<br>81290 Labruguière</p>
+            <p><a href="tel:+33631742313">06 31 74 23 13</a></p>
+            <p><a href="mailto:tms81290@gmail.com">tms81290@gmail.com</a></p>
+          </address>
+        </div>
+        <div class="contact__hours">
+          <h3>Horaires</h3>
+          <p>Lundi — Samedi : 8h00 - 18h00</p>
+          <p>Dimanche : Fermé</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="https://tms81.fr/images/tms-logo.jpg" alt="TMS" width="40" height="40" style="border-radius:8px;">
+        <p>Entreprise de terrassement et travaux publics dans le Tarn. Garantie décennale, RC Pro.</p>
+      </div>
+      <div class="footer__nav">
+        <h4>Plan du site</h4>
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#realisations">Réalisations</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__contact">
+        <h4>Contact</h4>
+        <address>
+          <p>Lieu-dit Bellevue<br>81290 Labruguière</p>
+          <p><a href="tel:+33631742313">06 31 74 23 13</a></p>
+          <p><a href="mailto:tms81290@gmail.com">tms81290@gmail.com</a></p>
+        </address>
+      </div>
+      <div class="footer__legal">
+        <h4>Informations</h4>
+        <p>EURL T.M.S<br>SIRET : 949 891 980</p>
+        <p>Garantie décennale · RC Pro</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 EURL T.M.S - Terrassement Multi-Service. Tous droits réservés.</p>
+      <p>Directeur de publication : Vincent Padilla</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Simple reveal on scroll -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Galerie pliable
+const galleryToggle = document.getElementById('galleryToggleBtn');
+const galleryPanel = document.getElementById('galleryExpandable');
+if (galleryToggle && galleryPanel) {
+  galleryToggle.addEventListener('click', () => {
+    const isOpen = galleryPanel.classList.toggle('is-open');
+    galleryToggle.setAttribute('aria-expanded', isOpen);
+    galleryToggle.querySelector('.gallery-toggle-btn__text').textContent =
+      isOpen ? 'Réduire la galerie' : 'Voir toutes nos réalisations';
+  });
+}
+</script>
+
+</body>
+</html>
