@@ -1512,6 +1512,43 @@ strong {
   font-weight: 600;
 }
 
+.faq-expandable {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease;
+  overflow: hidden;
+}
+
+.faq-expandable__inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.faq-expandable.is-open {
+  grid-template-rows: 1fr;
+}
+
+.faq-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--space-md);
+}
+
+.faq-toggle-btn__chevron {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--transition-base);
+}
+
+.faq-toggle-btn[aria-expanded="true"] .faq-toggle-btn__chevron {
+  transform: rotate(-135deg);
+}
+
 /* ============================================
    14. CONTACT
    ============================================ */

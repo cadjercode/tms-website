@@ -175,6 +175,20 @@
   }
 
   // ============================================
+  // 5c. FAQ EXPANDABLE TOGGLE
+  // ============================================
+  var faqToggle = document.getElementById('faq-toggle');
+  var faqPanel = document.getElementById('faq-panel');
+  if (faqToggle && faqPanel) {
+    faqToggle.addEventListener('click', function () {
+      var isOpen = faqPanel.classList.toggle('is-open');
+      faqToggle.setAttribute('aria-expanded', isOpen);
+      faqToggle.firstChild.textContent =
+        isOpen ? 'Réduire les questions ' : 'Voir toutes les questions ';
+    });
+  }
+
+  // ============================================
   // 6. GALLERY FILTER
   // ============================================
   var filterBtns = document.querySelectorAll('.filter-btn');
