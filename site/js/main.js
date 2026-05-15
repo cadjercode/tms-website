@@ -161,6 +161,20 @@
   }
 
   // ============================================
+  // 5b. GALLERY TOGGLE (expandable)
+  // ============================================
+  var galleryToggle = document.getElementById('galleryToggleBtn');
+  var galleryPanel = document.getElementById('galleryExpandable');
+  if (galleryToggle && galleryPanel) {
+    galleryToggle.addEventListener('click', function () {
+      var isOpen = galleryPanel.classList.toggle('is-open');
+      galleryToggle.setAttribute('aria-expanded', isOpen);
+      galleryToggle.querySelector('.gallery-toggle-btn__text').textContent =
+        isOpen ? 'Réduire la galerie' : 'Voir toutes nos réalisations';
+    });
+  }
+
+  // ============================================
   // 6. GALLERY FILTER
   // ============================================
   var filterBtns = document.querySelectorAll('.filter-btn');
@@ -172,6 +186,14 @@
 
       filterBtns.forEach(function (b) { b.classList.remove('active'); });
       this.classList.add('active');
+
+      if (filter !== 'all' && galleryPanel && !galleryPanel.classList.contains('is-open')) {
+        galleryPanel.classList.add('is-open');
+        if (galleryToggle) {
+          galleryToggle.setAttribute('aria-expanded', 'true');
+          galleryToggle.querySelector('.gallery-toggle-btn__text').textContent = 'Réduire la galerie';
+        }
+      }
 
       galleryItems.forEach(function (item) {
         var category = item.getAttribute('data-category');
