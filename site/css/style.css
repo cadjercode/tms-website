@@ -1249,6 +1249,14 @@ strong {
   margin-left: auto;
 }
 
+.zone__text {
+  margin-top: var(--space-md);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-light);
+  max-width: 65ch;
+}
+
 /* ============================================
    12. TEMOIGNAGES
    ============================================ */
