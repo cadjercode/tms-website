@@ -1527,8 +1527,9 @@ strong {
   grid-template-rows: 1fr;
 }
 
-.faq .faq-toggle-wrap {
-  text-align: center;
+section.faq .faq-toggle-wrap {
+  display: flex;
+  justify-content: center;
   margin-top: var(--space-md);
 }
 
