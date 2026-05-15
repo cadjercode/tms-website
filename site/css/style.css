@@ -1516,7 +1516,6 @@ strong {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.5s ease;
-  overflow: hidden;
 }
 
 .faq-expandable__inner {
@@ -1528,11 +1527,15 @@ strong {
   grid-template-rows: 1fr;
 }
 
+.faq .faq-toggle-wrap {
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
 .faq-toggle-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: var(--space-md);
 }
 
 .faq-toggle-btn__chevron {
