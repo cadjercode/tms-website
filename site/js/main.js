@@ -430,8 +430,31 @@
   });
 
   // ============================================
-  // 8b. LEAFLET MAP (Zone d'intervention)
+  // 8b. LEAFLET MAP (Zone d'intervention) — lazy loaded
   // ============================================
+  var mapEl = document.getElementById('zone-map');
+  if (mapEl) {
+    var mapObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        mapObserver.disconnect();
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+        link.crossOrigin = '';
+        document.head.appendChild(link);
+        var script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+        script.crossOrigin = '';
+        script.onload = function () { initMap(); };
+        document.body.appendChild(script);
+      }
+    }, { rootMargin: '200px' });
+    mapObserver.observe(mapEl);
+  }
+
+  function initMap() {
   var mapEl = document.getElementById('zone-map');
   if (mapEl && typeof L !== 'undefined') {
     var map = L.map('zone-map', {
@@ -494,6 +517,7 @@
         dashArray: '4 6'
       }).addTo(map);
     });
+  }
   }
 
   // ============================================
