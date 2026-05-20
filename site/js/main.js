@@ -97,18 +97,14 @@
   if (!prefersReducedMotion) {
     var heroImg = document.querySelector('.hero__bg img');
     if (heroImg) {
-      var parallaxStarted = false;
       var ticking = false;
       window.addEventListener('scroll', function () {
         if (!ticking) {
           requestAnimationFrame(function () {
             var scrollY = window.scrollY;
-            if (scrollY > 5 && !parallaxStarted) {
-              heroImg.style.animation = 'none';
-              parallaxStarted = true;
-            }
             if (scrollY < window.innerHeight) {
-              heroImg.style.transform = 'scale(' + (1.02 + scrollY * 0.0003) + ') translateY(' + (scrollY * 0.25) + 'px)';
+              heroImg.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
+              heroImg.style.animationPlayState = scrollY > 10 ? 'paused' : 'running';
             }
             ticking = false;
           });
