@@ -473,6 +473,7 @@ strong {
   height: 100%;
   object-fit: cover;
   object-position: 55% 24%;
+  filter: brightness(150%) contrast(90%) saturate(110%);
   animation: kenBurns 20s ease-in-out infinite alternate;
   will-change: transform;
 }
