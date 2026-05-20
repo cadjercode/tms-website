@@ -91,8 +91,35 @@
   // ============================================
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // ============================================
+  // 4a. HERO PARALLAX
+  // ============================================
   if (!prefersReducedMotion) {
-    var revealElements = document.querySelectorAll('.reveal, .reveal-left');
+    var heroImg = document.querySelector('.hero__bg img');
+    if (heroImg) {
+      var parallaxStarted = false;
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            var scrollY = window.scrollY;
+            if (scrollY > 5 && !parallaxStarted) {
+              heroImg.style.animation = 'none';
+              parallaxStarted = true;
+            }
+            if (scrollY < window.innerHeight) {
+              heroImg.style.transform = 'scale(' + (1.02 + scrollY * 0.0003) + ') translateY(' + (scrollY * 0.25) + 'px)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+  }
+
+  if (!prefersReducedMotion) {
+    var revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
 
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -110,7 +137,7 @@
       revealObserver.observe(el);
     });
   } else {
-    document.querySelectorAll('.reveal, .reveal-left').forEach(function (el) {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(function (el) {
       el.classList.add('visible');
     });
   }

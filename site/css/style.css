@@ -473,17 +473,31 @@ strong {
   height: 100%;
   object-fit: cover;
   object-position: 55% 24%;
+  animation: kenBurns 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes kenBurns {
+  0%   { transform: scale(1)   translate(0, 0); }
+  50%  { transform: scale(1.08) translate(-1%, -1%); }
+  100% { transform: scale(1.05) translate(1%, 0.5%); }
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(27,42,61,0.75) 0%,
-    rgba(27,42,61,0.5) 50%,
-    rgba(27,42,61,0.2) 100%
-  );
+  background:
+    linear-gradient(
+      135deg,
+      rgba(27,42,61,0.7) 0%,
+      rgba(27,42,61,0.4) 50%,
+      rgba(27,42,61,0.15) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(27,42,61,0.6) 0%,
+      transparent 40%
+    );
 }
 
 .hero__content {
@@ -494,6 +508,27 @@ strong {
   margin: 0 auto;
   width: 100%;
   text-align: center;
+}
+
+.js-ready .hero h1,
+.js-ready .hero__subtitle,
+.js-ready .hero__ctas,
+.js-ready .hero__bottom-bar {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: heroReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.js-ready .hero h1             { animation-delay: 0.3s; }
+.js-ready .hero__subtitle      { animation-delay: 0.6s; }
+.js-ready .hero__ctas          { animation-delay: 0.9s; }
+.js-ready .hero__bottom-bar    { animation-delay: 1.2s; }
+
+@keyframes heroReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero h1 {
@@ -1842,30 +1877,49 @@ section.faq .faq-toggle-wrap {
 
 .js-ready .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  filter: blur(4px);
 }
 
 .js-ready .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
 .js-ready .reveal-left {
   opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  filter: blur(4px);
 }
 
 .js-ready .reveal-left.visible {
   opacity: 1;
   transform: translateX(0);
+  filter: blur(0);
+}
+
+.js-ready .reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  filter: blur(4px);
+}
+
+.js-ready .reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
 }
 
 .js-ready .reveal-delay-1 { transition-delay: 0.1s; }
 .js-ready .reveal-delay-2 { transition-delay: 0.2s; }
 .js-ready .reveal-delay-3 { transition-delay: 0.3s; }
 .js-ready .reveal-delay-4 { transition-delay: 0.4s; }
+.js-ready .reveal-delay-5 { transition-delay: 0.5s; }
+.js-ready .reveal-delay-6 { transition-delay: 0.6s; }
 
 /* ============================================
    17. MEDIA QUERIES
@@ -2070,7 +2124,17 @@ section.faq .faq-toggle-wrap {
   }
 
   .reveal,
-  .reveal-left {
+  .reveal-left,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .hero h1,
+  .hero__subtitle,
+  .hero__ctas,
+  .hero__bottom-bar {
     opacity: 1;
     transform: none;
   }
