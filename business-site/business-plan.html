@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Plan — MonProEnLigne</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#4F46E5;--primary-light:#6366F1;--primary-bg:#EEF2FF;
+  --success:#10B981;--success-bg:#ECFDF5;
+  --danger:#EF4444;--danger-bg:#FEF2F2;
+  --warning:#F59E0B;--warning-bg:#FFFBEB;
+  --gray-50:#F9FAFB;--gray-100:#F3F4F6;--gray-200:#E5E7EB;--gray-300:#D1D5DB;
+  --gray-400:#9CA3AF;--gray-500:#6B7280;--gray-600:#4B5563;--gray-700:#374151;
+  --gray-800:#1F2937;--gray-900:#111827;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--gray-800);background:#fff;line-height:1.6}
+
+/* ── Layout ── */
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* ── Header ── */
+.site-header{background:linear-gradient(135deg,var(--primary) 0%,#7C3AED 100%);color:#fff;padding:48px 0 40px;position:relative;overflow:hidden}
+.site-header::after{content:'';position:absolute;top:0;right:0;width:400px;height:100%;background:radial-gradient(circle at 80% 50%,rgba(255,255,255,.08) 0%,transparent 70%)}
+.header-brand{font-size:.9rem;font-weight:500;opacity:.85;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.header-title{font-size:2.4rem;font-weight:800;line-height:1.15;margin-bottom:12px}
+.header-tagline{font-size:1.1rem;opacity:.9;max-width:600px;margin-bottom:24px}
+.header-meta{display:flex;gap:24px;flex-wrap:wrap;font-size:.85rem;opacity:.8}
+.header-meta span{display:flex;align-items:center;gap:6px}
+
+/* ── TOC ── */
+.toc{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px 28px;margin:32px auto;max-width:1100px}
+.toc h2{font-size:1rem;font-weight:700;color:var(--gray-700);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 24px}
+.toc a{color:var(--primary);text-decoration:none;font-size:.92rem;font-weight:500;padding:4px 0;display:block;transition:color .15s}
+.toc a:hover{color:var(--primary-light);text-decoration:underline}
+.toc a .toc-num{color:var(--gray-400);margin-right:6px;font-weight:600}
+
+/* ── Sections ── */
+section{padding:48px 0;border-bottom:1px solid var(--gray-100)}
+section:last-of-type{border-bottom:none}
+.section-number{font-size:.8rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.section-title{font-size:1.75rem;font-weight:800;color:var(--gray-900);margin-bottom:16px}
+.section-intro{color:var(--gray-600);font-size:1rem;max-width:800px;margin-bottom:28px;line-height:1.7}
+
+/* ── Cards ── */
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card-grid{display:grid;gap:20px}
+.card-grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card-grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card-grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+/* ── KPI ── */
+.kpi{text-align:center;padding:20px 16px}
+.kpi-value{font-size:2rem;font-weight:800;color:var(--primary);line-height:1.1}
+.kpi-value.success{color:var(--success)}
+.kpi-value.danger{color:var(--danger)}
+.kpi-value.warning{color:var(--warning)}
+.kpi-label{font-size:.82rem;color:var(--gray-500);margin-top:6px;font-weight:500}
+
+/* ── Tables ── */
+.table-wrap{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200)}
+th{background:var(--gray-50);font-weight:600;color:var(--gray-700);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px}
+td{color:var(--gray-600)}
+tr.highlight td{background:var(--primary-bg);font-weight:600;color:var(--primary)}
+
+/* ── Charts ── */
+.chart-container{position:relative;margin:20px 0;max-height:400px}
+.chart-container canvas{max-height:400px}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+
+/* ── Inputs ── */
+.inputs-panel{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;margin-bottom:28px}
+.inputs-panel h3{font-size:1rem;font-weight:700;color:var(--gray-700);margin-bottom:16px}
+.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.input-group{display:flex;flex-direction:column;gap:4px}
+.input-group label{font-size:.8rem;font-weight:600;color:var(--gray-600)}
+.input-group input,.input-group select{padding:8px 12px;border:1px solid var(--gray-300);border-radius:var(--radius-sm);font-size:.9rem;font-family:inherit;transition:border-color .15s}
+.input-group input:focus,.input-group select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+.input-group .unit{font-size:.75rem;color:var(--gray-400);margin-top:2px}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius-sm);font-size:.88rem;font-weight:600;border:none;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-light)}
+.btn-outline{background:transparent;color:var(--gray-600);border:1px solid var(--gray-300)}
+.btn-outline:hover{background:var(--gray-50);border-color:var(--gray-400)}
+
+/* ── Funnel ── */
+.funnel{display:flex;flex-direction:column;align-items:center;gap:0;margin:24px 0}
+.funnel-step{display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-weight:600;color:#fff;font-size:.9rem;position:relative;transition:all .3s}
+.funnel-step .funnel-count{font-size:1.3rem;font-weight:800;display:block}
+.funnel-step .funnel-label{font-size:.78rem;font-weight:500;opacity:.9}
+.funnel-arrow{color:var(--gray-300);font-size:1.2rem;margin:2px 0}
+
+/* ── Timeline ── */
+.timeline{position:relative;padding:20px 0 20px 32px;margin:24px 0}
+.timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--primary),var(--success));border-radius:2px}
+.timeline-item{position:relative;margin-bottom:28px}
+.timeline-item::before{content:'';position:absolute;left:-26px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--primary);border:3px solid #fff;box-shadow:var(--shadow)}
+.timeline-item.active::before{background:var(--success)}
+.timeline-period{font-size:.78rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.timeline-title{font-size:1.05rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.timeline-desc{font-size:.88rem;color:var(--gray-500);line-height:1.5}
+
+/* ── Risk Matrix ── */
+.risk-matrix{position:relative;width:100%;max-width:500px;aspect-ratio:1;margin:24px auto;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius)}
+.risk-dot{position:absolute;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;transition:transform .2s;z-index:2}
+.risk-dot:hover{transform:translate(-50%,-50%) scale(1.6)}
+.risk-axis-label{position:absolute;font-size:.75rem;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px}
+
+/* ── Highlight boxes ── */
+.highlight-box{padding:20px 24px;border-radius:var(--radius-sm);margin:16px 0;border-left:4px solid}
+.highlight-box.info{background:var(--primary-bg);border-color:var(--primary);color:#3730A3}
+.highlight-box.success{background:var(--success-bg);border-color:var(--success);color:#065F46}
+.highlight-box.warning{background:var(--warning-bg);border-color:var(--warning);color:#92400E}
+.highlight-box.danger{background:var(--danger-bg);border-color:var(--danger);color:#991B1B}
+
+/* ── Footer ── */
+.site-footer{background:var(--gray-900);color:var(--gray-400);padding:32px 0;text-align:center;font-size:.85rem}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .header-title{font-size:1.6rem}
+  .section-title{font-size:1.35rem}
+  .chart-row{grid-template-columns:1fr}
+  .input-grid{grid-template-columns:1fr 1fr}
+  .card-grid-2,.card-grid-3,.card-grid-4{grid-template-columns:1fr}
+  .kpi-value{font-size:1.5rem}
+  .toc-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .input-grid{grid-template-columns:1fr}
+  .header-meta{flex-direction:column;gap:8px}
+}
+
+/* ── Print ── */
+@media print{
+  body{font-size:11pt}
+  .site-header{background:var(--primary) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{page-break-inside:avoid;padding:24px 0}
+  .inputs-panel{background:var(--gray-50) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .btn{display:none}
+  .chart-container{max-height:320px}
+  canvas{max-width:100% !important;max-height:300px !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════ HEADER ════════════════════════════════════════ -->
+<header class="site-header">
+<div class="container">
+  <div class="header-brand">Business Plan 2026</div>
+  <h1 class="header-title">MonProEnLigne</h1>
+  <p class="header-tagline">Vos clients vous cherchent sur Google. On fait en sorte qu'ils vous trouvent.</p>
+  <div class="header-meta">
+    <span>📍 Tarn → Occitanie → France</span>
+    <span>🔧 Auto-entrepreneur (cumul salarié)</span>
+    <span>📅 Dernière mise à jour : mai 2026</span>
+  </div>
+</div>
+</header>
+
+<!-- ════════════════════════════════════════ TOC ════════════════════════════════════════ -->
+<nav class="toc container" aria-label="Sommaire">
+<h2>Sommaire</h2>
+<div class="toc-grid">
+  <a href="#resume"><span class="toc-num">01</span> Résumé Exécutif</a>
+  <a href="#marche"><span class="toc-num">02</span> Analyse de Marché</a>
+  <a href="#valeur"><span class="toc-num">03</span> Proposition de Valeur</a>
+  <a href="#modele"><span class="toc-num">04</span> Modèle Économique</a>
+  <a href="#projections"><span class="toc-num">05</span> Projections Financières</a>
+  <a href="#acquisition"><span class="toc-num">06</span> Stratégie d'Acquisition</a>
+  <a href="#plan-action"><span class="toc-num">07</span> Plan d'Action</a>
+  <a href="#risques"><span class="toc-num">08</span> Analyse des Risques</a>
+</div>
+</nav>
+
+<main class="container">
+
+<!-- ════════════════════════════════════════ 1. RÉSUMÉ ════════════════════════════════════════ -->
+<section id="resume">
+<div class="section-number">Section 01</div>
+<h2 class="section-title">Résumé Exécutif</h2>
+<div class="section-intro">
+  <p>Je lance <strong>MonProEnLigne</strong>, un service de création de sites web clé-en-main pour les artisans et TPE qui n'ont pas le temps, les compétences ou le budget pour se doter d'une présence en ligne professionnelle. En France, plus de 780 000 entreprises artisanales n'ont toujours pas de site internet digne de ce nom — c'est un marché massif et sous-exploité.</p>
+  <p style="margin-top:12px">Mon modèle repose sur deux piliers : une <strong>création accessible</strong> (490 à 990 €) grâce à des templates optimisés et un processus rodé, et des <strong>abonnements mensuels</strong> (39 à 149 €/mois) qui assurent la maintenance, le SEO local, et la génération de leads. Chaque client devient un revenu récurrent. L'objectif : atteindre 50 clients actifs et un MRR de 3 000 €+ en 18 mois, tout en conservant mon emploi salarié.</p>
+</div>
+
+<div class="card-grid card-grid-4" style="margin-top:24px">
+  <div class="card kpi">
+    <div class="kpi-value">490–990 €</div>
+    <div class="kpi-label">Création de site</div>
+  </div>
+  <div class="card kpi">
+    <div class="kpi-value">39–149 €</div>
+    <div class="kpi-label">Abonnement /mois</div>
+  </div>
+  <div class="card kpi">
+    <div class="kpi-value success">64 %</div>
+    <div class="kpi-label">Taux net après charges</div>
+  </div>
+  <div class="card kpi">
+    <div class="kpi-value warning">36 800 €</div>
+    <div class="kpi-label">Seuil TVA</div>
+  </div>
+</div>
+
+<div class="highlight-box info" style="margin-top:24px">
+  <strong>Statut juridique :</strong> Auto-entrepreneur (micro-entreprise, BIC prestation de services), en cumul avec une activité salariée. Charges sociales URSSAF 21,1 % + IR estimé ~15 % (tranche à 30 % avec abattement 50 %), soit environ <strong>36 % de charges totales</strong> et <strong>64 % de revenu net</strong>.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 2. MARCHÉ ════════════════════════════════════════ -->
+<section id="marche">
+<div class="section-number">Section 02</div>
+<h2 class="section-title">Analyse de Marché</h2>
+<div class="section-intro">
+  <p>Le marché de la création de sites pour artisans est en pleine expansion. La digitalisation post-Covid a accéléré le besoin : les clients particuliers recherchent désormais systématiquement en ligne avant de faire appel à un professionnel. Pourtant, environ <strong>60 % des artisans</strong> en France n'ont toujours pas de site web professionnel — ou possèdent un site obsolète, non responsive, mal référencé.</p>
+  <p style="margin-top:12px">L'Occitanie compte plus de 160 000 entreprises artisanales. En ciblant d'abord le Tarn (mon réseau local, ma référence TMS), puis en élargissant à la région, le potentiel est considérable.</p>
+</div>
+
+<div class="chart-row">
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">TAM / SAM / SOM</h3>
+    <div class="chart-container" style="max-height:300px;display:flex;justify-content:center">
+      <canvas id="chartTAM"></canvas>
+    </div>
+    <div style="margin-top:12px;font-size:.82rem;color:var(--gray-500)">
+      <strong>TAM</strong> (Total) : 1,3 M artisans France &bull;
+      <strong>SAM</strong> (Serviceable) : ~100 000 artisans Occitanie sans site &bull;
+      <strong>SOM</strong> (Obtainable) : 50–100 clients en 2 ans
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Tendance du marché</h3>
+    <div class="chart-container" style="max-height:300px">
+      <canvas id="chartTrend"></canvas>
+    </div>
+    <div style="margin-top:12px;font-size:.82rem;color:var(--gray-500)">
+      Recherches "artisan site internet" en hausse constante depuis 2020. La demande est structurelle, pas conjoncturelle.
+    </div>
+  </div>
+</div>
+
+<div class="card-grid card-grid-3" style="margin-top:20px">
+  <div class="card">
+    <div style="font-size:2rem;font-weight:800;color:var(--primary)">1,3 M</div>
+    <div style="font-size:.9rem;color:var(--gray-600);margin-top:4px">Entreprises artisanales en France</div>
+    <div style="font-size:.82rem;color:var(--gray-400);margin-top:8px">BTP, alimentation, services, production — dont ~400 000 dans le BTP seul</div>
+  </div>
+  <div class="card">
+    <div style="font-size:2rem;font-weight:800;color:var(--danger)">~60 %</div>
+    <div style="font-size:.9rem;color:var(--gray-600);margin-top:4px">N'ont pas de site web professionnel</div>
+    <div style="font-size:.82rem;color:var(--gray-400);margin-top:8px">Ou possèdent un site obsolète, non responsive, sans SEO — invisible sur Google</div>
+  </div>
+  <div class="card">
+    <div style="font-size:2rem;font-weight:800;color:var(--success)">97 %</div>
+    <div style="font-size:.9rem;color:var(--gray-600);margin-top:4px">Des consommateurs cherchent en ligne</div>
+    <div style="font-size:.82rem;color:var(--gray-400);margin-top:8px">Avant de contacter un artisan local. Pas de site = pas de client.</div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 3. VALEUR ════════════════════════════════════════ -->
+<section id="valeur">
+<div class="section-number">Section 03</div>
+<h2 class="section-title">Proposition de Valeur</h2>
+<div class="section-intro">
+  <p>MonProEnLigne se positionne entre le "fait maison" (Wix, WordPress bricolé) et les agences premium inaccessibles pour un artisan. Je propose un <strong>site professionnel livré en 48–72h</strong>, optimisé SEO local dès le départ, avec un accompagnement humain et des outils d'automatisation (relance avis Google, suivi leads) que les concurrents low-cost ne proposent pas.</p>
+  <p style="margin-top:12px">Mon avantage décisif : je suis moi-même créateur du site de TMS (mon premier client), je connais le métier artisan, je parle leur langage, et je maîtrise le SEO local au point d'avoir inscrit TMS sur 10 plateformes d'annuaires en une session.</p>
+</div>
+
+<!-- Tableau comparatif -->
+<div class="card" style="margin-bottom:24px">
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Comparatif concurrentiel</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th></th><th>MonProEnLigne</th><th>SiteArtisan</th><th>Simplebo</th><th>DIY (Wix)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Création</strong></td><td class="highlight td">490–990 €</td><td>0 €</td><td>400–1 800 €</td><td>0 € (temps)</td></tr>
+        <tr class="highlight"><td><strong>Abonnement</strong></td><td>39–149 €/mois</td><td>29 €/mois</td><td>60–240 € HT/mois</td><td>15–30 €/mois</td></tr>
+        <tr><td><strong>Engagement</strong></td><td>Sans engagement</td><td>12 mois</td><td>48 mois</td><td>Annuel</td></tr>
+        <tr><td><strong>SEO local</strong></td><td>Inclus (Turbo+)</td><td>Basique</td><td>Option payante</td><td>À faire soi-même</td></tr>
+        <tr><td><strong>Google Business</strong></td><td>99 € (ou inclus)</td><td>Non proposé</td><td>Option</td><td>À faire soi-même</td></tr>
+        <tr><td><strong>Automatisations</strong></td><td>n8n (relance, leads)</td><td>Non</td><td>Non</td><td>Non</td></tr>
+        <tr><td><strong>Qualité design</strong></td><td>Sur-mesure</td><td>Template</td><td>Correct</td><td>Variable</td></tr>
+        <tr><td><strong>Interlocuteur</strong></td><td>Humain dédié</td><td>Support ticket</td><td>Support</td><td>Aucun</td></tr>
+        <tr><td><strong>Délai livraison</strong></td><td>48–72h</td><td>24h</td><td>2–4 semaines</td><td>Illimité</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Radar -->
+<div class="card">
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Positionnement radar</h3>
+  <div class="chart-container" style="max-height:350px;max-width:500px;margin:0 auto">
+    <canvas id="chartRadar"></canvas>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 4. MODÈLE ÉCONOMIQUE ════════════════════════════════════════ -->
+<section id="modele">
+<div class="section-number">Section 04</div>
+<h2 class="section-title">Modèle Économique</h2>
+<div class="section-intro">
+  <p>Mon modèle combine deux flux de revenus complémentaires. La <strong>création de site</strong> génère un revenu ponctuel qui couvre le coût d'acquisition du client et dégage une marge immédiate. Les <strong>abonnements mensuels</strong> construisent un revenu récurrent (MRR) qui, mois après mois, devient le vrai moteur de l'activité.</p>
+  <p style="margin-top:12px">L'objectif est clair : chaque client doit rapporter en moyenne <strong>650 € à la création + 65 €/mois en récurrent</strong>. Avec une durée de vie moyenne estimée à 18 mois (avant churn), la <strong>LTV par client atteint environ 1 820 €</strong>.</p>
+</div>
+
+<!-- Tarifs détaillés -->
+<div class="card-grid card-grid-2" style="margin-bottom:24px">
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Packs Création</h3>
+    <table>
+      <thead><tr><th>Pack</th><th>Prix</th><th>Contenu</th></tr></thead>
+      <tbody>
+        <tr><td><strong>STARTER</strong></td><td>490 €</td><td>Site one-page, responsive, SEO de base</td></tr>
+        <tr><td><strong>PRO</strong></td><td>690 €</td><td>Multi-pages, galerie, formulaire avancé</td></tr>
+        <tr><td><strong>FULL IMPACT</strong></td><td>990 €</td><td>Pro + shooting photo, vidéo, branding</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Abonnements Mensuels</h3>
+    <table>
+      <thead><tr><th>Formule</th><th>Prix</th><th>Inclus</th></tr></thead>
+      <tbody>
+        <tr><td><strong>PILOTE AUTO</strong></td><td>39 €/mois</td><td>Hébergement, maintenance, support</td></tr>
+        <tr><td><strong>TURBO LOCAL</strong></td><td>69 €/mois</td><td>+ SEO local, Google Business, rapports</td></tr>
+        <tr><td><strong>MACHINE À LEADS</strong></td><td>149 €/mois</td><td>+ Automatisations n8n, relance avis, leads</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Revenu moyen par client</h3>
+    <div class="chart-container" style="max-height:300px">
+      <canvas id="chartRevClient"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Création vs Récurrent (24 mois)</h3>
+    <div class="chart-container" style="max-height:300px">
+      <canvas id="chartMixRevenu"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="highlight-box success" style="margin-top:16px">
+  <strong>LTV Client :</strong> Avec un abonnement moyen de 65 €/mois, une durée moyenne de 18 mois et une création moyenne de 650 €, la valeur vie client est d'environ <strong>1 820 €</strong>. Pour un coût d'acquisition estimé à 50–100 €, le ratio LTV/CAC est excellent (18–36x).
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 5. PROJECTIONS ════════════════════════════════════════ -->
+<section id="projections">
+<div class="section-number">Section 05</div>
+<h2 class="section-title">Projections Financières</h2>
+<div class="section-intro">
+  <p>C'est le coeur du business plan. Les projections ci-dessous sont entièrement interactives : modifiez les hypothèses pour voir en temps réel l'impact sur le chiffre d'affaires, les charges, le bénéfice net et la trésorerie. Les valeurs par défaut correspondent à un scénario réaliste et conservateur.</p>
+</div>
+
+<!-- Inputs -->
+<div class="inputs-panel">
+  <h3>Hypothèses modifiables</h3>
+  <div class="input-grid">
+    <div class="input-group">
+      <label for="inp-clients-m1">Nouveaux clients/mois (M1–M6)</label>
+      <input type="number" id="inp-clients-m1" value="3" min="0" max="50" step="1">
+    </div>
+    <div class="input-group">
+      <label for="inp-clients-m7">Nouveaux clients/mois (M7–M12)</label>
+      <input type="number" id="inp-clients-m7" value="5" min="0" max="50" step="1">
+    </div>
+    <div class="input-group">
+      <label for="inp-clients-m13">Nouveaux clients/mois (M13–M24)</label>
+      <input type="number" id="inp-clients-m13" value="8" min="0" max="50" step="1">
+    </div>
+    <div class="input-group">
+      <label for="inp-churn">Taux de churn mensuel (%)</label>
+      <input type="number" id="inp-churn" value="5" min="0" max="30" step="0.5">
+      <div class="unit">% des abonnés existants qui partent chaque mois</div>
+    </div>
+    <div class="input-group">
+      <label for="inp-pct-starter">% clients Starter (490 €)</label>
+      <input type="number" id="inp-pct-starter" value="40" min="0" max="100" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-pct-pro">% clients Pro (690 €)</label>
+      <input type="number" id="inp-pct-pro" value="40" min="0" max="100" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-pct-full">% clients Full Impact (990 €)</label>
+      <input type="number" id="inp-pct-full" value="20" min="0" max="100" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-pct-abo-pilote">% abo Pilote Auto (39 €)</label>
+      <input type="number" id="inp-pct-abo-pilote" value="50" min="0" max="100" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-pct-abo-turbo">% abo Turbo Local (69 €)</label>
+      <input type="number" id="inp-pct-abo-turbo" value="35" min="0" max="100" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-pct-abo-machine">% abo Machine à Leads (149 €)</label>
+      <input type="number" id="inp-pct-abo-machine" value="15" min="0" max="100" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-cout-hebergement">Coût hébergement/client (€/mois)</label>
+      <input type="number" id="inp-cout-hebergement" value="5" min="0" max="50" step="1">
+    </div>
+    <div class="input-group">
+      <label for="inp-cout-fixe">Coûts fixes mensuels (€)</label>
+      <input type="number" id="inp-cout-fixe" value="50" min="0" max="500" step="10">
+      <div class="unit">VPS n8n (20€) + outils (30€)</div>
+    </div>
+    <div class="input-group">
+      <label for="inp-temps-site">Temps production/site (heures)</label>
+      <input type="number" id="inp-temps-site" value="2" min="0.5" max="10" step="0.5">
+    </div>
+    <div class="input-group">
+      <label for="inp-taux-horaire">Valorisation horaire (€/h)</label>
+      <input type="number" id="inp-taux-horaire" value="50" min="10" max="200" step="5">
+    </div>
+    <div class="input-group">
+      <label for="inp-charges">Taux charges totales (%)</label>
+      <input type="number" id="inp-charges" value="36" min="0" max="60" step="1">
+      <div class="unit">URSSAF 21,1% + IR ~15%</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn btn-outline" onclick="resetDefaults()">↺ Réinitialiser les valeurs</button>
+  </div>
+</div>
+
+<!-- KPI dynamiques -->
+<div class="card-grid card-grid-4" id="projKPIs" style="margin-bottom:24px">
+  <div class="card kpi"><div class="kpi-value" id="kpi-breakeven">—</div><div class="kpi-label">Mois de breakeven</div></div>
+  <div class="card kpi"><div class="kpi-value success" id="kpi-mrr12">—</div><div class="kpi-label">MRR à 12 mois</div></div>
+  <div class="card kpi"><div class="kpi-value" id="kpi-ca-an1">—</div><div class="kpi-label">CA Année 1</div></div>
+  <div class="card kpi"><div class="kpi-value success" id="kpi-net-an1">—</div><div class="kpi-label">Revenu net Année 1</div></div>
+</div>
+
+<div class="card-grid card-grid-4" style="margin-bottom:24px">
+  <div class="card kpi"><div class="kpi-value" id="kpi-clients12">—</div><div class="kpi-label">Clients actifs M12</div></div>
+  <div class="card kpi"><div class="kpi-value" id="kpi-clients24">—</div><div class="kpi-label">Clients actifs M24</div></div>
+  <div class="card kpi"><div class="kpi-value success" id="kpi-ca-an2">—</div><div class="kpi-label">CA Année 2</div></div>
+  <div class="card kpi"><div class="kpi-value success" id="kpi-net-an2">—</div><div class="kpi-label">Revenu net Année 2</div></div>
+</div>
+
+<!-- Charts -->
+<div class="chart-row">
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">CA Mensuel (Création + MRR)</h3>
+    <div class="chart-container"><canvas id="chartCA"></canvas></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Revenus vs Charges vs Bénéfice Net</h3>
+    <div class="chart-container"><canvas id="chartPnL"></canvas></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px">
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Trésorerie Cumulée</h3>
+  <div class="chart-container"><canvas id="chartTreso"></canvas></div>
+</div>
+
+<div class="highlight-box warning" style="margin-top:16px">
+  <strong>Note TVA :</strong> Ces projections sont en net de charges sociales et IR, mais ne tiennent pas compte de la TVA. En dessous de 36 800 € de CA annuel, la franchise en base de TVA s'applique (pas de TVA facturée ni déductible). Au-delà, il faudra facturer la TVA et adapter les prix TTC en conséquence.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 6. ACQUISITION ════════════════════════════════════════ -->
+<section id="acquisition">
+<div class="section-number">Section 06</div>
+<h2 class="section-title">Stratégie d'Acquisition</h2>
+<div class="section-intro">
+  <p>Trouver mes premiers clients est le défi numéro un. Ma stratégie repose sur un mix de canaux à faible coût, adaptés au marché local des artisans. Le démarchage terrain et le bouche-à-oreille seront les moteurs principaux au démarrage, avant que le SEO et les partenariats ne prennent le relais.</p>
+</div>
+
+<!-- Funnel -->
+<div class="card" style="margin-bottom:24px">
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Funnel de conversion (mensuel estimé)</h3>
+  <div class="funnel" id="funnelViz">
+    <div class="funnel-step" style="width:90%;background:var(--primary);border-radius:8px 8px 0 0">
+      <div><span class="funnel-count" id="funnel-prospects">50</span><span class="funnel-label">Prospects contactés</span></div>
+    </div>
+    <div class="funnel-step" style="width:70%;background:var(--primary-light)">
+      <div><span class="funnel-count" id="funnel-interesses">15</span><span class="funnel-label">Intéressés (30%)</span></div>
+    </div>
+    <div class="funnel-step" style="width:50%;background:#8B5CF6">
+      <div><span class="funnel-count" id="funnel-devis">8</span><span class="funnel-label">Demandent un devis (50%)</span></div>
+    </div>
+    <div class="funnel-step" style="width:35%;background:var(--success);border-radius:0 0 8px 8px">
+      <div><span class="funnel-count" id="funnel-signes">5</span><span class="funnel-label">Signent (60%)</span></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:12px;font-size:.85rem;color:var(--gray-500)">
+    Taux de conversion global : <strong>10 %</strong> (du premier contact à la signature)
+  </div>
+</div>
+
+<!-- Canaux -->
+<div class="card-grid card-grid-2">
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px;color:var(--gray-700)">Canaux d'acquisition</h3>
+    <table>
+      <thead><tr><th>Canal</th><th>Phase</th><th>CAC estimé</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Démarchage terrain</strong><br><span style="font-size:.8rem;color:var(--gray-400)">Porte-à-porte, zones artisanales</span></td><td>M1–M6</td><td>~30 € <span style="font-size:.8rem;color:var(--gray-400)">(temps)</span></td></tr>
+        <tr><td><strong>Bouche-à-oreille / Parrainage</strong><br><span style="font-size:.8rem;color:var(--gray-400)">Clients satisfaits, réseau TMS</span></td><td>M3+</td><td>~0 €</td></tr>
+        <tr><td><strong>SEO monproenligne.fr</strong><br><span style="font-size:.8rem;color:var(--gray-400)">Blog, landing pages métiers</span></td><td>M4+</td><td>~10 € <span style="font-size:.8rem;color:var(--gray-400)">(temps)</span></td></tr>
+        <tr><td><strong>Partenariats CAPEB / CMA</strong><br><span style="font-size:.8rem;color:var(--gray-400)">Chambre des métiers, syndicats</span></td><td>M6+</td><td>~20 €</td></tr>
+        <tr><td><strong>Google Ads (SEA)</strong><br><span style="font-size:.8rem;color:var(--gray-400)">Budget limité, ciblé local</span></td><td>M6+</td><td>~80 €</td></tr>
+        <tr><td><strong>Réseaux sociaux</strong><br><span style="font-size:.8rem;color:var(--gray-400)">Facebook groupes artisans, LinkedIn</span></td><td>M2+</td><td>~15 €</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:12px;color:var(--gray-700)">Coût d'acquisition client (CAC)</h3>
+    <div class="chart-container" style="max-height:280px">
+      <canvas id="chartCAC"></canvas>
+    </div>
+    <div class="highlight-box success" style="margin-top:12px">
+      <strong>CAC moyen pondéré :</strong> ~50 €/client<br>
+      <strong>Ratio LTV/CAC :</strong> 1 820 € / 50 € = <strong>36x</strong> — largement au-dessus du seuil de viabilité (3x minimum).
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 7. PLAN D'ACTION ════════════════════════════════════════ -->
+<section id="plan-action">
+<div class="section-number">Section 07</div>
+<h2 class="section-title">Plan d'Action — 12 Premiers Mois</h2>
+<div class="section-intro">
+  <p>Le plan d'action est séquencé en 4 phases. La première phase est critique : elle pose les fondations techniques et administratives. Les phases suivantes se concentrent sur l'acquisition de clients et l'optimisation des processus. L'idée est de rester lean — pas de dépenses inutiles, pas d'embauche prématurée.</p>
+</div>
+
+<!-- Gantt simplifié -->
+<div class="card" style="margin-bottom:24px">
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Timeline Gantt</h3>
+  <div class="chart-container" style="max-height:250px">
+    <canvas id="chartGantt"></canvas>
+  </div>
+</div>
+
+<!-- Timeline détaillée -->
+<div class="timeline">
+  <div class="timeline-item active">
+    <div class="timeline-period">Mois 1–2 : Setup</div>
+    <div class="timeline-title">Fondations</div>
+    <div class="timeline-desc">
+      Inscription auto-entrepreneur (URSSAF). Achat domaine monproenligne.fr. Création de la landing page / site vitrine de l'offre. Développement de 3 templates de sites artisans (BTP, services, alimentation). Mise en place des workflows n8n (onboarding client, relance avis, envoi rapports). Configuration Airtable CRM. Rédaction des CGV et mentions légales. TMS comme site de référence / portfolio.
+    </div>
+  </div>
+  <div class="timeline-item active">
+    <div class="timeline-period">Mois 3–4 : Premiers clients</div>
+    <div class="timeline-title">Validation du marché</div>
+    <div class="timeline-desc">
+      Démarchage terrain dans le Tarn (zones artisanales Castres, Mazamet, Albi). Utilisation du réseau Vincent Padilla / TMS pour le bouche-à-oreille. Objectif : 5 à 10 premiers clients. Ajustement des prix et du discours commercial en fonction des retours. Création des premiers cas clients (avant/après).
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-period">Mois 5–8 : Croissance</div>
+    <div class="timeline-title">Process rodé, volume croissant</div>
+    <div class="timeline-desc">
+      SEO du site MonProEnLigne (blog articles : "pourquoi un artisan doit avoir un site", "SEO local pour plombier"…). Lancement parrainage clients (1 mois offert pour chaque filleul). Prise de contact CAPEB / CMA Tarn pour partenariat. Début Google Ads (budget 100–200 €/mois). Objectif : 20–30 clients actifs.
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-period">Mois 9–12 : Scale</div>
+    <div class="timeline-title">Passage à l'échelle</div>
+    <div class="timeline-desc">
+      Si la charge le permet : recrutement d'un freelance pour la production de sites. Extension géographique : Haute-Garonne, Hérault, Aude. Développement de nouveaux packs (e-commerce artisan, réservation en ligne). Objectif : 40–50 clients actifs, MRR stabilisé. Évaluation passage en société (EURL/SASU) si seuil TVA atteint.
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════ 8. RISQUES ════════════════════════════════════════ -->
+<section id="risques">
+<div class="section-number">Section 08</div>
+<h2 class="section-title">Analyse des Risques</h2>
+<div class="section-intro">
+  <p>Tout business comporte des risques. L'important n'est pas de les éviter mais de les identifier, les quantifier, et préparer des réponses. Voici les principaux risques identifiés, positionnés selon leur probabilité et leur impact potentiel.</p>
+</div>
+
+<div class="chart-row">
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Matrice Risques (Probabilité x Impact)</h3>
+    <div class="chart-container" style="max-height:350px">
+      <canvas id="chartRisks"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--gray-700)">Détail et mitigation</h3>
+    <div class="table-wrap">
+      <table style="font-size:.82rem">
+        <thead><tr><th>Risque</th><th>P</th><th>I</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--warning)"><strong>Churn élevé</strong></td><td>Moy.</td><td>Fort</td><td>Résultats SEO mesurables, engagement humain, rapports mensuels</td></tr>
+          <tr><td style="color:var(--danger)"><strong>Concurrence prix</strong></td><td>Fort</td><td>Moy.</td><td>Différenciation par le service et l'automatisation, pas la course au prix</td></tr>
+          <tr><td style="color:var(--warning)"><strong>Surcharge travail</strong></td><td>Moy.</td><td>Moy.</td><td>Templates + workflows = production rapide ; freelance en backup</td></tr>
+          <tr><td style="color:var(--gray-500)"><strong>Problème technique</strong></td><td>Faible</td><td>Fort</td><td>Backups automatiques, monitoring uptime, hébergeur fiable</td></tr>
+          <tr><td style="color:var(--gray-500)"><strong>Difficulté acquisition</strong></td><td>Moy.</td><td>Fort</td><td>Multi-canal, pivot rapide, TMS comme preuve sociale</td></tr>
+          <tr><td style="color:var(--warning)"><strong>Seuil TVA dépassé</strong></td><td>Moy.</td><td>Faible</td><td>Anticipé : ajuster prix TTC, comptabilité préparée</td></tr>
+          <tr><td style="color:var(--gray-500)"><strong>Impayés clients</strong></td><td>Faible</td><td>Moy.</td><td>Prélèvement auto, suspension site en cas d'impayé</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="highlight-box warning" style="margin-top:16px">
+  <strong>Risque principal identifié :</strong> le churn. Si les clients ne voient pas de résultats concrets (appels, demandes de devis via le site), ils résilieront. C'est pourquoi les abonnements Turbo et Machine incluent des rapports mensuels avec métriques concrètes (visites, position Google, leads générés). La preuve de valeur est le meilleur rempart contre le churn.
+</div>
+</section>
+
+</main>
+
+<!-- ════════════════════════════════════════ FOOTER ════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <p>Business Plan MonProEnLigne — Document confidentiel — Mai 2026</p>
+    <p style="margin-top:4px;opacity:.6">monproenligne.fr</p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════ JAVASCRIPT ════════════════════════════════════════ -->
+<script>
+// ── Defaults ──
+const DEFAULTS = {
+  'inp-clients-m1': 3, 'inp-clients-m7': 5, 'inp-clients-m13': 8,
+  'inp-churn': 5,
+  'inp-pct-starter': 40, 'inp-pct-pro': 40, 'inp-pct-full': 20,
+  'inp-pct-abo-pilote': 50, 'inp-pct-abo-turbo': 35, 'inp-pct-abo-machine': 15,
+  'inp-cout-hebergement': 5, 'inp-cout-fixe': 50,
+  'inp-temps-site': 2, 'inp-taux-horaire': 50, 'inp-charges': 36
+};
+
+function resetDefaults() {
+  Object.entries(DEFAULTS).forEach(([id, val]) => {
+    document.getElementById(id).value = val;
+  });
+  updateProjections();
+}
+
+function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function fmt(n) { return n.toLocaleString('fr-FR', { maximumFractionDigits: 0 }); }
+function fmtEur(n) { return fmt(n) + ' €'; }
+
+// ── Chart instances ──
+let chartCA, chartPnL, chartTreso, chartMixRevenu, chartRevClient;
+
+// ── Chart.js defaults ──
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#6B7280';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 16;
+
+// ── Static charts (rendered once) ──
+function initStaticCharts() {
+  // TAM/SAM/SOM Donut
+  new Chart(document.getElementById('chartTAM'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Artisans avec site (520 000)', 'SAM hors Occitanie (260 000)', 'SAM Occitanie sans site (100 000)', 'SOM: Objectif 50–100 clients'],
+      datasets: [{
+        data: [520000, 260000, 100000, 100],
+        backgroundColor: ['#D1D5DB', '#93C5FD', '#6366F1', '#10B981'],
+        borderWidth: 0,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 8 } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.label + ' (' + (ctx.parsed / 8801 * 100).toFixed(ctx.dataIndex === 3 ? 3 : 0) + '%)'
+          }
+        }
+      }
+    }
+  });
+
+  // Trend chart
+  new Chart(document.getElementById('chartTrend'), {
+    type: 'line',
+    data: {
+      labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+      datasets: [{
+        label: 'Intérêt relatif "artisan site internet"',
+        data: [45, 55, 62, 70, 78, 88, 100],
+        borderColor: '#4F46E5', backgroundColor: 'rgba(79,70,229,.1)',
+        fill: true, tension: .4, pointRadius: 4, pointBackgroundColor: '#4F46E5'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, max: 110, title: { display: true, text: 'Indice (base 100)' } }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Radar
+  new Chart(document.getElementById('chartRadar'), {
+    type: 'radar',
+    data: {
+      labels: ['Prix', 'Qualité', 'Support', 'Automatisation', 'Liberté (sans engagement)'],
+      datasets: [
+        { label: 'MonProEnLigne', data: [7, 9, 9, 9, 10], borderColor: '#4F46E5', backgroundColor: 'rgba(79,70,229,.15)', pointBackgroundColor: '#4F46E5' },
+        { label: 'SiteArtisan', data: [9, 4, 5, 2, 6], borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,.1)', pointBackgroundColor: '#F59E0B' },
+        { label: 'Simplebo', data: [3, 7, 7, 3, 2], borderColor: '#EF4444', backgroundColor: 'rgba(239,68,68,.1)', pointBackgroundColor: '#EF4444' },
+        { label: 'DIY (Wix)', data: [8, 3, 1, 1, 8], borderColor: '#9CA3AF', backgroundColor: 'rgba(156,163,175,.1)', pointBackgroundColor: '#9CA3AF' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { r: { beginAtZero: true, max: 10, ticks: { stepSize: 2 } } },
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }
+    }
+  });
+
+  // CAC by channel
+  new Chart(document.getElementById('chartCAC'), {
+    type: 'bar',
+    data: {
+      labels: ['Bouche-à-oreille', 'SEO', 'Démarchage', 'Réseaux sociaux', 'Partenariats', 'Google Ads'],
+      datasets: [{
+        label: 'CAC estimé (€)',
+        data: [0, 10, 30, 15, 20, 80],
+        backgroundColor: ['#10B981', '#34D399', '#6366F1', '#8B5CF6', '#A78BFA', '#EF4444'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      scales: { x: { beginAtZero: true, title: { display: true, text: '€ par client acquis' } } },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Gantt
+  new Chart(document.getElementById('chartGantt'), {
+    type: 'bar',
+    data: {
+      labels: ['Setup technique', 'Admin (auto-entreprise)', 'Premiers clients', 'SEO / Blog', 'Partenariats', 'Scale / Freelance'],
+      datasets: [
+        { label: 'Début', data: [0, 0, 2, 3, 5, 8], backgroundColor: 'transparent' },
+        { label: 'Durée', data: [2, 1, 4, 8, 6, 4], backgroundColor: ['#6366F1', '#8B5CF6', '#10B981', '#34D399', '#F59E0B', '#EF4444'], borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      scales: {
+        x: { stacked: true, title: { display: true, text: 'Mois' }, min: 0, max: 12, ticks: { stepSize: 1 } },
+        y: { stacked: true }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.datasetIndex === 0 ? null : 'Mois ' + (ctx.chart.data.datasets[0].data[ctx.dataIndex] + 1) + ' → ' + (ctx.chart.data.datasets[0].data[ctx.dataIndex] + ctx.parsed.x)
+          }
+        }
+      }
+    }
+  });
+
+  // Risk scatter
+  new Chart(document.getElementById('chartRisks'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Risques',
+        data: [
+          { x: 6, y: 8, label: 'Churn élevé' },
+          { x: 8, y: 5, label: 'Concurrence prix' },
+          { x: 5, y: 5, label: 'Surcharge travail' },
+          { x: 3, y: 7, label: 'Pb technique' },
+          { x: 6, y: 7, label: 'Difficulté acquisition' },
+          { x: 5, y: 3, label: 'Seuil TVA' },
+          { x: 3, y: 4, label: 'Impayés' }
+        ],
+        backgroundColor: ctx => {
+          const d = ctx.raw;
+          if (!d) return '#9CA3AF';
+          const score = d.x * d.y;
+          if (score >= 40) return '#EF4444';
+          if (score >= 20) return '#F59E0B';
+          return '#10B981';
+        },
+        pointRadius: 10,
+        pointHoverRadius: 14
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { min: 0, max: 10, title: { display: true, text: 'Probabilité →' } },
+        y: { min: 0, max: 10, title: { display: true, text: 'Impact →' } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.raw.label + ' (P:' + ctx.raw.x + '/10, I:' + ctx.raw.y + '/10)'
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Dynamic projection charts ──
+function updateProjections() {
+  const clientsM1 = getVal('inp-clients-m1');
+  const clientsM7 = getVal('inp-clients-m7');
+  const clientsM13 = getVal('inp-clients-m13');
+  const churn = getVal('inp-churn') / 100;
+
+  const pStarter = getVal('inp-pct-starter') / 100;
+  const pPro = getVal('inp-pct-pro') / 100;
+  const pFull = getVal('inp-pct-full') / 100;
+  const pAboP = getVal('inp-pct-abo-pilote') / 100;
+  const pAboT = getVal('inp-pct-abo-turbo') / 100;
+  const pAboM = getVal('inp-pct-abo-machine') / 100;
+
+  const coutHeb = getVal('inp-cout-hebergement');
+  const coutFixe = getVal('inp-cout-fixe');
+  const tempsSite = getVal('inp-temps-site');
+  const tauxH = getVal('inp-taux-horaire');
+  const txCharges = getVal('inp-charges') / 100;
+
+  const prixCreaMoyen = pStarter * 490 + pPro * 690 + pFull * 990;
+  const aboMoyen = pAboP * 39 + pAboT * 69 + pAboM * 149;
+  const coutProdSite = tempsSite * tauxH;
+
+  const months = 24;
+  const labels = [];
+  const dataCreation = [], dataMRR = [], dataCA = [];
+  const dataCharges = [], dataBenefice = [];
+  const dataTreso = [];
+  let activeClients = 0, tresoCum = 0;
+  let caAn1 = 0, caAn2 = 0;
+
+  for (let m = 1; m <= months; m++) {
+    labels.push('M' + m);
+    const newClients = m <= 6 ? clientsM1 : m <= 12 ? clientsM7 : clientsM13;
+
+    // Churn
+    const churned = Math.round(activeClients * churn);
+    activeClients = activeClients - churned + newClients;
+
+    const revCreation = newClients * prixCreaMoyen;
+    const revMRR = activeClients * aboMoyen;
+    const revTotal = revCreation + revMRR;
+
+    const coutVar = activeClients * coutHeb + newClients * coutProdSite;
+    const coutTotal = coutVar + coutFixe;
+    const chargesTotal = revTotal * txCharges + coutTotal;
+    const benefice = revTotal - chargesTotal;
+
+    tresoCum += benefice;
+
+    dataCreation.push(Math.round(revCreation));
+    dataMRR.push(Math.round(revMRR));
+    dataCA.push(Math.round(revTotal));
+    dataCharges.push(Math.round(chargesTotal));
+    dataBenefice.push(Math.round(benefice));
+    dataTreso.push(Math.round(tresoCum));
+
+    if (m <= 12) caAn1 += revTotal;
+    else caAn2 += revTotal;
+  }
+
+  // KPIs
+  const breakeven = dataBenefice.findIndex(b => b > 0) + 1;
+  document.getElementById('kpi-breakeven').textContent = breakeven > 0 ? 'Mois ' + breakeven : '—';
+  document.getElementById('kpi-mrr12').textContent = fmtEur(dataMRR[11] || 0);
+  document.getElementById('kpi-ca-an1').textContent = fmtEur(Math.round(caAn1));
+  document.getElementById('kpi-net-an1').textContent = fmtEur(Math.round(caAn1 * (1 - txCharges)));
+  document.getElementById('kpi-ca-an2').textContent = fmtEur(Math.round(caAn2));
+  document.getElementById('kpi-net-an2').textContent = fmtEur(Math.round(caAn2 * (1 - txCharges)));
+
+  // Clients actifs at M12 and M24
+  let ac12 = 0, ac24 = 0, ac = 0;
+  for (let m = 1; m <= 24; m++) {
+    const nc = m <= 6 ? clientsM1 : m <= 12 ? clientsM7 : clientsM13;
+    ac = ac - Math.round(ac * churn) + nc;
+    if (m === 12) ac12 = ac;
+    if (m === 24) ac24 = ac;
+  }
+  document.getElementById('kpi-clients12').textContent = ac12;
+  document.getElementById('kpi-clients24').textContent = ac24;
+
+  // ── Chart: CA mensuel ──
+  if (chartCA) chartCA.destroy();
+  chartCA = new Chart(document.getElementById('chartCA'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Création (ponctuel)', data: dataCreation, backgroundColor: '#A78BFA', borderRadius: 4 },
+        { label: 'MRR (récurrent)', data: dataMRR, backgroundColor: '#4F46E5', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, beginAtZero: true, ticks: { callback: v => fmt(v) + ' €' } }
+      }
+    }
+  });
+
+  // ── Chart: PnL ──
+  if (chartPnL) chartPnL.destroy();
+  chartPnL = new Chart(document.getElementById('chartPnL'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Revenus', data: dataCA, borderColor: '#4F46E5', backgroundColor: 'rgba(79,70,229,.08)', fill: true, tension: .3 },
+        { label: 'Charges totales', data: dataCharges, borderColor: '#EF4444', borderDash: [6, 3], tension: .3 },
+        { label: 'Bénéfice net', data: dataBenefice, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,.08)', fill: true, tension: .3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { ticks: { callback: v => fmt(v) + ' €' } } }
+    }
+  });
+
+  // ── Chart: Trésorerie ──
+  if (chartTreso) chartTreso.destroy();
+  chartTreso = new Chart(document.getElementById('chartTreso'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Trésorerie cumulée',
+        data: dataTreso,
+        backgroundColor: dataTreso.map(v => v >= 0 ? 'rgba(16,185,129,.7)' : 'rgba(239,68,68,.7)'),
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { ticks: { callback: v => fmt(v) + ' €' } } },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // ── Chart: Rev per client (Section 4) ──
+  if (chartRevClient) chartRevClient.destroy();
+  chartRevClient = new Chart(document.getElementById('chartRevClient'), {
+    type: 'bar',
+    data: {
+      labels: ['Starter', 'Pro', 'Full Impact'],
+      datasets: [
+        { label: 'Création', data: [490, 690, 990], backgroundColor: '#A78BFA', borderRadius: 4 },
+        { label: 'Abo 12 mois (Pilote)', data: [39*12, 39*12, 39*12], backgroundColor: '#6366F1', borderRadius: 4 },
+        { label: 'Abo 12 mois (Turbo)', data: [69*12, 69*12, 69*12], backgroundColor: '#4F46E5', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { beginAtZero: true, ticks: { callback: v => fmt(v) + ' €' } } },
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }
+    }
+  });
+
+  // ── Chart: Mix revenus (Section 4) ──
+  const totalCreation = dataCreation.reduce((a, b) => a + b, 0);
+  const totalMRR = dataMRR.reduce((a, b) => a + b, 0);
+  if (chartMixRevenu) chartMixRevenu.destroy();
+  chartMixRevenu = new Chart(document.getElementById('chartMixRevenu'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Création (' + fmtEur(totalCreation) + ')', 'Abonnements (' + fmtEur(totalMRR) + ')'],
+      datasets: [{
+        data: [totalCreation, totalMRR],
+        backgroundColor: ['#A78BFA', '#4F46E5'],
+        borderWidth: 0, hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.label + ' — ' + ((ctx.parsed / (totalCreation + totalMRR)) * 100).toFixed(1) + '%'
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  initStaticCharts();
+  updateProjections();
+
+  // Bind inputs
+  document.querySelectorAll('.inputs-panel input').forEach(inp => {
+    inp.addEventListener('input', updateProjections);
+  });
+});
+</script>
+
+</body>
+</html>
