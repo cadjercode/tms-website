@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions Légales | MonProEnLigne</title>
+<meta name="description" content="Mentions légales de MonProEnLigne — création de sites web professionnels pour artisans, freelances et indépendants. Informations légales conformes à la loi LCEN.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://monproenligne.fr/mentions-legales.html">
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #000000;
+  --white: #FFFFFF;
+  --blue: #3B82F6;
+  --blue-glow: rgba(59, 130, 246, 0.5);
+  --orange: #F97316;
+  --gray-light: #E5E7EB;
+  --gray-dark: #1F2937;
+  --gray-medium: #6B7280;
+  --gray-soft: #F9FAFB;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --container: 1200px;
+  --content-max: 800px;
+  --radius: 16px;
+  --radius-lg: 24px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--gray-dark);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--blue);
+  color: var(--white);
+  padding: 1rem 1.5rem;
+  z-index: 9999;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+/* Container */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Navigation (identique V4) */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.25rem 0;
+  transition: all 0.4s ease;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-logo span {
+  color: var(--blue);
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--gray-light);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: var(--blue);
+}
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  background: var(--blue);
+  color: var(--white);
+  border-radius: 100px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.nav-cta:hover {
+  background: var(--white);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-toggle { display: block; }
+}
+
+/* Page header */
+.page-header {
+  padding: 10rem 0 4rem;
+  background: var(--black);
+  color: var(--white);
+  text-align: center;
+}
+.page-header .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.page-header p {
+  color: var(--gray-light);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section-transition-dark-to-light {
+  height: 50px;
+  background: linear-gradient(180deg, var(--black) 0%, var(--white) 100%);
+}
+
+/* Main content */
+.legal-main {
+  padding: 4rem 0 6rem;
+  background: var(--white);
+}
+.legal-wrapper {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.7s ease forwards 0.1s;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Notice banner (placeholders) */
+.notice {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.25rem 1.5rem;
+  background: rgba(249, 115, 22, 0.06);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  border-left: 4px solid var(--orange);
+  border-radius: var(--radius);
+  margin-bottom: 3rem;
+  font-size: 0.95rem;
+  color: var(--gray-dark);
+  line-height: 1.6;
+}
+.notice .icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--orange);
+  margin-top: 0.15rem;
+}
+.notice strong {
+  color: var(--black);
+  font-weight: 600;
+}
+.notice code {
+  background: rgba(249, 115, 22, 0.12);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  color: #B45309;
+}
+
+/* Sections */
+.legal-section {
+  margin-bottom: 3rem;
+}
+.legal-section h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--blue);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid rgba(59, 130, 246, 0.15);
+}
+.legal-section h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--black);
+  margin: 1.5rem 0 0.75rem;
+}
+.legal-section p {
+  font-size: 1rem;
+  color: var(--gray-dark);
+  margin-bottom: 1rem;
+}
+.legal-section p:last-child { margin-bottom: 0; }
+
+.legal-section a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+.legal-section a:hover {
+  color: var(--orange);
+}
+
+/* Definition list */
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) 1fr;
+  gap: 0.6rem 1.5rem;
+}
+.info-list dt {
+  font-weight: 600;
+  color: var(--black);
+  font-size: 0.95rem;
+}
+.info-list dd {
+  color: var(--gray-dark);
+  font-size: 0.95rem;
+}
+
+/* Placeholder highlight */
+.placeholder {
+  display: inline-block;
+  padding: 0.05rem 0.45rem;
+  background: rgba(249, 115, 22, 0.12);
+  color: #B45309;
+  border: 1px dashed rgba(249, 115, 22, 0.5);
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .info-list {
+    grid-template-columns: 1fr;
+    gap: 0.2rem 0;
+  }
+  .info-list dt {
+    margin-top: 0.8rem;
+  }
+  .info-list dt:first-child {
+    margin-top: 0;
+  }
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 100px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+.back-link:hover {
+  background: var(--blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--blue-glow);
+  color: var(--white) !important;
+}
+.back-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Update date */
+.update-date {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-light);
+  font-size: 0.85rem;
+  color: var(--gray-medium);
+  font-style: italic;
+}
+
+/* Footer (identique V4) */
+.footer {
+  background: var(--black);
+  color: var(--gray-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3rem 0 2rem;
+  text-align: center;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--white);
+}
+.footer-logo span { color: var(--blue); }
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-links a {
+  color: var(--gray-light);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--blue); }
+.footer-copy {
+  font-size: 0.8rem;
+  color: var(--gray-medium);
+  margin-top: 1rem;
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .legal-wrapper { opacity: 1; transform: none; }
+}
+
+@media (max-width: 768px) {
+  .page-header { padding: 8rem 0 3rem; }
+  .legal-main { padding: 3rem 0 4rem; }
+  .legal-section h2 { font-size: 1.3rem; }
+}
+</style>
+</head>
+
+<body>
+<a href="#main" class="skip-link">Aller au contenu</a>
+
+<!-- Navigation -->
+<nav class="nav" aria-label="Navigation principale">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Mon<span>ProEnLigne</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#probleme">Pourquoi</a></li>
+      <li><a href="index.html#process">Process</a></li>
+      <li><a href="index.html#tarifs">Tarifs</a></li>
+      <li><a href="index.html#abonnements">Abonnements</a></li>
+      <li><a href="index.html#cas">Résultats</a></li>
+    </ul>
+    <a href="index.html#contact" class="nav-cta">Demander un devis</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- Page header -->
+<header class="page-header">
+  <div class="container">
+    <span class="label">Informations légales</span>
+    <h1>Mentions légales</h1>
+    <p>Informations légales relatives à l'éditeur du site monproenligne.fr, conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN).</p>
+  </div>
+</header>
+
+<div class="section-transition-dark-to-light"></div>
+
+<!-- Main legal content -->
+<main id="main" class="legal-main">
+  <div class="legal-wrapper">
+
+    <!-- Notice banner -->
+    <div class="notice" role="note">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <div>
+        <strong>Document à finaliser.</strong> Cette page contient des informations à compléter avant la mise en production. Les éléments entre crochets <code>[...]</code> sont des placeholders à remplacer par les données réelles de l'auto-entreprise (identité du dirigeant, adresse du siège, SIRET, etc.).
+      </div>
+    </div>
+
+    <!-- Identification de l'éditeur -->
+    <section class="legal-section" aria-labelledby="editeur">
+      <h2 id="editeur">1. Identification de l'éditeur</h2>
+      <p>Le site monproenligne.fr est édité par&nbsp;:</p>
+      <dl class="info-list">
+        <dt>Nom commercial</dt>
+        <dd>MonProEnLigne</dd>
+
+        <dt>Forme juridique</dt>
+        <dd>Entreprise Individuelle (EI)</dd>
+
+        <dt>Statut</dt>
+        <dd>Auto-entrepreneur (micro-entreprise)</dd>
+
+        <dt>Responsable</dt>
+        <dd><span class="placeholder">[NOM PRENOM]</span></dd>
+
+        <dt>Adresse du siège social</dt>
+        <dd><span class="placeholder">[ADRESSE COMPLETE]</span></dd>
+
+        <dt>Numéro SIRET</dt>
+        <dd><span class="placeholder">[SIRET]</span></dd>
+
+        <dt>Numéro RCS / RM</dt>
+        <dd><span class="placeholder">[RCS ou RM si applicable]</span></dd>
+
+        <dt>Code APE</dt>
+        <dd>6201Z — Programmation informatique</dd>
+
+        <dt>TVA intracommunautaire</dt>
+        <dd>Non applicable, article 293 B du Code Général des Impôts (franchise en base de TVA)</dd>
+
+        <dt>Email de contact</dt>
+        <dd><a href="mailto:contact@monproenligne.fr">contact@monproenligne.fr</a></dd>
+
+        <dt>Téléphone</dt>
+        <dd><span class="placeholder">[NUMERO DE TELEPHONE]</span></dd>
+      </dl>
+    </section>
+
+    <!-- Directeur de la publication -->
+    <section class="legal-section" aria-labelledby="directeur">
+      <h2 id="directeur">2. Directeur de la publication</h2>
+      <p>Le directeur de la publication du site monproenligne.fr est <span class="placeholder">[NOM PRENOM]</span>, en qualité de responsable de l'entreprise individuelle MonProEnLigne.</p>
+    </section>
+
+    <!-- Hébergement -->
+    <section class="legal-section" aria-labelledby="hebergeur">
+      <h2 id="hebergeur">3. Hébergement du site</h2>
+      <p>Le site monproenligne.fr est hébergé par&nbsp;:</p>
+      <dl class="info-list">
+        <dt>Société</dt>
+        <dd>Hostinger International Ltd</dd>
+
+        <dt>Adresse</dt>
+        <dd>61 Lordou Vironos Street, 6023 Larnaca, Chypre</dd>
+
+        <dt>Site web</dt>
+        <dd><a href="https://www.hostinger.fr" target="_blank" rel="noopener noreferrer">www.hostinger.fr</a></dd>
+
+        <dt>Téléphone</dt>
+        <dd>+370 5 214 3110</dd>
+      </dl>
+    </section>
+
+    <!-- Propriété intellectuelle -->
+    <section class="legal-section" aria-labelledby="propriete">
+      <h2 id="propriete">4. Propriété intellectuelle</h2>
+      <p>Le site monproenligne.fr et l'ensemble de son contenu — textes, images, logos, codes sources, structure, charte graphique, éléments sonores et visuels — sont la propriété exclusive de MonProEnLigne, à l'exception des marques et logos appartenant à des tiers (clients, partenaires) utilisés avec leur autorisation expresse.</p>
+      <p>Toute reproduction, représentation, modification, publication, adaptation, totale ou partielle, de ces éléments, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation écrite préalable de MonProEnLigne. Toute exploitation non autorisée constitue une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+    </section>
+
+    <!-- Responsabilité -->
+    <section class="legal-section" aria-labelledby="responsabilite">
+      <h2 id="responsabilite">5. Responsabilité</h2>
+      <p>MonProEnLigne s'efforce de fournir, sur le site monproenligne.fr, des informations aussi précises que possible. Toutefois, MonProEnLigne ne peut garantir l'exactitude, la complétude ou l'actualité des informations publiées. L'utilisateur reconnaît utiliser ces informations sous sa responsabilité exclusive.</p>
+      <p>Les liens hypertextes mis en place dans le cadre du site en direction d'autres ressources présentes sur le réseau Internet ne sauraient engager la responsabilité de MonProEnLigne quant au contenu de ces sites externes.</p>
+      <p>MonProEnLigne ne pourra être tenu responsable des dommages directs ou indirects résultant de l'utilisation du site ou de l'impossibilité d'y accéder.</p>
+    </section>
+
+    <!-- Données personnelles -->
+    <section class="legal-section" aria-labelledby="donnees">
+      <h2 id="donnees">6. Données personnelles et cookies</h2>
+      <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez de droits d'accès, de rectification, d'effacement, de portabilité et d'opposition concernant vos données personnelles.</p>
+      <p>Pour toute information détaillée concernant la collecte et le traitement des données personnelles sur ce site, veuillez consulter notre <a href="politique-confidentialite.html">Politique de Confidentialité</a>.</p>
+    </section>
+
+    <!-- Conditions d'utilisation -->
+    <section class="legal-section" aria-labelledby="conditions">
+      <h2 id="conditions">7. Conditions d'utilisation</h2>
+      <p>L'utilisation du site monproenligne.fr implique l'acceptation pleine et entière des présentes mentions légales. Ces conditions d'utilisation sont susceptibles d'être modifiées à tout moment ; il est donc conseillé de les consulter régulièrement.</p>
+    </section>
+
+    <!-- Droit applicable -->
+    <section class="legal-section" aria-labelledby="droit">
+      <h2 id="droit">8. Droit applicable et juridiction compétente</h2>
+      <p>Les présentes mentions légales sont régies par le droit français. En cas de litige et à défaut de résolution amiable préalable, les tribunaux français seront seuls compétents pour en connaître.</p>
+    </section>
+
+    <!-- Crédits -->
+    <section class="legal-section" aria-labelledby="credits">
+      <h2 id="credits">9. Crédits</h2>
+      <p>Site conçu, développé et maintenu par MonProEnLigne.</p>
+    </section>
+
+    <p class="update-date">Date de dernière mise à jour&nbsp;: <span class="placeholder">[DATE]</span></p>
+
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Retour à l'accueil
+    </a>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">Mon<span>ProEnLigne</span></div>
+    <ul class="footer-links">
+      <li><a href="index.html#tarifs">Tarifs</a></li>
+      <li><a href="index.html#abonnements">Abonnements</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="mentions-legales.html">Mentions légales</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">© 2026 MonProEnLigne. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

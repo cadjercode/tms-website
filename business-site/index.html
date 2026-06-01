@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MonProEnLigne — Sites web professionnels pour artisans du bâtiment</title>
-    <meta name="description" content="Création de sites vitrines pour artisans du BTP. Site professionnel + automatisation = des clients qui viennent à vous. Mise en ligne en 5 jours.">
+    <meta name="description" content="Création de sites vitrines pour artisans du BTP. Site professionnel + automatisation = des clients qui viennent à vous. Mise en ligne en 15 jours.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://monproenligne.fr/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MonProEnLigne">
     <meta property="og:title" content="MonProEnLigne — Sites web professionnels pour artisans">
-    <meta property="og:description" content="Site professionnel + automatisation = des clients qui viennent à vous. Mise en ligne en 5 jours, sans engagement.">
+    <meta property="og:description" content="Site professionnel + automatisation = des clients qui viennent à vous. Mise en ligne en 15 jours. Engagement 12 mois.">
     <meta property="og:url" content="https://monproenligne.fr/">
     <meta property="og:locale" content="fr_FR">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MonProEnLigne — Sites web professionnels pour artisans">
-    <meta name="twitter:description" content="Site professionnel + automatisation = des clients qui viennent à vous. Mise en ligne en 5 jours.">
+    <meta name="twitter:description" content="Site professionnel + automatisation = des clients qui viennent à vous. Mise en ligne en 15 jours.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -225,6 +225,16 @@
             background: var(--primary);
             color: var(--white);
             box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+            position: relative;
+        }
+
+        .btn-pulse {
+            animation: heroFadeUp 0.8s ease forwards, ctaPulse 3s ease-in-out 1.5s infinite !important;
+        }
+
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); }
+            50% { box-shadow: 0 6px 35px rgba(79, 70, 229, 0.65), 0 0 80px rgba(79, 70, 229, 0.25); }
         }
 
         .btn-primary:hover {
@@ -460,32 +470,117 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 7rem 0 4rem;
+            padding: 5rem 0 2rem;
             position: relative;
             overflow: hidden;
         }
 
-        /* Subtle grid pattern */
+        /* Animated grid pattern */
         .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
             pointer-events: none;
+            animation: gridMove 20s linear infinite;
         }
 
-        /* Glow orb */
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Glow orbs — animated */
         .hero::after {
             content: '';
             position: absolute;
-            top: 20%;
-            right: 10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+            top: 15%;
+            right: 5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.18) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
+            animation: orbPulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbPulse {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+            100% { transform: scale(1.2) translate(-30px, 20px); opacity: 1; }
+        }
+
+        /* Floating particles */
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat linear infinite;
+        }
+
+        .hero-particle--sm { width: 3px; height: 3px; }
+        .hero-particle--md { width: 5px; height: 5px; }
+        .hero-particle--lg { width: 7px; height: 7px; }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Second glow orb */
+        .hero-glow-2 {
+            position: absolute;
+            bottom: 10%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbPulse2 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbPulse2 {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.3) translate(20px, -20px); opacity: 0.8; }
+        }
+
+        /* Hero entrance animations */
+        .hero-content > * {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 0.8s ease forwards;
+        }
+
+        .hero-content > *:nth-child(1) { animation-delay: 0.2s; }
+        .hero-content > *:nth-child(2) { animation-delay: 0.4s; }
+        .hero-content > *:nth-child(3) { animation-delay: 0.6s; }
+        .hero-content > *:nth-child(4) { animation-delay: 0.8s; }
+        .hero-content > *:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes heroFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-mockup {
+            opacity: 0;
+            animation: heroMockupIn 1s ease 0.6s forwards;
+        }
+
+        @keyframes heroMockupIn {
+            0% { opacity: 0; transform: perspective(1000px) rotateY(-20deg) rotateX(8deg) translateX(60px) scale(0.9); }
+            100% { opacity: 1; transform: perspective(1000px) rotateY(-8deg) rotateX(4deg) translateX(0) scale(1); }
         }
 
         .hero .container {
@@ -547,7 +642,7 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero-badges {
@@ -575,25 +670,25 @@
         /* ============================================
            HERO MOCKUP (CSS-only site preview)
            ============================================ */
-        .hero-mockup {
-            perspective: 1000px;
-            display: flex;
-            justify-content: center;
-        }
-
         .mockup-frame {
             width: 100%;
             max-width: 420px;
             background: var(--white);
             border-radius: var(--radius-lg);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
-            transform: rotateY(-8deg) rotateX(4deg);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(79, 70, 229, 0.15);
             overflow: hidden;
+            animation: mockupFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes mockupFloat {
+            0%, 100% { transform: translateY(0) rotateY(-8deg) rotateX(4deg); }
+            50% { transform: translateY(-12px) rotateY(-5deg) rotateX(2deg); }
         }
 
         .mockup-frame:hover {
-            transform: rotateY(-3deg) rotateX(2deg);
+            animation-play-state: paused;
+            transform: rotateY(-3deg) rotateX(2deg) scale(1.02);
+            transition: transform 0.4s ease;
         }
 
         /* Browser chrome */
@@ -998,6 +1093,7 @@
 
         .pricing-features {
             margin-bottom: 2rem;
+            text-align: left;
         }
 
         .pricing-features li {
@@ -1568,6 +1664,22 @@
              SECTION 1 — HERO
              ============================================ -->
         <section class="hero" id="accueil" aria-labelledby="hero-title">
+            <!-- Floating particles -->
+            <div class="hero-particles" aria-hidden="true">
+                <div class="hero-particle hero-particle--sm" style="left:8%;background:rgba(99,102,241,0.5);animation-duration:12s;animation-delay:0s"></div>
+                <div class="hero-particle hero-particle--md" style="left:18%;background:rgba(245,158,11,0.4);animation-duration:15s;animation-delay:2s"></div>
+                <div class="hero-particle hero-particle--sm" style="left:30%;background:rgba(99,102,241,0.3);animation-duration:18s;animation-delay:4s"></div>
+                <div class="hero-particle hero-particle--lg" style="left:45%;background:rgba(79,70,229,0.4);animation-duration:14s;animation-delay:1s"></div>
+                <div class="hero-particle hero-particle--sm" style="left:55%;background:rgba(245,158,11,0.3);animation-duration:16s;animation-delay:6s"></div>
+                <div class="hero-particle hero-particle--md" style="left:68%;background:rgba(99,102,241,0.4);animation-duration:13s;animation-delay:3s"></div>
+                <div class="hero-particle hero-particle--sm" style="left:78%;background:rgba(79,70,229,0.3);animation-duration:17s;animation-delay:5s"></div>
+                <div class="hero-particle hero-particle--lg" style="left:88%;background:rgba(245,158,11,0.35);animation-duration:19s;animation-delay:7s"></div>
+                <div class="hero-particle hero-particle--sm" style="left:95%;background:rgba(99,102,241,0.4);animation-duration:11s;animation-delay:1.5s"></div>
+                <div class="hero-particle hero-particle--md" style="left:40%;background:rgba(16,185,129,0.3);animation-duration:20s;animation-delay:8s"></div>
+            </div>
+            <!-- Second glow -->
+            <div class="hero-glow-2" aria-hidden="true"></div>
+
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-badge">
@@ -1598,11 +1710,11 @@
                     <div class="hero-badges">
                         <span class="hero-mini-badge">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                            Mise en ligne en 5 jours
+                            Mise en ligne en 15 jours
                         </span>
                         <span class="hero-mini-badge">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                            Sans engagement
+                            Engagement 12 mois
                         </span>
                         <span class="hero-mini-badge">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1718,7 +1830,7 @@
                     <div class="step-card reveal reveal-delay-2">
                         <div class="step-number" aria-hidden="true">2</div>
                         <h3 class="step-title">On construit</h3>
-                        <p class="step-desc">En 5 jours, votre site est en ligne. Photos, textes, Google — tout est prêt.</p>
+                        <p class="step-desc">En 15 jours, votre site est en ligne. Photos, textes, Google — tout est prêt.</p>
                     </div>
 
                     <div class="step-card reveal reveal-delay-3">
@@ -1751,7 +1863,7 @@
                         <ul class="pricing-features">
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Site monopage responsive
+                                Site pro (ordinateur, tablette, smartphone)
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1771,7 +1883,7 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Mise en ligne sous 5 jours
+                                Jusqu'à 5 photos optimisées
                             </li>
                         </ul>
                         <a href="#contact" class="btn btn-primary">Choisir Starter</a>
@@ -1796,7 +1908,7 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                5 à 10 photos optimisées
+                                10 photos optimisées pour Google
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1804,11 +1916,11 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Galerie de réalisations
+                                Galerie réalisations (20 photos)
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Notification à chaque contact
+                                Notification instantanée à chaque contact
                             </li>
                         </ul>
                         <a href="#contact" class="btn btn-primary">Choisir Pro</a>
@@ -1829,19 +1941,23 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Collecte d'avis automatisée
+                                Site complet jusqu'à 6 pages
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Pages par spécialité (SEO)
+                                Jusqu'à 50 photos optimisées
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Agenda en ligne
+                                10 annuaires professionnels
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Rapport mensuel automatique
+                                Pages SEO par ville et spécialité
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                                Agenda en ligne (Google Agenda)
                             </li>
                         </ul>
                         <a href="#contact" class="btn btn-primary">Choisir Full Impact</a>
@@ -1849,7 +1965,7 @@
                 </div>
 
                 <p class="pricing-note reveal">
-                    <strong>Tous les sites vous appartiennent.</strong> Pas d'engagement. Pas de mauvaise surprise.
+                    <strong>Tous les sites vous appartiennent.</strong> Engagement 12 mois sur l'abonnement — votre site vous appartient.
                 </p>
             </div>
         </section>
@@ -1876,7 +1992,7 @@
                         <ul class="pricing-features">
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Hébergement + domaine + SSL
+                                Maintien en ligne (serveur, domaine, sécurité)
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1884,7 +2000,7 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Modifications illimitées
+                                1 modification tous les 2 mois
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1892,7 +2008,7 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Support direct
+                                Support direct (réponse sous 48h)
                             </li>
                         </ul>
                         <a href="#contact" class="btn btn-primary">Choisir Pilote Auto</a>
@@ -1914,15 +2030,15 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                1 post Google par semaine (IA)
+                                Adresse email professionnelle dédiée
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Réponse aux avis Google
+                                2 publications Google Business/mois
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Relance avis post-chantier
+                                Relance avis post-chantier (WhatsApp/email)
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1948,6 +2064,10 @@
                             </li>
                             <li>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                                Réponse aux avis Google (rédaction pro)
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
                                 Suivi prospects (tableau de bord)
                             </li>
                             <li>
@@ -1962,6 +2082,10 @@
                         <a href="#contact" class="btn btn-primary">Choisir Machine à Leads</a>
                     </div>
                 </div>
+
+                <p class="pricing-note reveal" style="margin-bottom: 1.5rem;">
+                    <strong>Engagement 12 mois.</strong> Paiement annuel : 1 mois offert.
+                </p>
 
                 <div class="roi-callout reveal">
                     <strong>Le calcul est simple :</strong> un plombier à 800 € le chantier — 1 seul client trouvé via Google = <strong>11 mois d'abonnement payés</strong>.
@@ -1990,7 +2114,7 @@
                         <div class="case-results">
                             <div class="case-result-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                                Site en ligne en 5 jours
+                                Site en ligne en 15 jours
                             </div>
                             <div class="case-result-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -2142,14 +2266,14 @@
                     <details class="faq-item reveal">
                         <summary>Combien de temps pour avoir mon site ?</summary>
                         <div class="faq-answer">
-                            5 jours ouvrés après notre premier appel et la réception de vos photos. On vous envoie un lien de prévisualisation avant la mise en ligne pour que vous validiez tout.
+                            15 jours ouvrés (soit environ 3 semaines) après notre premier appel et la réception de vos photos. On vous envoie un lien de prévisualisation avant la mise en ligne pour que vous validiez tout.
                         </div>
                     </details>
 
                     <details class="faq-item reveal">
                         <summary>Et si je veux arrêter l'abonnement ?</summary>
                         <div class="faq-answer">
-                            Préavis d'un mois, c'est tout. Le site vous appartient : on vous transfère les fichiers et le domaine. Aucun piège, aucune clause cachée.
+                            L'engagement est de 12 mois. Après 12 mois, résiliation libre avec 1 mois de préavis. Le site vous appartient : on vous transfère les fichiers et le domaine. Paiement annuel : 1 mois offert.
                         </div>
                     </details>
 
@@ -2160,33 +2284,37 @@
                         </div>
                     </details>
 
-                    <details class="faq-item reveal">
-                        <summary>C'est quoi exactement l'automatisation ?</summary>
-                        <div class="faq-answer">
-                            Des robots intelligents qui travaillent pour vous 24h/24 : ils collectent vos avis clients après chaque chantier, publient sur votre fiche Google, relancent les prospects qui n'ont pas donné suite, et vous envoient un rapport mensuel. Vous n'avez rien à faire.
-                        </div>
-                    </details>
+                    <div class="faq-extra" id="faq-extra" hidden>
+                        <details class="faq-item">
+                            <summary>C'est quoi exactement l'automatisation ?</summary>
+                            <div class="faq-answer">
+                                Des outils intelligents qui travaillent pour vous 24h/24 : ils collectent vos avis clients après chaque chantier, publient sur votre fiche Google, relancent les prospects qui n'ont pas donné suite, et vous envoient un rapport mensuel. Vous n'avez rien à faire.
+                            </div>
+                        </details>
 
-                    <details class="faq-item reveal">
-                        <summary>Mon site sera bien placé sur Google ?</summary>
-                        <div class="faq-answer">
-                            Oui. Chaque site est optimisé pour le référencement local (SEO) : balises techniques, fiche Google Business, inscription aux annuaires professionnels. L'objectif est clair — que vos clients vous trouvent quand ils tapent votre métier + votre ville.
-                        </div>
-                    </details>
+                        <details class="faq-item">
+                            <summary>Mon site sera bien placé sur Google ?</summary>
+                            <div class="faq-answer">
+                                Oui. Chaque site est optimisé pour le référencement local (SEO) : balises techniques, fiche Google Business, inscription aux annuaires professionnels. L'objectif est clair — que vos clients vous trouvent quand ils tapent votre métier + votre ville.
+                            </div>
+                        </details>
 
-                    <details class="faq-item reveal">
-                        <summary>Je peux modifier mon site moi-même ?</summary>
-                        <div class="faq-answer">
-                            Non, et c'est fait exprès : pas d'interface compliquée à apprendre. Vous m'envoyez un message (SMS, WhatsApp, email) et je fais les modifications sous 48h. C'est inclus dans l'abonnement.
-                        </div>
-                    </details>
+                        <details class="faq-item">
+                            <summary>Je peux modifier mon site moi-même ?</summary>
+                            <div class="faq-answer">
+                                Non, et c'est fait exprès : pas d'interface compliquée à apprendre. Vous m'envoyez un message (SMS, WhatsApp, email) et je fais les modifications sous 48h. C'est inclus dans l'abonnement.
+                            </div>
+                        </details>
 
-                    <details class="faq-item reveal">
-                        <summary>Qu'est-ce qui vous différencie des autres ?</summary>
-                        <div class="faq-answer">
-                            Trois choses : l'automatisation (vos avis, vos posts Google, vos relances — tout tourne sans vous), la proximité (un seul interlocuteur, pas une agence anonyme), et la liberté (votre site vous appartient, pas de lock-in, pas de piège contractuel).
-                        </div>
-                    </details>
+                        <details class="faq-item">
+                            <summary>Qu'est-ce qui vous différencie des autres ?</summary>
+                            <div class="faq-answer">
+                                Trois choses : l'automatisation (vos avis, vos posts Google, vos relances — tout tourne sans vous), la proximité (un seul interlocuteur, pas une agence anonyme), et la liberté (votre site vous appartient, pas de lock-in, pas de piège contractuel).
+                            </div>
+                        </details>
+                    </div>
+
+                    <button class="btn faq-toggle" id="faq-toggle" style="margin-top:1.5rem;background:var(--primary);color:var(--white);box-shadow:0 4px 14px rgba(79,70,229,0.3)" onclick="const extra=document.getElementById('faq-extra');const btn=this;if(extra.hidden){extra.hidden=false;btn.textContent='Voir moins';extra.style.opacity='0';extra.style.transform='translateY(-10px)';requestAnimationFrame(()=>{extra.style.transition='opacity 0.4s ease, transform 0.4s ease';extra.style.opacity='1';extra.style.transform='translateY(0)'})}else{extra.style.opacity='0';extra.style.transform='translateY(-10px)';setTimeout(()=>{extra.hidden=true},400);btn.textContent='Voir plus de questions'}">Voir plus de questions</button>
                 </div>
             </div>
         </section>

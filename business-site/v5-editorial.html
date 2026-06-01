@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MonProEnLigne — L'Édition Artisans 2026 | Sites web pour artisans du bâtiment</title>
+<meta name="description" content="Agence digitale dédiée aux artisans du bâtiment. Sites web professionnels, référencement Google local, machine à clients. Édition 2026.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://monproenligne.fr/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MonProEnLigne">
+<meta property="og:title" content="MonProEnLigne — L'Édition Artisans 2026">
+<meta property="og:description" content="Vos clients vous cherchent. On fait en sorte qu'ils vous trouvent.">
+<meta property="og:locale" content="fr_FR">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+
+<style>
+  /* ========== RESET & BASE ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #F8F5F0;
+    color: #0A0A0A;
+    line-height: 1.6;
+    overflow-x: hidden;
+    font-size: 17px;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  :root {
+    --cream: #F8F5F0;
+    --ink: #0A0A0A;
+    --red: #DC2626;
+    --green: #064E3B;
+    --border: rgba(10, 10, 10, 0.15);
+    --muted: rgba(10, 10, 10, 0.6);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  ::selection { background: var(--red); color: var(--cream); }
+
+  /* ========== TYPO COMMUNE ========== */
+  .serif { font-family: var(--serif); }
+  .italic { font-style: italic; }
+  .display {
+    font-family: var(--serif);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .eyebrow {
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .section-number {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateX(-30px);
+    display: inline-block;
+  }
+  .section-number.in { opacity: 1; transform: translateX(0); transition: opacity 0.8s ease, transform 0.8s ease; }
+
+  /* ========== LAYOUT ========== */
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 5vw, 4rem);
+  }
+  section {
+    padding: clamp(5rem, 10vw, 9rem) 0;
+    position: relative;
+  }
+  .bg-ink { background: var(--ink); color: var(--cream); }
+  .bg-white { background: #FFFFFF; }
+  .bg-cream { background: var(--cream); }
+  .bg-red { background: var(--red); color: var(--cream); }
+
+  /* ========== HEADER ========== */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248, 245, 240, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+  }
+  .site-header.on-dark {
+    background: rgba(10, 10, 10, 0.85);
+    color: var(--cream);
+    border-bottom: 1px solid rgba(248, 245, 240, 0.15);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem clamp(1.25rem, 5vw, 4rem);
+    max-width: 1440px;
+    margin: 0 auto;
+    gap: 2rem;
+  }
+  .brand { display: flex; flex-direction: column; line-height: 1; }
+  .brand-name {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  .brand-meta {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 0.25rem;
+    opacity: 0.7;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .nav-links a {
+    position: relative;
+    padding: 0.25rem 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .btn-souscrire {
+    background: var(--red);
+    color: var(--cream);
+    padding: 0.7rem 1.5rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: inline-block;
+  }
+  .btn-souscrire:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3); }
+  .nav-toggle { display: none; }
+
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-toggle {
+      display: flex; flex-direction: column; gap: 5px;
+      padding: 0.5rem; background: none; border: none;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: currentColor; }
+    .mobile-nav {
+      position: fixed; inset: 60px 0 0 0;
+      background: var(--cream);
+      padding: 3rem 2rem;
+      display: none; flex-direction: column; gap: 2rem;
+      z-index: 99;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: var(--serif); font-size: 2rem; font-weight: 700; }
+  }
+
+  /* ========== HERO Nº 01 ========== */
+  .hero {
+    background: var(--ink);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 9rem;
+    padding-bottom: 5rem;
+  }
+  .hero-eyebrow {
+    color: var(--cream);
+    opacity: 0.7;
+    margin-bottom: 2rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+    max-width: 18ch;
+  }
+  .hero h1 .highlight {
+    font-style: italic;
+    color: var(--red);
+    font-weight: 700;
+  }
+  .hero-sub {
+    max-width: 56ch;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: rgba(248, 245, 240, 0.8);
+    margin-bottom: 3rem;
+    font-family: var(--sans);
+  }
+  .hero-ctas {
+    display: flex; flex-wrap: wrap; gap: 2.5rem;
+    align-items: center;
+  }
+  .arrow-link {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    color: var(--cream);
+  }
+  .arrow-link::after {
+    content: '';
+    position: absolute; left: 0; bottom: 0;
+    height: 1px; width: 100%;
+    background: currentColor;
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .arrow-link:hover::after { transform: scaleX(0.4); }
+  .arrow-link .arrow { transition: transform 0.3s ease; }
+  .arrow-link:hover .arrow { transform: translateX(6px); }
+  .arrow-link.red { color: var(--red); }
+
+  .hero-tagline {
+    position: absolute;
+    bottom: 2.5rem; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    opacity: 0.5;
+  }
+
+  /* ========== Nº 02 — LE CONSTAT ========== */
+  .constat .container { display: block; }
+  .constat-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 5rem;
+  }
+  .constat-head h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .constat-head .lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 40ch;
+  }
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+    gap: 1.5rem;
+    margin-bottom: 5rem;
+  }
+  .bento-cell {
+    border: 1px solid var(--border);
+    padding: clamp(1.75rem, 2.5vw, 2.75rem);
+    display: flex; flex-direction: column; justify-content: space-between;
+    background: var(--cream);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .bento-cell .stat {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(4rem, 9vw, 8rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .bento-cell .stat-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-top: 1.5rem;
+    max-width: 28ch;
+  }
+  .bento-1 { grid-column: span 3; grid-row: span 2; background: var(--ink); color: var(--cream); }
+  .bento-2 { grid-column: span 3; grid-row: span 1; }
+  .bento-3 { grid-column: span 3; grid-row: span 1; background: var(--red); color: var(--cream); }
+  .bento-1 .stat { color: var(--red); }
+
+  .pullquote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.75rem, 4vw, 3.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .pullquote::before { content: '« '; color: var(--red); }
+  .pullquote::after { content: ' »'; color: var(--red); }
+
+  /* ========== Nº 03 — PROCESSUS ========== */
+  .processus {
+    background: var(--cream);
+  }
+  .processus h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+    margin: 1rem 0 4rem;
+  }
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    border-top: 1px solid var(--border);
+    padding-top: 4rem;
+  }
+  .process-step {
+    display: flex; flex-direction: column;
+    gap: 1.5rem;
+  }
+  .process-num {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(5rem, 12vw, 11rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .process-step:nth-child(2) .process-num { color: var(--red); }
+  .process-step:nth-child(3) .process-num { color: var(--green); }
+  .process-step h3 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .process-step p {
+    font-family: var(--sans);
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  /* ========== Nº 04 — CATALOGUE ========== */
+  .catalogue { background: #FFFFFF; }
+  .catalogue h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 1rem 0 1rem;
+  }
+  .catalogue-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    color: var(--muted);
+    margin-bottom: 5rem;
+    max-width: 40ch;
+  }
+  .pack-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .pack {
+    padding: clamp(2rem, 3vw, 3rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    position: relative;
+    background: #FFFFFF;
+    transition: background 0.3s ease;
+  }
+  .pack:last-child { border-right: none; }
+  .pack:hover { background: var(--cream); }
+  .pack.featured { background: var(--cream); }
+  .pack .editor-pick {
+    position: absolute; top: -1px;
+    left: 0; right: 0;
+    background: var(--red);
+    color: var(--cream);
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    transform: translateY(-100%);
+  }
+  .pack.featured { padding-top: clamp(3.5rem, 5vw, 5rem); }
+  .pack-name {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+  .pack-price {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .pack-price .currency {
+    font-size: 0.5em;
+    vertical-align: super;
+    font-weight: 400;
+    margin-right: 0.1em;
+  }
+  .pack-price-meta {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  .pack-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .pack ul {
+    list-style: none;
+    margin: 0 0 2rem 0;
+    padding: 0;
+    flex-grow: 1;
+  }
+  .pack ul li {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+    display: flex;
+    gap: 0.75rem;
+  }
+  .pack ul li::before {
+    content: '—';
+    color: var(--red);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .pack .pack-cta {
+    margin-top: auto;
+    padding: 0.9rem 1.5rem;
+    border: 1px solid var(--ink);
+    background: transparent;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: inline-block;
+  }
+  .pack .pack-cta:hover { background: var(--ink); color: var(--cream); }
+  .pack.featured .pack-cta { background: var(--ink); color: var(--cream); }
+  .pack.featured .pack-cta:hover { background: var(--red); border-color: var(--red); }
+
+  /* ========== Nº 05 — ABONNEMENT ========== */
+  .abo { background: var(--cream); }
+  .abo h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    margin: 1rem 0 1rem;
+    letter-spacing: -0.02em;
+  }
+  .abo-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    color: var(--muted);
+    margin-bottom: 5rem;
+    max-width: 40ch;
+  }
+  .abo-note {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: center;
+    margin: 2rem auto 4rem;
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+  .roi-box {
+    background: var(--red);
+    color: var(--cream);
+    padding: clamp(2rem, 3vw, 3rem);
+    text-align: center;
+    border: none;
+    max-width: 900px;
+    margin: 4rem auto 0;
+  }
+  .roi-box .roi-label {
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    opacity: 0.85;
+  }
+  .roi-box .roi-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .roi-box .roi-text strong { font-style: normal; font-weight: 900; }
+
+  /* ========== Nº 06 — PORTRAIT ========== */
+  .portrait {
+    background: var(--ink);
+    color: var(--cream);
+    padding-top: clamp(6rem, 12vw, 10rem);
+    padding-bottom: clamp(6rem, 12vw, 10rem);
+  }
+  .portrait .eyebrow { color: rgba(248, 245, 240, 0.6); }
+  .portrait h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    margin: 1rem 0 4rem;
+    color: rgba(248, 245, 240, 0.7);
+  }
+  .portrait-quote {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(2.25rem, 6.5vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    max-width: 18ch;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .portrait-quote::before { content: '« '; color: var(--red); }
+  .portrait-quote::after { content: ' »'; color: var(--red); }
+  .portrait-attrib {
+    text-align: center;
+    margin-top: 3rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(248, 245, 240, 0.6);
+  }
+  .portrait-results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 6rem;
+    padding-top: 4rem;
+    border-top: 1px solid rgba(248, 245, 240, 0.15);
+  }
+  .portrait-result {
+    text-align: center;
+  }
+  .portrait-result .num {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+    line-height: 1;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .portrait-result .lbl {
+    font-family: var(--sans);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: rgba(248, 245, 240, 0.7);
+  }
+
+  /* ========== Nº 07 — QUESTIONS ========== */
+  .questions { background: #FFFFFF; }
+  .questions h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    margin: 1rem 0 4rem;
+    letter-spacing: -0.02em;
+  }
+  .qa-list {
+    border-top: 1px solid var(--ink);
+    max-width: 900px;
+  }
+  .qa-item {
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 0;
+  }
+  .qa-item .q {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    letter-spacing: -0.015em;
+  }
+  .qa-item .a {
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 70ch;
+  }
+  .qa-hidden { display: none; }
+  .qa-hidden.shown { display: block; }
+  .qa-toggle {
+    margin-top: 3rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 0.4rem;
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .qa-toggle:hover { color: var(--red); border-color: var(--red); }
+
+  /* ========== Nº 08 — CONTACT ========== */
+  .contact {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .contact .eyebrow { color: rgba(248, 245, 240, 0.6); }
+  .contact h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 1rem 0 2rem;
+    max-width: 16ch;
+  }
+  .contact-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    color: rgba(248, 245, 240, 0.7);
+    max-width: 50ch;
+    margin-bottom: 5rem;
+  }
+  .contact-modes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(248, 245, 240, 0.2);
+    border-bottom: 1px solid rgba(248, 245, 240, 0.2);
+  }
+  .contact-mode {
+    padding: clamp(2rem, 3vw, 3rem);
+    border-right: 1px solid rgba(248, 245, 240, 0.15);
+    transition: background 0.3s ease;
+    display: flex; flex-direction: column;
+    gap: 1.25rem;
+  }
+  .contact-mode:last-child { border-right: none; }
+  .contact-mode:hover { background: rgba(248, 245, 240, 0.04); }
+  .contact-mode .cm-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--red);
+  }
+  .contact-mode .cm-name {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .contact-mode .cm-info {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: rgba(248, 245, 240, 0.75);
+  }
+  .contact-mode .cm-link {
+    margin-top: auto;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 1.5rem;
+    color: var(--cream);
+  }
+  .contact-mode .cm-link .arrow { transition: transform 0.3s ease; }
+  .contact-mode:hover .cm-link .arrow { transform: translateX(6px); }
+
+  /* ========== FOOTER (ours de magazine) ========== */
+  .ours {
+    background: var(--ink);
+    color: rgba(248, 245, 240, 0.6);
+    padding: 4rem 0 3rem;
+    border-top: 1px solid rgba(248, 245, 240, 0.15);
+  }
+  .ours-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .ours-brand {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 1.75rem;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .ours-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    max-width: 36ch;
+  }
+  .ours-col h4 {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .ours-col ul { list-style: none; padding: 0; }
+  .ours-col ul li {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    line-height: 2;
+  }
+  .ours-col ul li a:hover { color: var(--cream); }
+  .ours-bottom {
+    border-top: 1px solid rgba(248, 245, 240, 0.15);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: rgba(248, 245, 240, 0.45);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ========== ANIMATIONS DE BASE ========== */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  .word-reveal { display: inline-block; overflow: hidden; }
+  .word-reveal .w { display: inline-block; transform: translateY(110%); transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .word-reveal.in .w { transform: translateY(0); }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 1024px) {
+    .constat-head { grid-template-columns: 1fr; gap: 1.5rem; }
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .bento-1, .bento-2, .bento-3 { grid-column: span 2; grid-row: auto; }
+    .process-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .pack-row { grid-template-columns: 1fr; }
+    .pack { border-right: none; border-bottom: 1px solid var(--border); }
+    .pack:last-child { border-bottom: none; }
+    .portrait-results { grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+    .contact-modes { grid-template-columns: 1fr; }
+    .contact-mode { border-right: none; border-bottom: 1px solid rgba(248, 245, 240, 0.15); }
+    .contact-mode:last-child { border-bottom: none; }
+    .ours-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 600px) {
+    .bento { grid-template-columns: 1fr; }
+    .bento-1, .bento-2, .bento-3 { grid-column: span 1; }
+    .hero-ctas { gap: 1.5rem; flex-direction: column; align-items: flex-start; }
+    .portrait-results { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ours-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .ours-bottom { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Accessibilité focus */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 4px;
+  }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute; top: -100px; left: 0;
+    background: var(--ink); color: var(--cream);
+    padding: 1rem; z-index: 200;
+  }
+  .skip-link:focus { top: 0; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#" class="brand" aria-label="MonProEnLigne, retour à l'accueil">
+      <span class="brand-name">MonProEnLigne</span>
+      <span class="brand-meta">Édition 2026</span>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#constat">Le constat</a>
+      <a href="#processus">Processus</a>
+      <a href="#catalogue">Catalogue</a>
+      <a href="#abonnement">Abonnement</a>
+      <a href="#portrait">Portrait</a>
+      <a href="#questions">Questions</a>
+    </nav>
+    <a href="#contact" class="btn-souscrire">Souscrire</a>
+    <button class="nav-toggle" aria-label="Ouvrir le menu" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
+    <a href="#constat">Le constat</a>
+    <a href="#processus">Processus</a>
+    <a href="#catalogue">Catalogue</a>
+    <a href="#abonnement">Abonnement</a>
+    <a href="#portrait">Portrait</a>
+    <a href="#questions">Questions</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="contenu">
+
+  <!-- ============ Nº 01 — HERO ============ -->
+  <section class="hero" data-theme="dark">
+    <div class="container">
+      <div class="hero-eyebrow eyebrow section-number" data-num>Nº 01 — L'édition Artisans</div>
+      <h1 class="reveal">
+        Vos clients vous cherchent.<br>
+        <span class="highlight italic">On fait en sorte qu'ils vous trouvent.</span>
+      </h1>
+      <p class="hero-sub reveal">
+        Une publication de <strong>MonProEnLigne</strong>, agence digitale dédiée aux artisans
+        du bâtiment. Sites web professionnels, référencement Google local, suivi des prospects.
+        Vous restez sur le chantier, votre vitrine travaille pour vous.
+      </p>
+      <div class="hero-ctas reveal">
+        <a href="#constat" class="arrow-link">
+          Lire l'article <span class="arrow">→</span>
+        </a>
+        <a href="#contact" class="arrow-link red">
+          Nous contacter <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-tagline">— Une parution unique, une lecture unique —</div>
+  </section>
+
+  <!-- ============ Nº 02 — LE CONSTAT ============ -->
+  <section class="constat bg-white" id="constat" data-theme="light">
+    <div class="container">
+      <div class="constat-head">
+        <div>
+          <div class="eyebrow section-number" data-num>Nº 02 — Le constat</div>
+          <h2 class="reveal" style="margin-top:1.5rem;">Le constat.</h2>
+        </div>
+        <p class="lede reveal">
+          Pourquoi 9 artisans sur 10 perdent des clients sans le savoir, et ce qu'on peut faire pour inverser la tendance dès maintenant.
+        </p>
+      </div>
+
+      <div class="bento">
+        <article class="bento-cell bento-1 reveal">
+          <div class="stat">72<span style="font-size:0.5em">%</span></div>
+          <div class="stat-label">
+            des recherches d'artisans démarrent sur Google. Sans présence en ligne, ces prospects partent ailleurs — chez un concurrent.
+          </div>
+        </article>
+        <article class="bento-cell bento-2 reveal">
+          <div class="stat">3<span style="font-size:0.5em">s</span></div>
+          <div class="stat-label">
+            C'est tout ce qu'il faut à un visiteur pour décider de rester ou de partir.
+          </div>
+        </article>
+        <article class="bento-cell bento-3 reveal">
+          <div class="stat">95<span style="font-size:0.5em">%</span></div>
+          <div class="stat-label">
+            des clients lisent les avis Google avant de vous appeler. Sans fiche, vous n'existez pas.
+          </div>
+        </article>
+      </div>
+
+      <blockquote class="pullquote reveal">
+        Si vous n'êtes pas visible, c'est votre concurrent qui les prend.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============ Nº 03 — PROCESSUS ============ -->
+  <section class="processus" id="processus" data-theme="light">
+    <div class="container">
+      <div class="eyebrow section-number" data-num>Nº 03 — Le processus</div>
+      <h2 class="reveal">Du chantier à Google en trois étapes.</h2>
+
+      <div class="process-grid">
+        <article class="process-step reveal">
+          <div class="process-num">01</div>
+          <h3>Découverte</h3>
+          <p>
+            Un appel de 30 minutes pour comprendre votre métier, votre zone d'intervention,
+            vos clients types. Vous nous envoyez vos photos de chantier, on s'occupe du reste.
+          </p>
+        </article>
+        <article class="process-step reveal">
+          <div class="process-num">02</div>
+          <h3>Création</h3>
+          <p>
+            Votre site est conçu sur mesure en 15 jours ouvrés. Deux aller-retours pour ajuster
+            les détails. Vous validez chaque étape. Aucune surprise.
+          </p>
+        </article>
+        <article class="process-step reveal">
+          <div class="process-num">03</div>
+          <h3>Mise en ligne</h3>
+          <p>
+            Hébergement, domaine, SSL, fiche Google Business Profile, annuaires : tout est paramétré.
+            Votre vitrine est en ligne, optimisée pour le SEO local, et prête à recevoir des clients.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Nº 04 — CATALOGUE ============ -->
+  <section class="catalogue" id="catalogue" data-theme="light">
+    <div class="container">
+      <div class="eyebrow section-number" data-num>Nº 04 — Le catalogue</div>
+      <h2 class="reveal">Trois formules sur mesure.</h2>
+      <p class="catalogue-lede reveal">
+        Selon votre ambition, votre budget et la taille de votre zone d'intervention. Chaque pack est livré clé en main, sous 15 jours ouvrés.
+      </p>
+
+      <div class="pack-row">
+        <article class="pack reveal">
+          <div class="pack-name">Pack Nº 1</div>
+          <div class="pack-price"><span class="currency">€</span>490</div>
+          <div class="pack-price-meta">création unique</div>
+          <p class="pack-tagline">Starter — votre site pro en ligne en 15 jours.</p>
+          <ul>
+            <li>Site responsive PC, tablette, smartphone</li>
+            <li>Formulaire de contact + bouton d'appel direct</li>
+            <li>Carte Google Maps avec zone d'intervention</li>
+            <li>Mentions légales conformes</li>
+            <li>Hébergement + nom de domaine .fr inclus 1ʳᵉ année</li>
+            <li>Jusqu'à 5 photos optimisées pour le web</li>
+          </ul>
+          <a href="#contact" class="pack-cta">Choisir Starter</a>
+        </article>
+
+        <article class="pack featured reveal">
+          <div class="editor-pick">★ La sélection de la rédaction</div>
+          <div class="pack-name">Pack Nº 2</div>
+          <div class="pack-price"><span class="currency">€</span>690</div>
+          <div class="pack-price-meta">création unique</div>
+          <p class="pack-tagline">Pro — votre vitrine + Google qui bossent ensemble.</p>
+          <ul>
+            <li>Tout le Starter, plus :</li>
+            <li>Site enrichi : Accueil, Réalisations, Contact</li>
+            <li>10 photos retouchées et optimisées SEO</li>
+            <li>Création et optimisation de la fiche Google Business Profile</li>
+            <li>Inscription sur 5 annuaires (PagesJaunes, Alentoor, etc.)</li>
+            <li>Galerie de réalisations (jusqu'à 20 photos)</li>
+            <li>Notification instantanée à chaque demande de contact</li>
+          </ul>
+          <a href="#contact" class="pack-cta">Choisir Pro</a>
+        </article>
+
+        <article class="pack reveal">
+          <div class="pack-name">Pack Nº 3</div>
+          <div class="pack-price"><span class="currency">€</span>990</div>
+          <div class="pack-price-meta">création unique</div>
+          <p class="pack-tagline">Full Impact — on installe votre machine à clients.</p>
+          <ul>
+            <li>Tout le Pro, plus :</li>
+            <li>Site complet jusqu'à 6 pages</li>
+            <li>Jusqu'à 50 photos optimisées</li>
+            <li>Inscription sur 10 annuaires professionnels</li>
+            <li>Pages SEO par spécialité et par ville</li>
+            <li>Agenda en ligne synchronisé Google Agenda</li>
+          </ul>
+          <a href="#contact" class="pack-cta">Choisir Full Impact</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Nº 05 — ABONNEMENT ============ -->
+  <section class="abo" id="abonnement" data-theme="light">
+    <div class="container">
+      <div class="eyebrow section-number" data-num>Nº 05 — Le service</div>
+      <h2 class="reveal">Votre site ne dort jamais.</h2>
+      <p class="abo-lede reveal">
+        Trois formules d'abonnement pour que votre vitrine reste en vie : maintenance, contenu, suivi des prospects. Vous gardez votre énergie pour le chantier.
+      </p>
+
+      <div class="pack-row">
+        <article class="pack reveal">
+          <div class="pack-name">Abo Nº 1</div>
+          <div class="pack-price"><span class="currency">€</span>39</div>
+          <div class="pack-price-meta">par mois</div>
+          <p class="pack-tagline">Pilote Auto — votre site tourne, vous n'y pensez plus.</p>
+          <ul>
+            <li>Maintien en ligne (serveur, domaine, SSL)</li>
+            <li>Mises à jour techniques (sécurité, performance)</li>
+            <li>1 modification de contenu tous les 2 mois</li>
+            <li>Surveillance 24/7 (alerte + intervention si le site tombe)</li>
+            <li>Support par message direct (48h)</li>
+          </ul>
+          <a href="#contact" class="pack-cta">Souscrire Pilote</a>
+        </article>
+
+        <article class="pack featured reveal">
+          <div class="editor-pick">★ La sélection de la rédaction</div>
+          <div class="pack-name">Abo Nº 2</div>
+          <div class="pack-price"><span class="currency">€</span>69</div>
+          <div class="pack-price-meta">par mois</div>
+          <p class="pack-tagline">Turbo Local — Google travaille pour vous pendant que vous êtes sur le chantier.</p>
+          <ul>
+            <li>Tout Pilote Auto, plus :</li>
+            <li>Adresse email professionnelle dédiée</li>
+            <li>2 publications Google Business par mois</li>
+            <li>Relance automatique pour collecter les avis clients</li>
+            <li>Rapport mensuel (visites, appels, devis, recommandations)</li>
+          </ul>
+          <a href="#contact" class="pack-cta">Souscrire Turbo</a>
+        </article>
+
+        <article class="pack reveal">
+          <div class="pack-name">Abo Nº 3</div>
+          <div class="pack-price"><span class="currency">€</span>149</div>
+          <div class="pack-price-meta">par mois</div>
+          <p class="pack-tagline">Machine à Leads — chaque contact devient un devis potentiel.</p>
+          <ul>
+            <li>Tout Turbo Local, plus :</li>
+            <li>Réponse aux avis Google (rédaction pro, validation client)</li>
+            <li>Tableau de suivi des prospects (statut, relances)</li>
+            <li>Relance automatique des prospects dormants (J+3, J+7)</li>
+            <li>Estimation du retour sur investissement dans le rapport</li>
+          </ul>
+          <a href="#contact" class="pack-cta">Souscrire Machine</a>
+        </article>
+      </div>
+
+      <p class="abo-note reveal">
+        Engagement 12 mois. Au-delà, résiliation libre avec 1 mois de préavis. <br>
+        <strong>Paiement annuel</strong> : 1 mois offert (Pilote Auto 429 €/an, Turbo Local 759 €/an, Machine à Leads 1 639 €/an).
+      </p>
+
+      <div class="roi-box reveal">
+        <div class="roi-label">— Encadré rédactionnel —</div>
+        <p class="roi-text">
+          <strong>ROI :</strong> pour un artisan qui facture 800 € un chantier, <strong>1 seul client</strong>
+          trouvé via Google = <strong>11 mois</strong> d'abonnement Turbo Local payés.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Nº 06 — PORTRAIT ============ -->
+  <section class="portrait" id="portrait" data-theme="dark">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="eyebrow section-number" data-num>Nº 06 — Portrait</div>
+        <h2 class="reveal">Vincent Padilla, TMS Terrassement.</h2>
+      </div>
+
+      <blockquote class="portrait-quote reveal">
+        Depuis qu'on a refait le site, j'ai eu plus d'appels en deux mois qu'en deux ans.
+      </blockquote>
+      <p class="portrait-attrib reveal">— Vincent P., Labruguière, Tarn</p>
+
+      <div class="portrait-results">
+        <div class="portrait-result reveal">
+          <div class="num">×4</div>
+          <div class="lbl">demandes de devis</div>
+        </div>
+        <div class="portrait-result reveal">
+          <div class="num">15j</div>
+          <div class="lbl">délai de livraison</div>
+        </div>
+        <div class="portrait-result reveal">
+          <div class="num">100%</div>
+          <div class="lbl">SEO local Tarn</div>
+        </div>
+        <div class="portrait-result reveal">
+          <div class="num">22</div>
+          <div class="lbl">photos optimisées</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Nº 07 — QUESTIONS ============ -->
+  <section class="questions" id="questions" data-theme="light">
+    <div class="container">
+      <div class="eyebrow section-number" data-num>Nº 07 — Questions</div>
+      <h2 class="reveal">Les questions qu'on nous pose.</h2>
+
+      <div class="qa-list" id="qaList">
+        <article class="qa-item reveal">
+          <h3 class="q">En combien de temps mon site sera-t-il en ligne ?</h3>
+          <p class="a">15 jours ouvrés à partir de la réception de vos photos et contenus. Le processus comprend un appel découverte, la création, deux aller-retours de validation, puis la mise en ligne technique.</p>
+        </article>
+        <article class="qa-item reveal">
+          <h3 class="q">Suis-je engagé sur la durée ?</h3>
+          <p class="a">Les packs de création sont sans engagement. Les abonnements mensuels demandent un engagement minimum de 12 mois — ensuite, vous êtes libre avec 1 mois de préavis. Le paiement annuel vous fait économiser 1 mois.</p>
+        </article>
+        <article class="qa-item reveal">
+          <h3 class="q">Que se passe-t-il si je n'ai aucun client via le site ?</h3>
+          <p class="a">Avec un bon référencement local, c'est rarissime. Si malgré tout vous n'obtenez aucune demande de contact via le site dans les 3 premiers mois, le 4ᵉ mois d'abonnement vous est offert.</p>
+        </article>
+
+        <article class="qa-item qa-hidden reveal">
+          <h3 class="q">Qui rédige les textes du site ?</h3>
+          <p class="a">Nous rédigeons tous les textes à partir de l'appel découverte et des informations que vous nous fournissez. Vous validez l'ensemble avant la mise en ligne. Vous restez maître du contenu.</p>
+        </article>
+        <article class="qa-item qa-hidden reveal">
+          <h3 class="q">Puis-je modifier le site moi-même ?</h3>
+          <p class="a">Inutile : les modifications sont incluses dans votre abonnement. Pour Pilote Auto, 1 modification tous les 2 mois ; pour Turbo Local et Machine à Leads, c'est inclus dans le suivi mensuel.</p>
+        </article>
+        <article class="qa-item qa-hidden reveal">
+          <h3 class="q">Et si je veux récupérer mon site plus tard ?</h3>
+          <p class="a">Aucun verrou propriétaire. Si vous résiliez ou changez de prestataire, vous repartez avec votre site, votre domaine, et tous vos contenus.</p>
+        </article>
+        <article class="qa-item qa-hidden reveal">
+          <h3 class="q">Quelles différences avec un site fait par un proche ?</h3>
+          <p class="a">Un site fait à l'arrache, sans SEO local ni fiche Google Business, restera invisible. Nous travaillons à la fois la vitrine et le référencement — ce sont les deux qui amènent des clients. C'est aussi de notre travail que dépend la pérennité technique du site.</p>
+        </article>
+      </div>
+
+      <button class="qa-toggle" id="qaToggle">Lire la suite →</button>
+    </div>
+  </section>
+
+  <!-- ============ Nº 08 — CONTACT ============ -->
+  <section class="contact" id="contact" data-theme="dark">
+    <div class="container">
+      <div class="eyebrow section-number" data-num>Nº 08 — Contact</div>
+      <h2 class="reveal">Pour souscrire ou poser une question.</h2>
+      <p class="contact-lede reveal">
+        Trois moyens de nous joindre — choisissez celui qui vous arrange. Réponse sous 24h ouvrées, toujours par un humain.
+      </p>
+
+      <div class="contact-modes">
+        <a href="https://wa.me/33631742313" class="contact-mode reveal" rel="noopener noreferrer">
+          <span class="cm-num">i.</span>
+          <span class="cm-name">WhatsApp</span>
+          <span class="cm-info">Le plus rapide. Photos, audio, écrit — comme vous voulez.</span>
+          <span class="cm-link">Ouvrir la conversation <span class="arrow">→</span></span>
+        </a>
+        <a href="tel:+33631742313" class="contact-mode reveal">
+          <span class="cm-num">ii.</span>
+          <span class="cm-name">Téléphone</span>
+          <span class="cm-info">06 31 74 23 13 — du lundi au vendredi, 8h-18h.</span>
+          <span class="cm-link">Appeler maintenant <span class="arrow">→</span></span>
+        </a>
+        <a href="mailto:contact@monproenligne.fr" class="contact-mode reveal">
+          <span class="cm-num">iii.</span>
+          <span class="cm-name">Email</span>
+          <span class="cm-info">contact@monproenligne.fr — réponse sous 24h.</span>
+          <span class="cm-link">Écrire un message <span class="arrow">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER (OURS) ============ -->
+  <footer class="ours" role="contentinfo">
+    <div class="container">
+      <div class="ours-grid">
+        <div>
+          <div class="ours-brand">MonProEnLigne</div>
+          <p class="ours-tagline">
+            L'édition Artisans — agence digitale dédiée aux artisans du bâtiment.
+            Sites web professionnels, référencement Google local, suivi des prospects.
+          </p>
+        </div>
+        <div class="ours-col">
+          <h4>L'agence</h4>
+          <ul>
+            <li><a href="#processus">Processus</a></li>
+            <li><a href="#catalogue">Catalogue</a></li>
+            <li><a href="#portrait">Portrait client</a></li>
+          </ul>
+        </div>
+        <div class="ours-col">
+          <h4>Service</h4>
+          <ul>
+            <li><a href="#abonnement">Abonnements</a></li>
+            <li><a href="#questions">Questions</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="ours-col">
+          <h4>Légal</h4>
+          <ul>
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">CGV</a></li>
+            <li><a href="#">Confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ours-bottom">
+        <span>© 2026 MonProEnLigne — Tous droits réservés.</span>
+        <span>Édition Nº 01 — Imprimée numériquement à Labruguière, Occitanie.</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ===== Lenis smooth scroll =====
+    let lenis;
+    if (window.Lenis) {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+
+      // Anchor links via Lenis
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const target = a.getAttribute('href');
+          if (target && target.length > 1) {
+            const el = document.querySelector(target);
+            if (el) {
+              e.preventDefault();
+              lenis.scrollTo(el, { offset: -50 });
+              const mn = document.getElementById('mobileNav');
+              if (mn) mn.classList.remove('open');
+            }
+          }
+        });
+      });
+    }
+
+    // ===== GSAP + ScrollTrigger =====
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Sync Lenis with ScrollTrigger
+      if (lenis) {
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      // Reveal animations on .reveal
+      document.querySelectorAll('.reveal').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      // Section numbers slide-in
+      document.querySelectorAll('[data-num]').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, x: -30 },
+          {
+            opacity: 1, x: 0, duration: 1, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      // Pull-quotes text reveal (line-by-line approximation via blur+y)
+      document.querySelectorAll('.pullquote, .portrait-quote').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 50, filter: 'blur(8px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      // Bento staggered
+      gsap.fromTo('.bento-cell',
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.bento', start: 'top 80%', toggleActions: 'play none none none' }
+        }
+      );
+
+      // Process numbers staggered
+      gsap.fromTo('.process-num',
+        { opacity: 0, y: 80, scale: 0.9 },
+        {
+          opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'power3.out', stagger: 0.18,
+          scrollTrigger: { trigger: '.process-grid', start: 'top 75%', toggleActions: 'play none none none' }
+        }
+      );
+
+      // Pack reveal staggered
+      document.querySelectorAll('.pack-row').forEach((row) => {
+        gsap.fromTo(row.querySelectorAll('.pack'),
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
+            scrollTrigger: { trigger: row, start: 'top 80%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      // Header theme switch on dark sections
+      const header = document.getElementById('siteHeader');
+      document.querySelectorAll('section[data-theme="dark"]').forEach((sec) => {
+        ScrollTrigger.create({
+          trigger: sec,
+          start: 'top 60px',
+          end: 'bottom 60px',
+          onEnter: () => header.classList.add('on-dark'),
+          onEnterBack: () => header.classList.add('on-dark'),
+          onLeave: () => header.classList.remove('on-dark'),
+          onLeaveBack: () => header.classList.remove('on-dark')
+        });
+      });
+    } else {
+      // Fallback : reveal all immediately
+      document.querySelectorAll('.reveal, [data-num]').forEach(el => {
+        el.classList.add('in');
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      });
+    }
+
+    // ===== Mobile nav =====
+    const navToggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    if (navToggle && mobileNav) {
+      navToggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
+      });
+    }
+
+    // ===== Questions toggle =====
+    const qaToggle = document.getElementById('qaToggle');
+    if (qaToggle) {
+      qaToggle.addEventListener('click', () => {
+        const hidden = document.querySelectorAll('.qa-hidden');
+        const isOpen = qaToggle.dataset.open === 'true';
+        hidden.forEach(el => el.classList.toggle('shown', !isOpen));
+        qaToggle.dataset.open = String(!isOpen);
+        qaToggle.textContent = isOpen ? 'Lire la suite →' : 'Réduire ←';
+      });
+    }
+  });
+</script>
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "MonProEnLigne",
+  "description": "Agence digitale dédiée aux artisans du bâtiment : sites web professionnels, référencement Google local, suivi des prospects.",
+  "url": "https://monproenligne.fr",
+  "telephone": "+33631742313",
+  "email": "contact@monproenligne.fr",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Labruguière",
+    "postalCode": "81290",
+    "addressRegion": "Occitanie",
+    "addressCountry": "FR"
+  },
+  "areaServed": "FR",
+  "priceRange": "€€",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Packs création MonProEnLigne",
+    "itemListElement": [
+      { "@type": "Offer", "name": "Starter", "price": "490", "priceCurrency": "EUR" },
+      { "@type": "Offer", "name": "Pro", "price": "690", "priceCurrency": "EUR" },
+      { "@type": "Offer", "name": "Full Impact", "price": "990", "priceCurrency": "EUR" }
+    ]
+  }
+}
+</script>
+
+</body>
+</html>
