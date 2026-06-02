@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Page introuvable | TMS - Terrassement Multi-Service</title>
+  <meta name="description" content="La page que vous cherchez n'existe pas ou a été déplacée. Retournez à l'accueil de TMS, entreprise de terrassement dans le Tarn.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://tms81.fr/404">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#2D7D46">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap">
+
+  <style>
+    /* Custom Properties (matching main site) */
+    :root {
+      --color-primary: #2D7D46;
+      --color-primary-dark: #1B5E30;
+      --color-primary-light: #ECFDF5;
+      --color-secondary: #1B2A3D;
+      --color-secondary-light: #2C3E50;
+      --color-accent: #E8A838;
+      --color-text: #1A1A2E;
+      --color-text-light: #5A6270;
+      --color-bg: #FFFFFF;
+      --color-bg-alt: #F7F5F2;
+      --color-border: #E2DDD7;
+
+      --font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
+      --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+
+      --transition-fast: 150ms ease;
+      --transition-base: 300ms ease;
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Container */
+    .error-page {
+      max-width: 560px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    /* Logo */
+    .error-page__logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+    }
+
+    /* 404 Number */
+    .error-page__code {
+      font-family: var(--font-heading);
+      font-size: clamp(6rem, 20vw, 10rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-accent);
+      letter-spacing: -0.04em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    /* Title */
+    .error-page__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--color-secondary);
+      line-height: 1.2;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease 0.15s forwards;
+    }
+
+    /* Message */
+    .error-page__message {
+      font-size: 1.125rem;
+      color: var(--color-text-light);
+      max-width: 440px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease 0.25s forwards;
+    }
+
+    /* CTA group */
+    .error-page__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease 0.35s forwards;
+    }
+
+    /* Buttons — shared */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: background-color var(--transition-base),
+                  color var(--transition-base),
+                  border-color var(--transition-base),
+                  box-shadow var(--transition-base),
+                  transform var(--transition-fast);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Primary button */
+    .btn--primary {
+      background-color: var(--color-primary);
+      color: #FFFFFF;
+      border-color: var(--color-primary);
+    }
+
+    .btn--primary:hover {
+      background-color: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Outline button */
+    .btn--outline {
+      background-color: transparent;
+      color: var(--color-secondary);
+      border-color: var(--color-border);
+    }
+
+    .btn--outline:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Phone link */
+    .error-page__phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-base);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease 0.45s forwards;
+    }
+
+    .error-page__phone:hover {
+      color: var(--color-primary-dark);
+    }
+
+    .error-page__phone:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+      border-radius: var(--radius-md);
+    }
+
+    /* Phone icon */
+    .error-page__phone svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Divider */
+    .error-page__divider {
+      width: 60px;
+      height: 3px;
+      background-color: var(--color-bg-alt);
+      border: none;
+      border-radius: 2px;
+    }
+
+    /* Animation keyframes */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .error-page__code,
+      .error-page__title,
+      .error-page__message,
+      .error-page__actions,
+      .error-page__phone {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Responsive: small screens */
+    @media (max-width: 480px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+
+      .error-page__logo {
+        width: 64px;
+        height: 64px;
+      }
+
+      .error-page__actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="error-page" role="main">
+    <img
+      src="/images/tms-logo.jpg"
+      alt="TMS - Terrassement Multi-Service"
+      class="error-page__logo"
+      width="80"
+      height="80"
+    >
+
+    <p class="error-page__code" aria-hidden="true">404</p>
+
+    <h1 class="error-page__title">Page introuvable</h1>
+
+    <p class="error-page__message">
+      La page que vous cherchez n'existe pas ou a&nbsp;été&nbsp;déplacée.
+    </p>
+
+    <div class="error-page__actions">
+      <a href="/" class="btn btn--primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Retour à l'accueil
+      </a>
+      <a href="/#contact" class="btn btn--outline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Nous contacter
+      </a>
+    </div>
+
+    <hr class="error-page__divider">
+
+    <a href="tel:+33631742313" class="error-page__phone">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      06 31 74 23 13
+    </a>
+  </main>
+</body>
+</html>

@@ -40,12 +40,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap">
 
   <!-- Preload Hero -->
+  <link rel="preload" as="image" href="images/hero-chantier-pelle.webp" type="image/webp">
   <link rel="preload" as="image" href="images/hero-chantier-pelle.jpg">
 
   <!-- Leaflet CSS — chargé à la demande par JS quand la carte est visible -->
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=20260520b">
+  <link rel="stylesheet" href="css/style.css?v=20260601">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -255,9 +256,10 @@
     <!-- ==================== HERO ==================== -->
     <section id="accueil" class="hero">
       <picture class="hero__bg">
+        <source srcset="images/hero-chantier-pelle.webp" type="image/webp">
         <img src="images/hero-chantier-pelle.jpg"
              alt="Chantier de terrassement avec pelle Doosan — TMS Terrassement Labruguière"
-             width="1920" height="1440" fetchpriority="high" decoding="async">
+             width="935" height="1200" fetchpriority="high" decoding="async">
       </picture>
       <div class="hero__overlay"></div>
       <div class="hero__content">
@@ -849,7 +851,12 @@
   <!-- Leaflet JS -->
   <!-- Leaflet JS — chargé à la demande quand la section zone est visible -->
 
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
+  <!-- Vanilla Tilt -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
   <!-- JS -->
-  <script src="js/main.js?v=20260520" defer></script>
+  <script src="js/main.js?v=20260601" defer></script>
 </body>
 </html>

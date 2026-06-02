@@ -475,7 +475,6 @@ strong {
   object-position: 55% 24%;
   filter: brightness(125%) contrast(110%) saturate(125%);
   animation: kenBurns 12s ease-in-out infinite alternate;
-  will-change: transform;
 }
 
 @keyframes kenBurns {
@@ -511,25 +510,13 @@ strong {
   text-align: center;
 }
 
+/* Hero elements: GSAP handles the timeline, CSS is fallback */
 .js-ready .hero h1,
 .js-ready .hero__subtitle,
 .js-ready .hero__ctas,
 .js-ready .hero__bottom-bar {
   opacity: 0;
   transform: translateY(30px);
-  animation: heroReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.js-ready .hero h1             { animation-delay: 0.3s; }
-.js-ready .hero__subtitle      { animation-delay: 0.6s; }
-.js-ready .hero__ctas          { animation-delay: 0.9s; }
-.js-ready .hero__bottom-bar    { animation-delay: 1.2s; }
-
-@keyframes heroReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .hero h1 {
@@ -767,8 +754,12 @@ strong {
 }
 
 .service-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
+}
+
+/* Vanilla Tilt glare layer */
+.service-card .js-tilt-glare {
+  border-radius: var(--radius-lg);
 }
 
 .service-card__image {
@@ -2134,43 +2125,44 @@ section.faq .faq-toggle-wrap {
   transform: none;
 }
 
+/* GSAP handles reveal animations — these are fallback for when GSAP is unavailable */
 .js-ready .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
-  filter: blur(1.5px);
+  filter: blur(2px);
 }
 
 .js-ready .reveal.visible {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
 }
 
 .js-ready .reveal-left {
   opacity: 0;
   transform: translateX(-40px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
-  filter: blur(1.5px);
+  filter: blur(2px);
 }
 
 .js-ready .reveal-left.visible {
   opacity: 1;
   transform: translateX(0);
   filter: blur(0);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
 }
 
 .js-ready .reveal-scale {
   opacity: 0;
   transform: scale(0.92);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
-  filter: blur(1.5px);
+  filter: blur(2px);
 }
 
 .js-ready .reveal-scale.visible {
   opacity: 1;
   transform: scale(1);
   filter: blur(0);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
 }
 
 .js-ready .reveal-delay-1 { transition-delay: 0.1s; }

@@ -1,12 +1,14 @@
 /* ============================================
    TMS - Main JavaScript
-   Navigation, animations, galerie, formulaire
+   Navigation, GSAP animations, galerie, formulaire
    ============================================ */
 
 (function () {
   'use strict';
 
   document.documentElement.classList.add('js-ready');
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ============================================
   // 1. MOBILE NAV TOGGLE
@@ -87,104 +89,224 @@
   });
 
   // ============================================
-  // 4. SCROLL REVEAL
+  // 4. GSAP SCROLL ANIMATIONS
   // ============================================
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
+    gsap.registerPlugin(ScrollTrigger);
 
-  // ============================================
-  // 4a. HERO PARALLAX
-  // ============================================
-  if (!prefersReducedMotion) {
+    // 4a. HERO TIMELINE
+    var heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    heroTl
+      .fromTo('.hero h1',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.9 }, 0.3)
+      .fromTo('.hero__subtitle',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8 }, 0.6)
+      .fromTo('.hero__ctas',
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.7 }, 0.85)
+      .fromTo('.hero__bottom-bar',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6 }, 1.1);
+
+    // 4b. HERO PARALLAX via ScrollTrigger
     var heroImg = document.querySelector('.hero__bg img');
     if (heroImg) {
-      var ticking = false;
-      window.addEventListener('scroll', function () {
-        if (!ticking) {
-          requestAnimationFrame(function () {
-            var scrollY = window.scrollY;
-            if (scrollY < window.innerHeight) {
-              heroImg.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
-              heroImg.style.animationPlayState = scrollY > 10 ? 'paused' : 'running';
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      }, { passive: true });
-    }
-  }
-
-  if (!prefersReducedMotion) {
-    var revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
-
-    var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
+      gsap.to(heroImg, {
+        y: '30%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
         }
       });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
+    }
+
+    // 4c. SCROLL REVEAL — batch for performance
+    ScrollTrigger.batch('.reveal', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 40, filter: 'blur(2px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', stagger: 0.12 }
+        );
+      },
+      start: 'top 85%',
+      once: true
     });
 
-    revealElements.forEach(function (el) {
-      revealObserver.observe(el);
+    ScrollTrigger.batch('.reveal-left', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, x: -40, filter: 'blur(2px)' },
+          { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', stagger: 0.12 }
+        );
+      },
+      start: 'top 85%',
+      once: true
     });
+
+    ScrollTrigger.batch('.reveal-scale', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, scale: 0.92, filter: 'blur(2px)' },
+          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', stagger: 0.12 }
+        );
+      },
+      start: 'top 85%',
+      once: true
+    });
+
+    // 4d. SERVICE CARDS — staggered cascade
+    var serviceCards = gsap.utils.toArray('.service-card');
+    if (serviceCards.length) {
+      serviceCards.forEach(function (card, i) {
+        gsap.fromTo(card,
+          { opacity: 0, y: 50, filter: 'blur(2px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)',
+            duration: 0.7, ease: 'power2.out',
+            delay: i * 0.1,
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 88%',
+              once: true
+            }
+          }
+        );
+      });
+    }
+
+    // 4e. GALLERY ITEMS — stagger grid reveal
+    ScrollTrigger.batch('.gallery-grid--preview .gallery-item', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 30, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08 }
+        );
+      },
+      start: 'top 85%',
+      once: true
+    });
+
+    // 4f. FIGURE CARDS counter animation via GSAP
+    var countEls = gsap.utils.toArray('[data-target]');
+    countEls.forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      var obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 2,
+        ease: 'power2.out',
+        snap: { val: 1 },
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true
+        },
+        onUpdate: function () {
+          el.textContent = Math.round(obj.val) + (target >= 10 ? '+' : '');
+        }
+      });
+    });
+
+    // 4g. ZONE CITIES stagger
+    ScrollTrigger.batch('.zone__city', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 }
+        );
+      },
+      start: 'top 85%',
+      once: true
+    });
+
+    // 4h. FAQ ITEMS stagger
+    ScrollTrigger.batch('.faq__item', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.06 }
+        );
+      },
+      start: 'top 88%',
+      once: true
+    });
+
+    // 4i. CERTIF BADGES pop
+    ScrollTrigger.batch('.certif-badge', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.4)', stagger: 0.1 }
+        );
+      },
+      start: 'top 85%',
+      once: true
+    });
+
+    // 4j. TESTIMONIAL CARDS
+    ScrollTrigger.batch('.testimonial-card', {
+      onEnter: function (batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.1 }
+        );
+      },
+      start: 'top 85%',
+      once: true
+    });
+
+    // 4k. CONTACT FORM slide-in
+    gsap.fromTo('.contact-form',
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: '.contact-form', start: 'top 85%', once: true }
+      }
+    );
+
+    gsap.fromTo('.contact__info',
+      { opacity: 0, x: 30 },
+      { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: '.contact__info', start: 'top 85%', once: true }
+      }
+    );
+
   } else {
+    // Fallback: show everything immediately
     document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(function (el) {
       el.classList.add('visible');
     });
-  }
-
-  // ============================================
-  // 5. NUMBER COUNT-UP
-  // ============================================
-  var countElements = document.querySelectorAll('[data-target]');
-
-  function animateCount(el) {
-    var target = parseInt(el.getAttribute('data-target'), 10);
-    var duration = 2000;
-    var start = 0;
-    var startTime = null;
-
-    function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      var progress = Math.min((timestamp - startTime) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.round(eased * target);
-      el.textContent = current + (target >= 100 ? '+' : target >= 10 ? '+' : '');
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  if (!prefersReducedMotion) {
-    var countObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          animateCount(entry.target);
-          countObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    countElements.forEach(function (el) {
-      countObserver.observe(el);
-    });
-  } else {
-    countElements.forEach(function (el) {
+    // Static count display
+    document.querySelectorAll('[data-target]').forEach(function (el) {
       var target = el.getAttribute('data-target');
       el.textContent = target + (parseInt(target, 10) >= 10 ? '+' : '');
     });
+    // Make hero elements visible
+    document.querySelectorAll('.hero h1, .hero__subtitle, .hero__ctas, .hero__bottom-bar').forEach(function (el) {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
   }
 
   // ============================================
-  // 5b. GALLERY TOGGLE (expandable)
+  // 5. VANILLA TILT on service cards (desktop only)
+  // ============================================
+  if (typeof VanillaTilt !== 'undefined' && !prefersReducedMotion && window.innerWidth >= 1024) {
+    VanillaTilt.init(document.querySelectorAll('.service-card'), {
+      max: 4,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.08,
+      scale: 1.02
+    });
+  }
+
+  // ============================================
+  // 6. GALLERY TOGGLE (expandable)
   // ============================================
   var galleryToggle = document.getElementById('galleryToggleBtn');
   var galleryPanel = document.getElementById('galleryExpandable');
@@ -198,7 +320,7 @@
   }
 
   // ============================================
-  // 5c. FAQ EXPANDABLE TOGGLE
+  // 6b. FAQ EXPANDABLE TOGGLE
   // ============================================
   var faqToggle = document.getElementById('faq-toggle');
   var faqPanel = document.getElementById('faq-panel');
@@ -212,7 +334,7 @@
   }
 
   // ============================================
-  // 6. GALLERY FILTER
+  // 7. GALLERY FILTER
   // ============================================
   var filterBtns = document.querySelectorAll('.filter-btn');
   var galleryItems = document.querySelectorAll('.gallery-item');
@@ -244,7 +366,7 @@
   });
 
   // ============================================
-  // 7. LIGHTBOX
+  // 8. LIGHTBOX
   // ============================================
   var lightbox = document.getElementById('lightbox');
   var lightboxImg = document.getElementById('lightbox-img');
@@ -364,7 +486,7 @@
   }, { passive: true });
 
   // ============================================
-  // 8. FORM VALIDATION & AJAX SUBMIT
+  // 9. FORM VALIDATION & AJAX SUBMIT
   // ============================================
   var form = document.getElementById('contact-form');
   var submitBtn = document.getElementById('submit-btn');
@@ -410,7 +532,6 @@
         return;
       }
 
-      // AJAX submit — no redirect
       submitBtn.textContent = 'Envoi en cours...';
       submitBtn.disabled = true;
 
@@ -453,7 +574,7 @@
   });
 
   // ============================================
-  // 8b. LEAFLET MAP (Zone d'intervention) — lazy loaded
+  // 10. LEAFLET MAP (Zone d'intervention) — lazy loaded
   // ============================================
   var mapEl = document.getElementById('zone-map');
   if (mapEl) {
@@ -478,73 +599,69 @@
   }
 
   function initMap() {
-  var mapEl = document.getElementById('zone-map');
-  if (mapEl && typeof L !== 'undefined') {
-    var map = L.map('zone-map', {
-      scrollWheelZoom: false,
-      attributionControl: true,
-      zoomControl: true
-    }).setView([43.52, 2.26], 11);
+    var mapEl = document.getElementById('zone-map');
+    if (mapEl && typeof L !== 'undefined') {
+      var map = L.map('zone-map', {
+        scrollWheelZoom: false,
+        attributionControl: true,
+        zoomControl: true
+      }).setView([43.52, 2.26], 11);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 18
-    }).addTo(map);
-
-    // Marqueur TMS (siège)
-    var orangeIcon = L.divIcon({
-      className: 'zone-marker-hq',
-      html: '<div style="width:20px;height:20px;background:#D4622B;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
-      iconSize: [20, 20],
-      iconAnchor: [10, 10]
-    });
-
-    var darkIcon = L.divIcon({
-      className: 'zone-marker',
-      html: '<div style="width:14px;height:14px;background:#1B2A3D;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>',
-      iconSize: [14, 14],
-      iconAnchor: [7, 7]
-    });
-
-    // Rayon d'intervention (cercle)
-    L.circle([43.5336, 2.2639], {
-      radius: 50000,
-      color: '#D4622B',
-      fillColor: '#D4622B',
-      fillOpacity: 0.06,
-      weight: 1.5,
-      dashArray: '6 4'
-    }).addTo(map);
-
-    // Marqueurs
-    var hq = L.marker([43.5336, 2.2639], { icon: orangeIcon }).addTo(map);
-    hq.bindPopup('<span class="zone-popup-title">TMS — Siège</span><br>Lieu-dit Bellevue<br>81290 Labruguière<br><span class="zone-popup-dist">06 31 74 23 13</span>');
-
-    var cities = [
-      { name: 'Castres', lat: 43.6045, lng: 2.2390, dist: '~10 min' },
-      { name: 'Mazamet', lat: 43.4897, lng: 2.3745, dist: '~20 min' },
-      { name: 'Albi', lat: 43.9293, lng: 2.1480, dist: '~45 min' }
-    ];
-
-    cities.forEach(function (city) {
-      var m = L.marker([city.lat, city.lng], { icon: darkIcon }).addTo(map);
-      m.bindPopup('<span class="zone-popup-title">' + city.name + '</span><br><span class="zone-popup-dist">' + city.dist + ' depuis Labruguière</span>');
-    });
-
-    // Lignes de connexion vers le siège
-    cities.forEach(function (city) {
-      L.polyline([[43.5336, 2.2639], [city.lat, city.lng]], {
-        color: '#D4622B',
-        weight: 1.5,
-        opacity: 0.3,
-        dashArray: '4 6'
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
       }).addTo(map);
-    });
-  }
+
+      var orangeIcon = L.divIcon({
+        className: 'zone-marker-hq',
+        html: '<div style="width:20px;height:20px;background:#D4622B;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+      });
+
+      var darkIcon = L.divIcon({
+        className: 'zone-marker',
+        html: '<div style="width:14px;height:14px;background:#1B2A3D;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+
+      L.circle([43.5336, 2.2639], {
+        radius: 50000,
+        color: '#D4622B',
+        fillColor: '#D4622B',
+        fillOpacity: 0.06,
+        weight: 1.5,
+        dashArray: '6 4'
+      }).addTo(map);
+
+      var hq = L.marker([43.5336, 2.2639], { icon: orangeIcon }).addTo(map);
+      hq.bindPopup('<span class="zone-popup-title">TMS — Siège</span><br>Lieu-dit Bellevue<br>81290 Labruguière<br><span class="zone-popup-dist">06 31 74 23 13</span>');
+
+      var cities = [
+        { name: 'Castres', lat: 43.6045, lng: 2.2390, dist: '~10 min' },
+        { name: 'Mazamet', lat: 43.4897, lng: 2.3745, dist: '~20 min' },
+        { name: 'Albi', lat: 43.9293, lng: 2.1480, dist: '~45 min' }
+      ];
+
+      cities.forEach(function (city) {
+        var m = L.marker([city.lat, city.lng], { icon: darkIcon }).addTo(map);
+        m.bindPopup('<span class="zone-popup-title">' + city.name + '</span><br><span class="zone-popup-dist">' + city.dist + ' depuis Labruguière</span>');
+      });
+
+      cities.forEach(function (city) {
+        L.polyline([[43.5336, 2.2639], [city.lat, city.lng]], {
+          color: '#D4622B',
+          weight: 1.5,
+          opacity: 0.3,
+          dashArray: '4 6'
+        }).addTo(map);
+      });
+    }
   }
 
   // ============================================
-  // 9. WHATSAPP VISIBILITY
+  // 11. WHATSAPP VISIBILITY
   // ============================================
   var whatsappFab = document.getElementById('whatsapp-fab');
   var contactSection = document.getElementById('contact');
@@ -560,7 +677,7 @@
   }
 
   // ============================================
-  // 10. TESTIMONIALS CAROUSEL
+  // 12. TESTIMONIALS CAROUSEL
   // ============================================
   document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
     var track = carousel.querySelector('.carousel__track');
@@ -642,7 +759,6 @@
       });
     }
 
-    // Touch swipe
     var touchStartX = 0;
     var touchEndX = 0;
     if (viewport) {
@@ -659,7 +775,6 @@
       }, { passive: true });
     }
 
-    // Rebuild on resize
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
