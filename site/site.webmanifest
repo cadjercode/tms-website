@@ -1,7 +1,7 @@
 {
   "name": "TMS - Terrassement Multi-Service",
   "short_name": "TMS",
-  "description": "Entreprise de terrassement et location d'engins dans le Tarn",
+  "description": "Entreprise de terrassement et travaux publics dans le Tarn",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
