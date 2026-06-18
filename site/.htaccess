@@ -19,7 +19,7 @@ RewriteRule ^(.+?)/?$ $1.html [L]
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
-  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com; frame-src https://www.google.com https://maps.google.com; connect-src 'self' https://formspree.io"
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://widgets.sociablekit.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://widgets.sociablekit.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: ; frame-src https://www.google.com https://maps.google.com https://widgets.sociablekit.com; connect-src 'self' https://formspree.io https://widgets.sociablekit.com"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
