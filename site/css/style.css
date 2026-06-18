@@ -339,7 +339,7 @@ strong {
 .nav__brand-sub {
   font-size: 0.7rem;
   font-weight: 400;
-  color: var(--color-text-light);
+  color: var(--color-text);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
