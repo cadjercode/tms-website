@@ -351,14 +351,6 @@ strong {
 .footer .nav__brand {
   color: #fff;
 }
-
-.footer .nav__brand-sub {
-  color: rgba(255,255,255,0.6);
-}
-
-.footer__logo-img {
-  width: 40px;
-  height: 40px;
 }
 
 .nav__toggle {
@@ -1192,6 +1184,66 @@ strong {
 }
 
 /* ============================================
+   PAGE LÉGALE (mentions légales)
+   ============================================ */
+.legal {
+  background: var(--color-bg);
+}
+
+.legal__container {
+  max-width: 800px;
+}
+
+.legal h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: var(--space-md);
+}
+
+.legal__intro {
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xl);
+}
+
+.legal h2 {
+  font-size: 1.3rem;
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
+  color: var(--color-secondary);
+}
+
+.legal p,
+.legal li {
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.legal ul {
+  padding-left: 1.2rem;
+}
+
+.legal a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.legal__back {
+  margin-top: var(--space-2xl);
+}
+
+/* ============================================
+   AVIS GOOGLE
+   ============================================ */
+.avis {
+  background: var(--color-bg-alt);
+}
+
+.avis .sk-ww-google-reviews {
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 420px; /* réserve l'espace avant injection du widget — évite le CLS */
+}
+
+/* ============================================
    11. ZONE D'INTERVENTION
    ============================================ */
 .zone {
@@ -1713,79 +1765,71 @@ section.faq .faq-toggle-wrap {
    ============================================ */
 .footer {
   background: var(--color-secondary);
-  color: rgba(255,255,255,0.8);
-  padding: var(--space-lg) 0 var(--space-sm);
+  color: rgba(255,255,255,0.7);
+  padding: var(--space-md) 0 var(--space-xs);
 }
 
-.footer h4 {
-  color: #fff;
-  font-size: 0.9rem;
-  margin-bottom: var(--space-xs);
-}
-
-.footer__grid {
-  display: grid;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
-}
-
-.footer__brand p {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.6);
-  margin-top: var(--space-sm);
-}
-
-.footer__nav ul {
+.footer__main {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  padding-bottom: var(--space-sm);
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
   gap: var(--space-sm);
+  color: #fff;
+  flex-shrink: 0;
 }
 
-.footer__nav a {
-  font-size: 0.85rem;
-  display: inline-block;
-  padding: 0.15rem 0;
-  min-height: 36px;
-  line-height: 1.4;
+.footer__logo .nav__logo-img {
+  width: 36px;
+  height: 36px;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  flex: 1;
+}
+
+.footer__links a {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.65);
   transition: color var(--transition-fast);
+  white-space: nowrap;
 }
 
-.footer__nav a:hover {
+.footer__links a:hover {
   color: var(--color-primary);
 }
 
-.footer__contact address {
-  font-style: normal;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-.footer__contact a {
-  display: inline-block;
-  padding: 0.3rem 0;
-  min-height: 48px;
-  transition: color var(--transition-fast);
-}
-
-.footer__contact a:hover {
-  color: var(--color-primary);
+.footer__sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(255,255,255,0.2);
 }
 
 .footer__social {
   display: flex;
-  gap: 0.75rem;
-  margin-top: var(--space-sm);
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .footer__social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
   transition: background var(--transition-fast), color var(--transition-fast);
 }
 
@@ -1794,28 +1838,35 @@ section.faq .faq-toggle-wrap {
   color: #fff;
 }
 
-.footer__legal p {
-  font-size: 0.875rem;
-  color: rgba(255,255,255,0.5);
-}
-
 .footer__bottom {
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: var(--space-sm);
   display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.4);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem var(--space-lg);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
 }
 
-.footer__bottom a {
+.footer__nap {
+  flex-basis: 100%;
+  font-style: normal;
+  font-size: 0.8rem;
   color: rgba(255,255,255,0.5);
-  transition: color var(--transition-fast);
+  margin-bottom: 0.4rem;
 }
 
+.footer__nap a,
+.footer__bottom a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+}
+
+.footer__nap a:hover,
 .footer__bottom a:hover {
-  color: var(--color-primary);
+  color: #fff;
+  text-decoration: underline;
 }
 
 /* ============================================
@@ -2176,6 +2227,29 @@ section.faq .faq-toggle-wrap {
    17. MEDIA QUERIES
    ============================================ */
 
+/* Mobile footer: stack and center */
+@media (max-width: 599px) {
+  .footer__main {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-sm);
+  }
+
+  .footer__links {
+    justify-content: center;
+  }
+
+  .footer__sep {
+    display: none;
+  }
+
+  .footer__bottom {
+    text-align: center;
+    justify-content: center;
+  }
+}
+
 /* Tablet small (600px-1023px): services 2-col grid */
 @media (min-width: 600px) and (max-width: 1023px) {
   .services__list {
@@ -2235,14 +2309,6 @@ section.faq .faq-toggle-wrap {
     grid-template-columns: 1fr 1fr;
   }
 
-  .footer__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer__bottom {
-    flex-direction: row;
-    justify-content: space-between;
-  }
 }
 
 /* Desktop (1024px+) */
@@ -2336,9 +2402,6 @@ section.faq .faq-toggle-wrap {
     flex-basis: calc((100% - 2 * var(--space-lg)) / 3);
   }
 
-  .footer__grid {
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-  }
 }
 
 /* Large desktop (1200px+) */

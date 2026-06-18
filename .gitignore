@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Outils locaux
+.netlify
+.gstack/
+
+# Archives / temp
+*.zip
+*.tmp
+
+# Backups datés (ne pas versionner)
+*.backup-*
+*-backup.*
+
+# Document interne d'identifiants — NE JAMAIS versionner
+SYNTHESE-TMS.md

@@ -17,19 +17,21 @@
   <meta property="og:title" content="Terrassement &amp; Travaux Publics dans le Tarn | TMS">
   <meta property="og:description" content="Entreprise de terrassement à Labruguière. Terrassement, VRD, aménagement extérieur. Garantie décennale. Devis gratuit.">
   <meta property="og:url" content="https://tms81.fr/">
-  <meta property="og:image" content="https://tms81.fr/images/terrassement-piscine.webp">
+  <meta property="og:image" content="https://tms81.fr/images/og-tms.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TMS — Terrassement &amp; Travaux Publics dans le Tarn">
   <meta property="og:locale" content="fr_FR">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TMS - Terrassement &amp; Travaux Publics | Tarn">
   <meta name="twitter:description" content="Entreprise de terrassement à Labruguière (81). Garantie décennale. Devis gratuit : 06 31 74 23 13">
-  <meta name="twitter:image" content="https://tms81.fr/images/terrassement-piscine.webp">
+  <meta name="twitter:image" content="https://tms81.fr/images/og-tms.jpg">
 
   <!-- Favicon -->
   <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/images/favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#2D7D46">
@@ -39,14 +41,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap">
 
-  <!-- Preload Hero -->
+  <!-- Preload Hero (WebP uniquement — le JPG est servi en fallback <picture> aux navigateurs sans WebP) -->
   <link rel="preload" as="image" href="images/hero-chantier-pelle.webp" type="image/webp">
-  <link rel="preload" as="image" href="images/hero-chantier-pelle.jpg">
 
   <!-- Leaflet CSS — chargé à la demande par JS quand la carte est visible -->
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=20260601">
+  <link rel="stylesheet" href="css/style.css?v=20260616">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -54,7 +55,7 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "LocalBusiness",
+        "@type": "ConstructionContractor",
         "@id": "https://tms81.fr/#business",
         "name": "EURL T.M.S - Terrassement Multi-Service",
         "alternateName": "TMS",
@@ -111,7 +112,29 @@
           { "@type": "EducationalOccupationalCredential", "credentialCategory": "RC Professionnelle" }
         ],
         "sameAs": [
-          "https://www.facebook.com/profile.php?id=61589977414563"
+          "https://www.facebook.com/profile.php?id=61589977414563",
+          "https://g.page/r/CQVAnXuMPmxeEBM"
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": 5,
+          "reviewCount": 2,
+          "bestRating": 5,
+          "worstRating": 1
+        },
+        "review": [
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "Pauline Siguier" },
+            "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 },
+            "reviewBody": "Un super boulot rien à dire très professionnel, le avant après est juste magnifique merci beaucoup je recommande. Vincent a réalisé les plages de notre piscine."
+          },
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "marine DARCY" },
+            "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 },
+            "reviewBody": "Artisan très réactif et appliqué. En tant que conseillère immo, je fais régulièrement appelle à lui pour des clients. Ils en sont très satisfaits. Entreprise que je recommande."
+          }
         ]
       },
       {
@@ -230,7 +253,7 @@
   <header class="header" id="header">
     <nav class="nav" aria-label="Navigation principale">
       <a href="#accueil" class="nav__logo" aria-label="TMS - Accueil">
-        <img src="images/tms-logo.jpg" alt="TMS Terrassement Multi-Service" class="nav__logo-img" width="50" height="50">
+        <img src="images/tms-logo.webp" alt="TMS Terrassement Multi-Service" class="nav__logo-img" width="50" height="50">
         <span class="nav__brand"><strong>T.M.S</strong> <span class="nav__brand-sub">Terrassement</span></span>
       </a>
 
@@ -241,6 +264,7 @@
       <ul class="nav__menu" id="nav-menu" role="list">
         <li><a href="#services" class="nav__link">Services</a></li>
         <li><a href="#realisations" class="nav__link">Réalisations</a></li>
+        <li><a href="#avis" class="nav__link">Avis</a></li>
         <li><a href="#contact" class="nav__link">Contact</a></li>
       </ul>
 
@@ -304,8 +328,8 @@
           </div>
           <div class="apropos__figures reveal">
             <div class="figure-card">
-              <span class="figure-card__number">50+</span>
-              <span class="figure-card__label">Chantiers réalisés</span>
+              <span class="figure-card__number">140+</span>
+              <span class="figure-card__label">Clients satisfaits</span>
             </div>
             <div class="figure-card">
               <span class="figure-card__number">24h</span>
@@ -341,7 +365,7 @@
             <div class="service-card__content">
               <div class="service-card__number">01</div>
               <h3>Terrassement résidentiel et agricole</h3>
-              <p>Terrassement de terrain à Labruguière, Castres et dans tout le Tarn. Décapage, nivellement, remblaiement sur tous types de sols, même les terrains difficiles et pentus. Un travail précis adapté à votre projet.</p>
+              <p>Terrassement de terrain à Labruguière, <a href="terrassement-castres">Castres</a> et dans tout le Tarn. Décapage, nivellement, remblaiement sur tous types de sols, même les terrains difficiles et pentus. Nous intervenons aussi à <a href="terrassement-mazamet">Mazamet</a> et <a href="terrassement-albi">Albi</a>.</p>
               <a href="#contact" class="service-card__link" data-service="terrassement">Demander un devis →</a>
             </div>
           </article>
@@ -352,7 +376,7 @@
             <div class="service-card__content">
               <div class="service-card__number">02</div>
               <h3>Voies d'accès et parking</h3>
-              <p>Création de chemins d'accès, parkings et pistes forestières dans le Tarn et en montagne. Intervention en terrain pentu et boisé pour ouvrir, élargir et entretenir vos voies d'accès.</p>
+              <p>Création de chemins d'accès, parkings et <a href="piste-forestiere-tarn">pistes forestières dans le Tarn</a> et en montagne. Intervention en terrain pentu et boisé pour ouvrir, élargir et entretenir vos voies d'accès.</p>
               <a href="#contact" class="service-card__link" data-service="voies-parking">Demander un devis →</a>
             </div>
           </article>
@@ -363,7 +387,7 @@
             <div class="service-card__content">
               <div class="service-card__number">03</div>
               <h3>Piscines et aménagement extérieur</h3>
-              <p>Terrassement de piscine et aménagement extérieur : bassins, clôtures, mise en forme de terrain. Transformez votre jardin à Castres, Labruguière ou Mazamet avec un projet sur mesure.</p>
+              <p><a href="terrassement-piscine-tarn">Terrassement de piscine</a> et aménagement extérieur : bassins, clôtures, mise en forme de terrain. Transformez votre jardin à Castres, Labruguière ou Mazamet avec un projet sur mesure.</p>
               <a href="#contact" class="service-card__link" data-service="piscine">Demander un devis →</a>
             </div>
           </article>
@@ -686,6 +710,20 @@
       </div>
     </section>
 
+    <!-- ==================== AVIS GOOGLE ==================== -->
+    <section id="avis" class="avis section">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2>Ce que disent nos clients</h2>
+          <p class="section__subtitle">Avis vérifiés sur notre profil Google &middot; note 5/5</p>
+        </div>
+        <div class="reveal">
+          <div class="sk-ww-google-reviews" data-embed-id="25689987"></div>
+          <script src="https://widgets.sociablekit.com/google-reviews/widget.js" defer></script>
+        </div>
+      </div>
+    </section>
+
 <!-- ==================== CONTACT ==================== -->
     <section id="contact" class="contact section">
       <div class="container">
@@ -770,58 +808,35 @@
   <!-- ==================== FOOTER ==================== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand">
-          <a href="#accueil" class="nav__logo" aria-label="TMS - Retour en haut">
-            <img src="images/tms-logo.jpg" alt="TMS Terrassement Multi-Service" class="nav__logo-img footer__logo-img" width="40" height="40">
-            <span class="nav__brand"><strong>T.M.S</strong> <span class="nav__brand-sub">Terrassement</span></span>
+      <div class="footer__main">
+        <a href="#accueil" class="footer__logo" aria-label="TMS - Retour en haut">
+          <img src="images/tms-logo.webp" alt="TMS" class="nav__logo-img" width="36" height="36">
+          <span class="nav__brand"><strong>T.M.S</strong></span>
+        </a>
+        <nav class="footer__links" aria-label="Liens du pied de page">
+          <a href="#services">Services</a>
+          <a href="#realisations">Réalisations</a>
+          <a href="#contact">Contact</a>
+          <span class="footer__sep" aria-hidden="true"></span>
+          <a href="terrassement-castres">Castres</a>
+          <a href="terrassement-mazamet">Mazamet</a>
+          <a href="terrassement-albi">Albi</a>
+          <a href="terrassement-piscine-tarn">Piscine</a>
+          <a href="piste-forestiere-tarn">Pistes</a>
+        </nav>
+        <div class="footer__social">
+          <a href="https://www.facebook.com/profile.php?id=61589977414563" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="footer__social-link">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
-          <p>Entreprise de terrassement et travaux publics dans le Tarn.</p>
-          <div class="footer__social">
-            <a href="https://www.facebook.com/profile.php?id=61589977414563" target="_blank" rel="noopener noreferrer" aria-label="Suivez TMS sur Facebook" class="footer__social-link">
-              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-            <a href="https://g.page/r/CQVAnXuMPmxeEBM" target="_blank" rel="noopener noreferrer" aria-label="Voir TMS sur Google Business" class="footer__social-link">
-              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-            </a>
-          </div>
-        </div>
-        <div class="footer__nav">
-          <h4>Plan du site</h4>
-          <ul>
-            <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#realisations">Réalisations</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer__contact">
-          <h4>Contact</h4>
-          <address>
-            <p>Lieu-dit Bellevue<br>81290 Labruguière</p>
-            <p><a href="tel:+33631742313">06 31 74 23 13</a></p>
-            <p><a href="mailto:tms81290@gmail.com">tms81290@gmail.com</a></p>
-          </address>
-        </div>
-        <div class="footer__nav">
-          <h4>Nos zones</h4>
-          <ul>
-            <li><a href="terrassement-castres.html">Terrassement Castres</a></li>
-            <li><a href="terrassement-mazamet.html">Terrassement Mazamet</a></li>
-            <li><a href="terrassement-albi.html">Terrassement Albi</a></li>
-            <li><a href="terrassement-piscine-tarn.html">Piscine Tarn</a></li>
-            <li><a href="piste-forestiere-tarn.html">Pistes forestières</a></li>
-          </ul>
-        </div>
-        <div class="footer__legal">
-          <h4>Informations</h4>
-          <p>EURL T.M.S<br>SIRET : 949 891 980</p>
-          <p>Garantie décennale &middot; RC Professionnelle</p>
+          <a href="https://g.page/r/CQVAnXuMPmxeEBM" target="_blank" rel="noopener noreferrer" aria-label="Google Business" class="footer__social-link">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </a>
         </div>
       </div>
       <div class="footer__bottom">
-        <p>&copy; 2026 EURL T.M.S - Terrassement Multi-Service. Tous droits réservés.</p>
-        <p>Directeur de publication : Vincent Padilla</p>
+        <address class="footer__nap">EURL T.M.S - Terrassement Multi-Service &middot; Lieu-dit Bellevue, 81290 Labruguière &middot; <a href="tel:+33631742313">06 31 74 23 13</a> &middot; <a href="mailto:tms81290@gmail.com">tms81290@gmail.com</a></address>
+        <p>&copy; 2026 EURL T.M.S &middot; SIRET 949 891 980 &middot; Garantie décennale &middot; RC Pro &middot; <a href="mentions-legales">Mentions légales</a></p>
+        <p>Dir. publication : Vincent Padilla</p>
       </div>
     </div>
   </footer>

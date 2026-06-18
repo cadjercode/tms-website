@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMS — Choix du Hero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --orange: #D4622B;
+      --orange-dark: #B8511F;
+      --dark: #1B2A3D;
+      --accent: #E8A838;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #111; color: #fff; }
+
+    /* ===== TOOLBAR ===== */
+    .toolbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(17,17,17,0.95); backdrop-filter: blur(10px);
+      padding: 1rem 2rem; display: flex; align-items: center; gap: 1.5rem;
+      border-bottom: 1px solid #333; flex-wrap: wrap;
+    }
+    .toolbar h1 { font-family: 'Outfit'; font-size: 1.1rem; color: var(--orange); white-space: nowrap; }
+    .toolbar p { font-size: 0.8rem; color: #888; flex: 1; min-width: 200px; }
+    .toolbar .actions { display: flex; gap: 0.5rem; }
+    .tool-btn {
+      padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; border: 2px solid #444; background: transparent; color: #ccc;
+      transition: all 0.2s;
+    }
+    .tool-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .tool-btn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+    /* ===== HERO VARIANTS ===== */
+    .variants { padding: 5rem 2rem 2rem; display: flex; flex-direction: column; gap: 2rem; }
+    .variant-label {
+      display: flex; align-items: center; gap: 1rem; margin-top: 1rem;
+    }
+    .variant-label h2 { font-family: 'Outfit'; font-size: 1.2rem; }
+    .variant-label .tag {
+      padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .tag-modern { background: #7c3aed22; color: #a78bfa; border: 1px solid #7c3aed44; }
+    .tag-classic { background: #0ea5e922; color: #67e8f9; border: 1px solid #0ea5e944; }
+    .tag-bold { background: #ef444422; color: #fca5a5; border: 1px solid #ef444444; }
+    .tag-minimal { background: #22c55e22; color: #86efac; border: 1px solid #22c55e44; }
+
+    /* ===== HERO PREVIEW ===== */
+    .hero-preview {
+      position: relative; width: 100%; aspect-ratio: 16/7; border-radius: 12px;
+      overflow: hidden; cursor: default; border: 2px solid #333;
+      transition: border-color 0.3s;
+    }
+    .hero-preview:hover { border-color: var(--orange); }
+    .hero-preview.selected { border-color: var(--orange); box-shadow: 0 0 30px rgba(212,98,43,0.3); }
+
+    .hero-preview img.hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+    }
+
+    /* Draggable elements */
+    .drag-zone {
+      position: absolute; inset: 0; z-index: 5;
+    }
+    .draggable {
+      position: absolute; cursor: grab; user-select: none;
+      transition: box-shadow 0.2s;
+    }
+    .draggable:active { cursor: grabbing; }
+    .draggable.dragging {
+      box-shadow: 0 0 20px rgba(212,98,43,0.5);
+      outline: 2px dashed var(--orange);
+      outline-offset: 4px;
+    }
+    .drag-hint {
+      position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+      font-size: 0.6rem; color: var(--orange); white-space: nowrap;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+      background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 3px;
+    }
+    .draggable:hover .drag-hint { opacity: 1; }
+
+    /* Logo variants */
+    .hero-logo {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero-logo svg { width: 48px; height: 48px; }
+    .hero-logo-text { font-family: 'Outfit'; font-weight: 800; font-size: 2rem; color: #fff; }
+    .hero-logo-sub { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); }
+
+    .logo-v2 {
+      background: var(--orange); padding: 0.6rem 1.2rem; border-radius: 8px;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .logo-v2 .hero-logo-text { font-size: 1.8rem; }
+
+    .logo-v3 {
+      border: 3px solid #fff; padding: 0.5rem 1rem; border-radius: 4px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .logo-v3 .hero-logo-text { font-size: 2.2rem; letter-spacing: 0.15em; }
+    .logo-v3 .hero-logo-sub { margin-top: -4px; }
+
+    .logo-v4 {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .logo-v4 .hero-logo-text {
+      font-size: 3rem; line-height: 0.9;
+      background: linear-gradient(135deg, #fff, var(--orange));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-v4 .hero-logo-sub { color: var(--accent); font-weight: 600; }
+
+    /* Title styles */
+    .hero-title {
+      font-family: 'Outfit'; font-weight: 700; color: #fff;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+    }
+
+    .hero-subtitle {
+      color: rgba(255,255,255,0.9); max-width: 500px; line-height: 1.5;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+    }
+
+    /* CTA styles */
+    .hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .cta-primary {
+      padding: 0.85rem 1.75rem; background: var(--orange); color: #fff;
+      border-radius: 8px; font-family: 'Outfit'; font-weight: 600; font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      text-decoration: none;
+    }
+    .cta-outline {
+      padding: 0.85rem 1.75rem; border: 2px solid #fff; color: #fff;
+      border-radius: 8px; font-family: 'Outfit'; font-weight: 600; font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 0.5rem; background: transparent;
+      text-decoration: none;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex; gap: 2rem; padding: 1rem 0;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Outfit'; font-weight: 700; font-size: 1.5rem; color: var(--accent); }
+    .stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Certif badges */
+    .hero-certifs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .hero-certif {
+      padding: 0.3rem 0.7rem; background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
+      font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    /* ===== SELECT BUTTON ===== */
+    .select-btn {
+      position: absolute; bottom: 1rem; right: 1rem; z-index: 10;
+      padding: 0.6rem 1.2rem; background: var(--orange); color: #fff;
+      border: none; border-radius: 8px; font-family: 'Outfit'; font-weight: 600;
+      font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+      opacity: 0; pointer-events: none;
+    }
+    .hero-preview:hover .select-btn { opacity: 1; pointer-events: auto; }
+    .hero-preview.selected .select-btn { opacity: 1; pointer-events: auto; background: #27A960; }
+
+    /* ===== OUTPUT ===== */
+    .output-section {
+      padding: 2rem; margin: 2rem; background: #1a1a2e; border-radius: 12px;
+      border: 1px solid #333; display: none;
+    }
+    .output-section.show { display: block; }
+    .output-section h2 { font-family: 'Outfit'; color: var(--orange); margin-bottom: 1rem; }
+    .output-code {
+      background: #0d0d1a; padding: 1.5rem; border-radius: 8px;
+      font-family: 'Consolas', monospace; font-size: 0.8rem; color: #a0a0b0;
+      white-space: pre-wrap; max-height: 400px; overflow-y: auto;
+    }
+    .copy-btn {
+      margin-top: 1rem; padding: 0.6rem 1.5rem; background: var(--orange); color: #fff;
+      border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-preview { aspect-ratio: 16/9; }
+      .hero-title { font-size: 1.5rem !important; }
+      .hero-subtitle { font-size: 0.85rem !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <h1>TMS — Hero Builder</h1>
+    <p>Choisis une variante puis deplace les elements avec la souris. Clique "Choisir" pour valider.</p>
+    <div class="actions">
+      <button class="tool-btn active" id="btn-drag">Deplacer</button>
+      <button class="tool-btn" id="btn-export">Exporter mon choix</button>
+    </div>
+  </div>
+
+  <div class="variants">
+
+    <!-- ===== VARIANTE 1 : PLEIN ECRAN CENTRÉ ===== -->
+    <div class="variant-label">
+      <h2>Variante 1 — Hero grand impact, texte centre</h2>
+      <span class="tag tag-bold">Impact</span>
+    </div>
+    <div class="hero-preview" data-variant="1" id="v1">
+      <img class="hero-bg" src="../site/images/doosan-foret-piste.jpg" alt="">
+      <div class="hero-overlay" style="background: linear-gradient(135deg, rgba(15,25,35,0.75) 0%, rgba(15,25,35,0.3) 60%, rgba(15,25,35,0.6) 100%);"></div>
+      <div class="drag-zone">
+        <div class="draggable" style="top: 5%; left: 5%;" data-el="logo">
+          <span class="drag-hint">Deplacer le logo</span>
+          <div class="logo-v2">
+            <svg viewBox="0 0 48 48" width="40" height="40"><rect x="2" y="8" width="44" height="5" rx="2.5" fill="#fff"/><rect x="20" y="8" width="5" height="32" rx="2.5" fill="#fff"/><path d="M2 13 L10 24 L2 24 Z" fill="#fff" opacity="0.8"/></svg>
+            <div>
+              <div class="hero-logo-text" style="font-size:1.5rem">TMS</div>
+              <div class="hero-logo-sub">Terrassement Multi-Service</div>
+            </div>
+          </div>
+        </div>
+        <div class="draggable" style="top: 30%; left: 50%; transform: translateX(-50%);" data-el="title">
+          <span class="drag-hint">Deplacer le titre</span>
+          <h1 class="hero-title" style="font-size: 3.5rem; text-align: center; line-height: 1.1;">Du terrain brut<br>au projet abouti</h1>
+        </div>
+        <div class="draggable" style="top: 55%; left: 50%; transform: translateX(-50%);" data-el="subtitle">
+          <span class="drag-hint">Deplacer le sous-titre</span>
+          <p class="hero-subtitle" style="text-align: center; font-size: 1.1rem;">Terrassement, amenagement et location d'engins dans le Tarn depuis 2013</p>
+        </div>
+        <div class="draggable" style="top: 70%; left: 50%; transform: translateX(-50%);" data-el="ctas">
+          <span class="drag-hint">Deplacer les boutons</span>
+          <div class="hero-ctas">
+            <span class="cta-primary">Demander un devis gratuit</span>
+            <span class="cta-outline">Appeler maintenant</span>
+          </div>
+        </div>
+        <div class="draggable" style="bottom: 8%; left: 50%; transform: translateX(-50%);" data-el="stats">
+          <span class="drag-hint">Deplacer les chiffres</span>
+          <div class="stats-bar">
+            <div class="stat"><div class="stat-number">13+</div><div class="stat-label">Annees</div></div>
+            <div class="stat"><div class="stat-number">143+</div><div class="stat-label">Clients</div></div>
+            <div class="stat"><div class="stat-number">8</div><div class="stat-label">Services</div></div>
+          </div>
+        </div>
+      </div>
+      <button class="select-btn" onclick="selectVariant(1)">Choisir cette variante</button>
+    </div>
+
+    <!-- ===== VARIANTE 2 : SPLIT DIAGONAL ===== -->
+    <div class="variant-label">
+      <h2>Variante 2 — Split gauche avec bande</h2>
+      <span class="tag tag-modern">Moderne</span>
+    </div>
+    <div class="hero-preview" data-variant="2" id="v2">
+      <img class="hero-bg" src="../site/images/camion-pelle-remorque.jpg" alt="">
+      <div class="hero-overlay" style="background: linear-gradient(90deg, rgba(27,42,61,0.95) 0%, rgba(27,42,61,0.9) 45%, rgba(27,42,61,0.1) 70%, transparent 100%);"></div>
+      <div class="drag-zone">
+        <div class="draggable" style="top: 8%; left: 4%;" data-el="logo">
+          <span class="drag-hint">Deplacer le logo</span>
+          <div class="logo-v3">
+            <div class="hero-logo-text" style="font-size:1.8rem; letter-spacing:0.15em;">TMS</div>
+            <div class="hero-logo-sub" style="margin-top:-2px;">Terrassement Multi-Service</div>
+          </div>
+        </div>
+        <div class="draggable" style="top: 28%; left: 4%;" data-el="title">
+          <span class="drag-hint">Deplacer le titre</span>
+          <h1 class="hero-title" style="font-size: 2.8rem; line-height: 1.1; max-width: 500px;">Votre expert<br><span style="color: #E8A838;">terrassement</span><br>dans le Tarn</h1>
+        </div>
+        <div class="draggable" style="top: 55%; left: 4%;" data-el="subtitle">
+          <span class="drag-hint">Deplacer</span>
+          <p class="hero-subtitle" style="font-size: 1rem;">Depuis 2013, TMS realise vos travaux de terrassement, VRD, amenagement et location d'engins en Occitanie.</p>
+        </div>
+        <div class="draggable" style="top: 72%; left: 4%;" data-el="ctas">
+          <span class="drag-hint">Deplacer</span>
+          <div class="hero-ctas">
+            <span class="cta-primary">Devis gratuit &rarr;</span>
+            <span class="cta-outline">05 63 88 45 12</span>
+          </div>
+        </div>
+        <div class="draggable" style="top: 88%; left: 4%;" data-el="certifs">
+          <span class="drag-hint">Deplacer</span>
+          <div class="hero-certifs">
+            <span class="hero-certif">Qualibat</span>
+            <span class="hero-certif">Garantie decennale</span>
+            <span class="hero-certif">RC Pro</span>
+          </div>
+        </div>
+      </div>
+      <button class="select-btn" onclick="selectVariant(2)">Choisir cette variante</button>
+    </div>
+
+    <!-- ===== VARIANTE 3 : DRONE + GRAND LOGO ===== -->
+    <div class="variant-label">
+      <h2>Variante 3 — Vue aerienne, logo imposant</h2>
+      <span class="tag tag-classic">Classique</span>
+    </div>
+    <div class="hero-preview" data-variant="3" id="v3">
+      <img class="hero-bg" src="../site/images/drone-minipelle-camion.jpg" alt="">
+      <div class="hero-overlay" style="background: linear-gradient(to bottom, rgba(15,25,35,0.5) 0%, rgba(15,25,35,0.2) 30%, rgba(15,25,35,0.7) 80%, rgba(15,25,35,0.9) 100%);"></div>
+      <div class="drag-zone">
+        <div class="draggable" style="top: 15%; left: 50%; transform: translateX(-50%);" data-el="logo">
+          <span class="drag-hint">Deplacer le logo</span>
+          <div class="logo-v4" style="text-align: center;">
+            <div class="hero-logo-text" style="font-size: 5rem; letter-spacing: 0.1em;">TMS</div>
+            <div class="hero-logo-sub" style="color: #E8A838; font-size: 0.8rem; letter-spacing: 0.2em;">TERRASSEMENT MULTI-SERVICE</div>
+          </div>
+        </div>
+        <div class="draggable" style="top: 55%; left: 50%; transform: translateX(-50%);" data-el="subtitle">
+          <span class="drag-hint">Deplacer</span>
+          <p class="hero-subtitle" style="text-align: center; font-size: 1.15rem;">Du terrain brut au projet abouti — Labruguiere, Tarn</p>
+        </div>
+        <div class="draggable" style="top: 68%; left: 50%; transform: translateX(-50%);" data-el="ctas">
+          <span class="drag-hint">Deplacer</span>
+          <div class="hero-ctas" style="justify-content: center;">
+            <span class="cta-primary" style="padding: 1rem 2.5rem; font-size: 1.05rem;">Demander un devis gratuit</span>
+          </div>
+        </div>
+        <div class="draggable" style="bottom: 6%; left: 50%; transform: translateX(-50%);" data-el="stats">
+          <span class="drag-hint">Deplacer</span>
+          <div class="stats-bar" style="gap: 3rem; border-color: rgba(255,255,255,0.15);">
+            <div class="stat"><div class="stat-number">13+</div><div class="stat-label">Annees d'experience</div></div>
+            <div class="stat"><div class="stat-number">143+</div><div class="stat-label">Clients satisfaits</div></div>
+            <div class="stat"><div class="stat-number">Qualibat</div><div class="stat-label">Certifie</div></div>
+          </div>
+        </div>
+      </div>
+      <button class="select-btn" onclick="selectVariant(3)">Choisir cette variante</button>
+    </div>
+
+    <!-- ===== VARIANTE 4 : FORESTIER IMMERSIF ===== -->
+    <div class="variant-label">
+      <h2>Variante 4 — Immersif foret, texte bas</h2>
+      <span class="tag tag-bold">Immersif</span>
+    </div>
+    <div class="hero-preview" data-variant="4" id="v4">
+      <img class="hero-bg" src="../site/images/doosan-foret-dense.jpg" alt="">
+      <div class="hero-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.15) 40%, rgba(15,25,35,0.85) 75%, rgba(15,25,35,0.95) 100%);"></div>
+      <div class="drag-zone">
+        <div class="draggable" style="top: 5%; left: 4%;" data-el="logo">
+          <span class="drag-hint">Deplacer</span>
+          <div class="logo-v2" style="background: rgba(212,98,43,0.9);">
+            <svg viewBox="0 0 48 48" width="32" height="32"><rect x="2" y="8" width="44" height="5" rx="2.5" fill="#fff"/><rect x="20" y="8" width="5" height="32" rx="2.5" fill="#fff"/><path d="M2 13 L10 24 L2 24 Z" fill="#fff" opacity="0.8"/></svg>
+            <div class="hero-logo-text" style="font-size:1.3rem">TMS</div>
+          </div>
+        </div>
+        <div class="draggable" style="bottom: 28%; left: 4%;" data-el="title">
+          <span class="drag-hint">Deplacer</span>
+          <h1 class="hero-title" style="font-size: 2.8rem; line-height: 1.1;">On transforme<br>votre terrain.</h1>
+        </div>
+        <div class="draggable" style="bottom: 18%; left: 4%;" data-el="subtitle">
+          <span class="drag-hint">Deplacer</span>
+          <p class="hero-subtitle" style="font-size: 1.05rem;">Terrassement &middot; VRD &middot; Amenagement &middot; Location d'engins<br>Labruguiere &middot; Tarn &middot; Occitanie — depuis 2013</p>
+        </div>
+        <div class="draggable" style="bottom: 5%; left: 4%;" data-el="ctas">
+          <span class="drag-hint">Deplacer</span>
+          <div class="hero-ctas">
+            <span class="cta-primary">Devis gratuit</span>
+            <span class="cta-outline">05 63 88 45 12</span>
+            <span class="hero-certif" style="align-self: center;">Qualibat</span>
+            <span class="hero-certif" style="align-self: center;">Garantie decennale</span>
+          </div>
+        </div>
+      </div>
+      <button class="select-btn" onclick="selectVariant(4)">Choisir cette variante</button>
+    </div>
+
+    <!-- ===== VARIANTE 5 : CHANTIER PISCINE ===== -->
+    <div class="variant-label">
+      <h2>Variante 5 — Residentiel, chantier piscine</h2>
+      <span class="tag tag-minimal">Accessible</span>
+    </div>
+    <div class="hero-preview" data-variant="5" id="v5">
+      <img class="hero-bg" src="../site/images/terrassement-piscine.jpg" alt="">
+      <div class="hero-overlay" style="background: linear-gradient(135deg, rgba(27,42,61,0.92) 0%, rgba(27,42,61,0.7) 50%, rgba(27,42,61,0.3) 100%);"></div>
+      <div class="drag-zone">
+        <div class="draggable" style="top: 6%; left: 5%;" data-el="logo">
+          <span class="drag-hint">Deplacer</span>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 50px; height: 50px; background: var(--orange); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 48 48" width="32" height="32"><rect x="2" y="8" width="44" height="5" rx="2.5" fill="#fff"/><rect x="20" y="8" width="5" height="32" rx="2.5" fill="#fff"/><path d="M2 13 L10 24 L2 24 Z" fill="#fff" opacity="0.8"/></svg>
+            </div>
+            <div>
+              <div style="font-family: Outfit; font-weight: 800; font-size: 1.6rem; color: #fff;">TMS</div>
+              <div style="font-size: 0.6rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em;">Terrassement Multi-Service</div>
+            </div>
+          </div>
+        </div>
+        <div class="draggable" style="top: 25%; left: 5%;" data-el="title">
+          <span class="drag-hint">Deplacer</span>
+          <h1 class="hero-title" style="font-size: 2.5rem; line-height: 1.15; max-width: 550px;">Terrassement professionnel<br>dans le <span style="color: var(--orange);">Tarn</span></h1>
+        </div>
+        <div class="draggable" style="top: 48%; left: 5%;" data-el="subtitle">
+          <span class="drag-hint">Deplacer</span>
+          <p class="hero-subtitle" style="font-size: 1rem; max-width: 480px;">Piscines, voies d'acces, VRD, defrichement — Vincent Padilla et son equipe realisent vos projets avec precision depuis 2013.</p>
+        </div>
+        <div class="draggable" style="top: 66%; left: 5%;" data-el="ctas">
+          <span class="drag-hint">Deplacer</span>
+          <div class="hero-ctas">
+            <span class="cta-primary" style="border-radius: 50px; padding: 0.9rem 2rem;">Obtenir un devis gratuit</span>
+            <span class="cta-outline" style="border-radius: 50px; padding: 0.9rem 2rem;">06 31 74 23 13</span>
+          </div>
+        </div>
+        <div class="draggable" style="top: 82%; left: 5%;" data-el="certifs">
+          <span class="drag-hint">Deplacer</span>
+          <div style="display: flex; gap: 1.5rem; align-items: center;">
+            <div class="stat"><div class="stat-number" style="font-size:1.3rem">13+</div><div class="stat-label">Annees</div></div>
+            <div style="width:1px; height:30px; background:rgba(255,255,255,0.2);"></div>
+            <div class="stat"><div class="stat-number" style="font-size:1.3rem">143+</div><div class="stat-label">Clients</div></div>
+            <div style="width:1px; height:30px; background:rgba(255,255,255,0.2);"></div>
+            <div class="hero-certifs" style="gap: 0.4rem;">
+              <span class="hero-certif">Qualibat</span>
+              <span class="hero-certif">Decennale</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="select-btn" onclick="selectVariant(5)">Choisir cette variante</button>
+    </div>
+
+    <!-- ===== VARIANTE 6 : TRANSPORT PANORAMIQUE ===== -->
+    <div class="variant-label">
+      <h2>Variante 6 — Panoramique, split droit</h2>
+      <span class="tag tag-modern">Moderne</span>
+    </div>
+    <div class="hero-preview" data-variant="6" id="v6">
+      <img class="hero-bg" src="../site/images/camion-clovis-transport.jpg" alt="">
+      <div class="hero-overlay" style="background: linear-gradient(90deg, transparent 0%, transparent 40%, rgba(27,42,61,0.85) 60%, rgba(27,42,61,0.95) 100%);"></div>
+      <div class="drag-zone">
+        <div class="draggable" style="top: 8%; right: 5%; left: auto;" data-el="logo">
+          <span class="drag-hint">Deplacer</span>
+          <div class="logo-v3" style="border-color: var(--orange);">
+            <div class="hero-logo-text" style="font-size:2rem; color: var(--orange);">TMS</div>
+            <div class="hero-logo-sub" style="color: rgba(255,255,255,0.8);">Terrassement Multi-Service</div>
+          </div>
+        </div>
+        <div class="draggable" style="top: 32%; right: 5%; left: auto; text-align: right;" data-el="title">
+          <span class="drag-hint">Deplacer</span>
+          <h1 class="hero-title" style="font-size: 2.5rem; line-height: 1.1;">Du terrain brut<br>au projet<br><span style="color: var(--accent);">abouti.</span></h1>
+        </div>
+        <div class="draggable" style="top: 60%; right: 5%; left: auto; text-align: right;" data-el="subtitle">
+          <span class="drag-hint">Deplacer</span>
+          <p class="hero-subtitle" style="text-align: right; margin-left: auto;">Terrassement, VRD et location d'engins<br>Labruguiere — Tarn — Occitanie</p>
+        </div>
+        <div class="draggable" style="top: 78%; right: 5%; left: auto;" data-el="ctas">
+          <span class="drag-hint">Deplacer</span>
+          <div class="hero-ctas" style="justify-content: flex-end;">
+            <span class="cta-primary">Devis gratuit &rarr;</span>
+          </div>
+        </div>
+      </div>
+      <button class="select-btn" onclick="selectVariant(6)">Choisir cette variante</button>
+    </div>
+
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-section" id="output-section">
+    <h2>Ton choix</h2>
+    <p style="color: #888; margin-bottom: 1rem;">Copie ce texte et colle-le dans la conversation Claude :</p>
+    <div class="output-code" id="output-code"></div>
+    <button class="copy-btn" onclick="copyOutput()">Copier pour Claude</button>
+  </div>
+
+  <script>
+    // ===== DRAG & DROP =====
+    let isDragging = false;
+    let dragTarget = null;
+    let offsetX, offsetY;
+
+    document.querySelectorAll('.draggable').forEach(el => {
+      el.addEventListener('mousedown', startDrag);
+      el.addEventListener('touchstart', startDragTouch, { passive: false });
+    });
+
+    function startDrag(e) {
+      if (e.button !== 0) return;
+      dragTarget = this;
+      const rect = dragTarget.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      dragTarget.classList.add('dragging');
+      dragTarget.style.transform = '';
+      isDragging = true;
+      e.preventDefault();
+    }
+
+    function startDragTouch(e) {
+      dragTarget = this;
+      const touch = e.touches[0];
+      const rect = dragTarget.getBoundingClientRect();
+      offsetX = touch.clientX - rect.left;
+      offsetY = touch.clientY - rect.top;
+      dragTarget.classList.add('dragging');
+      dragTarget.style.transform = '';
+      isDragging = true;
+      e.preventDefault();
+    }
+
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('touchmove', moveDragTouch, { passive: false });
+
+    function moveDrag(e) {
+      if (!isDragging || !dragTarget) return;
+      const parent = dragTarget.closest('.hero-preview');
+      const parentRect = parent.getBoundingClientRect();
+      let x = e.clientX - parentRect.left - offsetX;
+      let y = e.clientY - parentRect.top - offsetY;
+      x = Math.max(0, Math.min(x, parentRect.width - dragTarget.offsetWidth));
+      y = Math.max(0, Math.min(y, parentRect.height - dragTarget.offsetHeight));
+      dragTarget.style.left = (x / parentRect.width * 100) + '%';
+      dragTarget.style.top = (y / parentRect.height * 100) + '%';
+      dragTarget.style.right = 'auto';
+      dragTarget.style.bottom = 'auto';
+    }
+
+    function moveDragTouch(e) {
+      if (!isDragging || !dragTarget) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const parent = dragTarget.closest('.hero-preview');
+      const parentRect = parent.getBoundingClientRect();
+      let x = touch.clientX - parentRect.left - offsetX;
+      let y = touch.clientY - parentRect.top - offsetY;
+      x = Math.max(0, Math.min(x, parentRect.width - dragTarget.offsetWidth));
+      y = Math.max(0, Math.min(y, parentRect.height - dragTarget.offsetHeight));
+      dragTarget.style.left = (x / parentRect.width * 100) + '%';
+      dragTarget.style.top = (y / parentRect.height * 100) + '%';
+      dragTarget.style.right = 'auto';
+      dragTarget.style.bottom = 'auto';
+    }
+
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchend', stopDrag);
+
+    function stopDrag() {
+      if (dragTarget) dragTarget.classList.remove('dragging');
+      isDragging = false;
+      dragTarget = null;
+    }
+
+    // ===== VARIANT SELECTION =====
+    let selectedVariant = null;
+
+    function selectVariant(n) {
+      document.querySelectorAll('.hero-preview').forEach(p => p.classList.remove('selected'));
+      document.getElementById('v' + n).classList.add('selected');
+      selectedVariant = n;
+      document.querySelectorAll('.select-btn').forEach(b => b.textContent = 'Choisir cette variante');
+      document.getElementById('v' + n).querySelector('.select-btn').textContent = 'Selectionne !';
+    }
+
+    // ===== EXPORT =====
+    document.getElementById('btn-export').addEventListener('click', () => {
+      if (!selectedVariant) { alert('Choisis une variante d\'abord !'); return; }
+
+      const preview = document.getElementById('v' + selectedVariant);
+      const img = preview.querySelector('.hero-bg').src.split('/').pop();
+      const overlay = preview.querySelector('.hero-overlay').style.background;
+
+      const elements = [];
+      preview.querySelectorAll('.draggable').forEach(el => {
+        const elName = el.dataset.el;
+        const left = el.style.left;
+        const top = el.style.top;
+        const text = el.textContent.trim().replace(/Deplacer[^\n]*/g, '').trim().substring(0, 80);
+        elements.push(`  ${elName}: position ${left} / ${top} — "${text}"`);
+      });
+
+      const descriptions = {
+        1: 'Hero grand impact, texte centre, fond foret',
+        2: 'Split gauche avec bande, fond transport',
+        3: 'Vue aerienne, logo imposant, fond drone',
+        4: 'Immersif foret, texte bas',
+        5: 'Residentiel piscine, style accessible',
+        6: 'Panoramique, split droit, fond transport'
+      };
+
+      const output = `CHOIX HERO TMS
+Variante: ${selectedVariant} — ${descriptions[selectedVariant]}
+Photo: ${img}
+Overlay: ${overlay}
+Elements:
+${elements.join('\n')}`;
+
+      document.getElementById('output-code').textContent = output;
+      document.getElementById('output-section').classList.add('show');
+      document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function copyOutput() {
+      navigator.clipboard.writeText(document.getElementById('output-code').textContent).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copie !';
+        setTimeout(() => btn.textContent = 'Copier pour Claude', 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
