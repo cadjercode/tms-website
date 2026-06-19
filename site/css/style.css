@@ -130,11 +130,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   color: var(--color-text);
+  text-wrap: balance;
 }
 
 h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
 h2 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
-h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); }
+h3 { font-size: clamp(1.15rem, 2.2vw, 1.6rem); }
 h4 { font-size: 1.1rem; }
 
 p {
@@ -278,7 +279,7 @@ strong {
   right: 0;
   height: var(--header-h-mobile);
   z-index: 1000;
-  transition: all var(--transition-base);
+  transition: background var(--transition-base), box-shadow var(--transition-base), height var(--transition-base);
 }
 
 .header--scrolled {
@@ -742,7 +743,7 @@ strong {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-base);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
 }
 
 .service-card:hover {
@@ -832,13 +833,14 @@ strong {
 }
 
 .filter-btn {
-  padding: var(--space-sm) var(--space-md);
+  padding: 0.55rem var(--space-md);
   border-radius: var(--radius-xl);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-text-light);
   border: 2px solid var(--color-border);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+  min-height: 44px;
 }
 
 .filter-btn:hover {
@@ -1898,9 +1900,12 @@ section.faq .faq-toggle-wrap {
 
 .footer__links a {
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.75);
   transition: color var(--transition-fast);
   white-space: nowrap;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .footer__links a:hover {
@@ -1923,11 +1928,11 @@ section.faq .faq-toggle-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.75);
   transition: background var(--transition-fast), color var(--transition-fast);
 }
 
@@ -1937,27 +1942,27 @@ section.faq .faq-toggle-wrap {
 }
 
 .footer__bottom {
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255,255,255,0.1);
   padding-top: var(--space-sm);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.25rem var(--space-lg);
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.55);
 }
 
 .footer__nap {
   flex-basis: 100%;
   font-style: normal;
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.65);
   margin-bottom: 0.4rem;
 }
 
 .footer__nap a,
 .footer__bottom a {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.75);
   text-decoration: none;
 }
 
