@@ -129,8 +129,8 @@
     ScrollTrigger.batch('.reveal', {
       onEnter: function (batch) {
         gsap.fromTo(batch,
-          { opacity: 0, y: 40, filter: 'blur(2px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', stagger: 0.12 }
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.12 }
         );
       },
       start: 'top 85%',
@@ -140,8 +140,8 @@
     ScrollTrigger.batch('.reveal-left', {
       onEnter: function (batch) {
         gsap.fromTo(batch,
-          { opacity: 0, x: -40, filter: 'blur(2px)' },
-          { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', stagger: 0.12 }
+          { opacity: 0, x: -40 },
+          { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', stagger: 0.12 }
         );
       },
       start: 'top 85%',
@@ -151,8 +151,8 @@
     ScrollTrigger.batch('.reveal-scale', {
       onEnter: function (batch) {
         gsap.fromTo(batch,
-          { opacity: 0, scale: 0.92, filter: 'blur(2px)' },
-          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', stagger: 0.12 }
+          { opacity: 0, scale: 0.92 },
+          { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out', stagger: 0.12 }
         );
       },
       start: 'top 85%',
@@ -164,9 +164,9 @@
     if (serviceCards.length) {
       serviceCards.forEach(function (card, i) {
         gsap.fromTo(card,
-          { opacity: 0, y: 50, filter: 'blur(2px)' },
+          { opacity: 0, y: 50 },
           {
-            opacity: 1, y: 0, filter: 'blur(0px)',
+            opacity: 1, y: 0,
             duration: 0.7, ease: 'power2.out',
             delay: i * 0.1,
             scrollTrigger: {

@@ -2283,40 +2283,34 @@ section.faq .faq-toggle-wrap {
 .js-ready .reveal {
   opacity: 0;
   transform: translateY(40px);
-  filter: blur(2px);
 }
 
 .js-ready .reveal.visible {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .js-ready .reveal-left {
   opacity: 0;
   transform: translateX(-40px);
-  filter: blur(2px);
 }
 
 .js-ready .reveal-left.visible {
   opacity: 1;
   transform: translateX(0);
-  filter: blur(0);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .js-ready .reveal-scale {
   opacity: 0;
   transform: scale(0.92);
-  filter: blur(2px);
 }
 
 .js-ready .reveal-scale.visible {
   opacity: 1;
   transform: scale(1);
-  filter: blur(0);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .js-ready .reveal-delay-1 { transition-delay: 0.1s; }
@@ -2545,7 +2539,6 @@ section.faq .faq-toggle-wrap {
   .reveal-scale {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 
   .hero h1,
