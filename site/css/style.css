@@ -352,7 +352,6 @@ strong {
 .footer .nav__brand {
   color: #fff;
 }
-}
 
 .nav__toggle {
   display: flex;
@@ -368,6 +367,7 @@ strong {
 
 .nav__toggle span {
   display: block;
+  width: 24px;
   height: 2.5px;
   background: #fff;
   border-radius: 2px;
@@ -445,6 +445,40 @@ strong {
   display: none;
 }
 
+/* Mobile/tablette : CTA téléphone en icône ronde à côté du burger */
+@media (max-width: 1023.98px) {
+  .nav__logo {
+    margin-right: auto;
+  }
+
+  .nav__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    order: 2;
+    margin-right: var(--space-xs);
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    z-index: 1001;
+  }
+
+  .nav__cta svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav__cta-text {
+    display: none;
+  }
+
+  .nav__toggle {
+    order: 3;
+  }
+}
+
 /* ============================================
    6. HERO
    ============================================ */
@@ -491,6 +525,24 @@ strong {
       rgba(27,42,61,0.6) 0%,
       transparent 40%
     );
+}
+
+/* Mobile : overlay renforcé pour la lisibilité du titre sur photo claire */
+@media (max-width: 767.98px) {
+  .hero__overlay {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(27,42,61,0.75) 0%,
+        rgba(27,42,61,0.6) 50%,
+        rgba(27,42,61,0.45) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgba(27,42,61,0.6) 0%,
+        transparent 40%
+      );
+  }
 }
 
 .hero__content {
