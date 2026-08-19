@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /preview-v2.html
 
 # AI Search Crawlers — allowed
 User-agent: GPTBot
