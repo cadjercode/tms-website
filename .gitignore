@@ -23,3 +23,7 @@ desktop.ini
 
 # Document interne d'identifiants — NE JAMAIS versionner
 SYNTHESE-TMS.md
+
+# Brief client — contient des donnees personnelles (email perso, alias SSH).
+# Ne JAMAIS versionner : ce depot est public (requis par GitHub Pages).
+CLAUDE.md
