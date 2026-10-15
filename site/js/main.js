@@ -55,7 +55,7 @@
 
   function handleScroll() {
     var scrollY = window.scrollY;
-    if (scrollY > 80) {
+    if (scrollY > 80 || header.hasAttribute('data-solid')) {
       header.classList.add('header--scrolled');
     } else {
       header.classList.remove('header--scrolled');
@@ -457,33 +457,35 @@
     });
   });
 
-  lightbox.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
-  lightbox.querySelector('.lightbox__next').addEventListener('click', nextImage);
-  lightbox.querySelector('.lightbox__prev').addEventListener('click', prevImage);
+  if (lightbox) {
+    lightbox.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
+    lightbox.querySelector('.lightbox__next').addEventListener('click', nextImage);
+    lightbox.querySelector('.lightbox__prev').addEventListener('click', prevImage);
 
-  lightbox.addEventListener('click', function (e) {
-    if (e.target === lightbox) closeLightbox();
-  });
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
 
-  document.addEventListener('keydown', function (e) {
-    if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-  });
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
 
-  // Touch swipe
-  var touchStartX = 0;
-  lightbox.addEventListener('touchstart', function (e) {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
+    // Touch swipe
+    var touchStartX = 0;
+    lightbox.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
 
-  lightbox.addEventListener('touchend', function (e) {
-    var diff = e.changedTouches[0].screenX - touchStartX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? prevImage() : nextImage();
-    }
-  }, { passive: true });
+    lightbox.addEventListener('touchend', function (e) {
+      var diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? prevImage() : nextImage();
+      }
+    }, { passive: true });
+  }
 
   // ============================================
   // 9. FORM VALIDATION & AJAX SUBMIT
@@ -499,14 +501,17 @@
       var isValid = true;
       var nom = document.getElementById('nom');
       var email = document.getElementById('email');
+      var telephone = document.getElementById('telephone');
       var message = document.getElementById('message');
+      var contactError = document.getElementById('contact-error');
 
       // Reset errors
-      [nom, email, message].forEach(function (field) {
+      [nom, telephone, email, message].forEach(function (field) {
         field.classList.remove('error');
         var errorEl = document.getElementById(field.id + '-error');
         if (errorEl) errorEl.style.display = 'none';
       });
+      contactError.style.display = 'none';
 
       if (!nom.value.trim()) {
         nom.classList.add('error');
@@ -514,7 +519,23 @@
         isValid = false;
       }
 
-      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      var emailVal = email.value.trim();
+      var telVal = telephone.value.trim();
+
+      if (!emailVal && !telVal) {
+        telephone.classList.add('error');
+        email.classList.add('error');
+        contactError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (telVal && telVal.replace(/\D/g, '').length < 10) {
+        telephone.classList.add('error');
+        document.getElementById('telephone-error').style.display = 'block';
+        isValid = false;
+      }
+
+      if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
         email.classList.add('error');
         document.getElementById('email-error').style.display = 'block';
         isValid = false;

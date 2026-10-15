@@ -34,6 +34,7 @@ RewriteRule ^(.+?)/?$ $1.html [L]
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType application/manifest+json "access plus 1 week"
   ExpiresByType text/xml "access plus 1 hour"
 </IfModule>
