@@ -1,29 +1,42 @@
-name: Deploy to GitHub Pages
+name: Deploy to Hostinger
 
 on:
   push:
     branches: [main]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    paths: ['site/**']
+  workflow_dispatch:
 
 concurrency:
-  group: pages
+  group: deploy-prod
   cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-      - id: deployment
-        uses: actions/deploy-pages@v4
+
+      - name: Configure SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      # No --delete: the server holds files the repo does not track (uploads, CNAME...).
+      - name: Rsync site/ to Hostinger
+        run: |
+          rsync -rlvz --itemize-changes \
+            -e "ssh -i ~/.ssh/id_deploy -p 65002" \
+            --exclude='.git*' --exclude='.gstack' \
+            --exclude='*backup*' --exclude='*.bak' --exclude='*.orig' \
+            --exclude='preview-*' --exclude='reglage-*' --exclude='_mockup-*' \
+            --exclude='*-test.html' --exclude='draft-*' --exclude='*.md' \
+            --exclude='node_modules' \
+            site/ u468434482@72.60.93.244:domains/tms81.fr/public_html/
+
+      - name: Check production
+        run: |
+          code=$(curl -sL -o /dev/null -w '%{http_code}' https://tms81.fr/)
+          echo "tms81.fr -> HTTP $code"
+          [ "$code" = "200" ]
