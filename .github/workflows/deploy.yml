@@ -24,16 +24,22 @@ jobs:
           echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       # No --delete: the server holds files the repo does not track (uploads, CNAME...).
+      # Retries: Hostinger occasionally resets SSH from some GitHub runner IPs (seen 2026-11-01).
       - name: Rsync site/ to Hostinger
         run: |
-          rsync -rlvz --itemize-changes \
-            -e "ssh -i ~/.ssh/id_deploy -p 65002" \
-            --exclude='.git*' --exclude='.gstack' \
-            --exclude='*backup*' --exclude='*.bak' --exclude='*.orig' \
-            --exclude='preview-*' --exclude='reglage-*' --exclude='_mockup-*' \
-            --exclude='*-test.html' --exclude='draft-*' --exclude='*.md' \
-            --exclude='node_modules' \
-            site/ u468434482@72.60.93.244:domains/tms81.fr/public_html/
+          for i in 1 2 3 4 5; do
+            rsync -rlvz --itemize-changes \
+              -e "ssh -i ~/.ssh/id_deploy -p 65002 -o ConnectTimeout=15" \
+              --exclude='.git*' --exclude='.gstack' \
+              --exclude='*backup*' --exclude='*.bak' --exclude='*.orig' \
+              --exclude='preview-*' --exclude='reglage-*' --exclude='_mockup-*' \
+              --exclude='*-test.html' --exclude='draft-*' --exclude='*.md' \
+              --exclude='node_modules' \
+              site/ u468434482@72.60.93.244:domains/tms81.fr/public_html/ && exit 0
+            echo "Tentative $i echouee, nouvel essai dans $((i*10))s"
+            sleep $((i*10))
+          done
+          exit 1
 
       - name: Check production
         run: |
